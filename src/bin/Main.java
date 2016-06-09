@@ -11,7 +11,9 @@ public class Main
 	public static DrawApplet d = new DrawApplet();
 	
 	public static void main(String[] args)
-	{				
+	{		
+        System.out.println("Git version\n");
+
 		d.init();
 
 		df.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
