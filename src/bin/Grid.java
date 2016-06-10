@@ -20,33 +20,35 @@ public class Grid
 		}
 	}
 	
-	static void addEntity(Entity e,int x,int y)
+	static void addEntity(Entity e,Location l)
 	{
-		grid[x][y].contents.add(e);
-		refresh(x,y);
+		grid[l.x][l.y].contents.add(e);
+		refresh(l);
 	}
 	
 	static void removeEntity(Entity e)
 	{
-		grid[e.x][e.y].contents.remove(e);
-		refresh(e.x,e.y);
+		grid[e.loc.x][e.loc.y].contents.remove(e);
+		refresh(e.loc);
 	}
 	
-	static void addWall(Wall w,int x,int y)
+	static void addWall(Wall w,Location l)
 	{
-		grid[x][y].wall = w;
-		refresh(x,y);
+		grid[l.x][l.y].wall = w;
+		refresh(l);
 	}
 	
-	static void removeWall(int x,int y)
+	static void removeWall(Location l)
 	{	
-		grid[x][y].wall = null;
-		refresh(x,y);
+		grid[l.x][l.y].wall = null;
+		refresh(l);
 	}
 	
-	static void refresh(int x,int y)
+	static void refresh(Location l)
 	{
-		grid[x][y].changed = true;
+		grid[l.x][l.y].changed = true;
+		DrawApplet.changed.add(grid[l.x][l.y]);
+
 	}
 	
 }

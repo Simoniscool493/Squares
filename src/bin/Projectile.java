@@ -8,13 +8,12 @@ public class Projectile extends Entity
 	int life;
 	Entity source;
 	
-	Projectile(Entity s,int xpos,int ypos,int a,int l,Color c)
+	Projectile(Entity s,Location l,int a,int li,Color c)
 	{
-		super(xpos,ypos,c);
+		super(l,c);
 		align = a;
-		life = l;
+		life = li;
 		source = s;
-		color = c;
 	}
 	
 	void update()
@@ -50,11 +49,11 @@ public class Projectile extends Entity
 		
 		if(align == 1||align == 3)//horizontal
 		{
-			g2.fillRect((width*x)+2,(height*y)+height/2-1,width-2,3);
+			g2.fillRect((width*loc.x)+2,(height*loc.y)+height/2-1,width-2,3);
 		}
 		else//vertical
 		{
-			g2.fillRect((width*x)+width/2-1, (height*y)+2,3,height-2);
+			g2.fillRect((width*loc.x)+width/2-1, (height*loc.y)+2,3,height-2);
 		}
 	}
 		
@@ -64,7 +63,7 @@ public class Projectile extends Entity
 		
 		if(g.hasWall())
 		{
-			Grid.removeWall(g.x,g.y);
+			Grid.removeWall(g.getLocation());
 			((Player)source).points+=100;
 		}
 	}
@@ -72,7 +71,7 @@ public class Projectile extends Entity
 	void kill()
 	{
 		DrawApplet.deadlist.add(this);
-		Grid.grid[x][y].changed = true;	
+		Grid.grid[loc.x][loc.y].changed = true;	
 	}
 }
 

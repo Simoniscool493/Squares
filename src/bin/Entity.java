@@ -2,6 +2,7 @@ package bin;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
+import java.awt.geom.Point2D;
 
 public class Entity 
 {
@@ -10,39 +11,37 @@ public class Entity
 	static float gridWidth = U.gridWidth;
 	static float gridHeight = U.gridHeight;
 	
-	int x;
-	int y;
+	Location loc;
 	int align;
 	boolean clipping = true;
 	Color color = Color.black;
 	
 	Entity(){}
 	
-	Entity(int xpos,int ypos)
+	Entity(Location l)
 	{
-		Grid.addEntity(this,xpos,ypos);
-		x = xpos;
-		y = ypos;
+		loc = l.copy();
+		Grid.addEntity(this,loc);
 	}
 	
-	Entity(int xpos,int ypos,Color c)
+	Entity(Location l,Color c)
 	{
-		this(xpos,ypos);
+		this(l);
 		color = c;
 	}
 		
 	void render(Graphics2D g2)
 	{		
 		g2.setColor(color);
-        g2.fillRect((width*x)+1,(height*y)+1,width-1,height-1);
+        g2.fillRect((width*loc.x)+1,(height*loc.y)+1,width-1,height-1);
 	}
 	
 	void move(int Xoffs,int Yoffs)
 	{
-		Grid.refresh(x,y);
+		Grid.refresh(loc);
 
-		int newX = x+Xoffs;
-		int newY = y+Yoffs;
+		int newX = loc.x+Xoffs;
+		int newY = loc.y+Yoffs;
 		
 		if(newX >= gridWidth || newY >= gridHeight ||newX<0||newY<0)
 		//if out of bounds
@@ -55,7 +54,7 @@ public class Entity
 		}
 		else
 		{
-			GridPoint oldG = Grid.grid[x][y];
+			GridPoint oldG = Grid.grid[loc.x][loc.y];
 			GridPoint newG = Grid.grid[newX][newY];
 			
 			if(!newG.hasWall()||!clipping)
@@ -63,10 +62,10 @@ public class Entity
 				oldG.contents.remove(this);
 				newG.contents.add(this);
 
-				Grid.refresh(newX,newY);
+				Grid.refresh(newG.getLocation());
 				
-				x+=Xoffs;
-				y+=Yoffs;	
+				loc.x+=Xoffs;
+				loc.y+=Yoffs;	
 			}
 			else
 			{
@@ -87,7 +86,7 @@ public class Entity
 	
 	void placeWall()
 	{
-		new Wall(x,y,color);
+		new Wall(loc,color);
 	}
 	
 	public String toString()

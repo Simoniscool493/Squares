@@ -10,6 +10,7 @@ public class GridPoint
 	int y;
 	Color background;
 	boolean changed;
+	Projectile projectile;
 	Wall wall;
 	
 	ArrayList<Entity> contents = new ArrayList<Entity>();
@@ -39,18 +40,26 @@ public class GridPoint
 					e.render(g2);
 				}
 			}
+			
+			if(projectile!=null)
+			{
+				projectile.render(g2);
+			}
 		}
 		else
 		{
 			g2.setColor(wall.color);
 	        g2.fillRect((width*x)+1,(height*y)+1,width-1,height-1);
-
 		}
         
         changed = false;
         
 	}
 	
+	public Location getLocation()
+	{
+		return new Location(x,y);
+	}
 
 	public Entity getWall()
 	{

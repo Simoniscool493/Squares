@@ -16,12 +16,13 @@ public class DrawApplet extends JApplet implements ActionListener
 	
 	public static ArrayList<Projectile> projectiles = new ArrayList<Projectile>();
 	public static ArrayList<Projectile> deadlist = new ArrayList<Projectile>();
+	public static ArrayList<GridPoint> changed = new ArrayList<GridPoint>();
 	
 	static boolean started = false;
 	
 	Timer t = new Timer(50,this);
 	Menu m = new Menu();
-	Player p = new Player(10,10);
+	Player p = new Player(new Location(10,10));
 
 	public void paint(Graphics g)
 	{
@@ -36,7 +37,7 @@ public class DrawApplet extends JApplet implements ActionListener
         update(g2);
         spawn();
         
-        //System.out.println(p.points);
+        //System.out.println(Grid.grid[4][0].contents.size());
 	}
 	
 	public void update(Graphics2D g2)
@@ -50,25 +51,18 @@ public class DrawApplet extends JApplet implements ActionListener
 				projectiles.get(i).update();
 			}
 		}
-		
-		for(int i=0;i<U.gridWidth;i++)
-		{
-			for(int j=0;j<U.gridHeight;j++)
-			{
-				GridPoint gp = Grid.grid[i][j]; 
 				
-				if(gp.changed)
-				{
-					//System.out.println("updated " + i + " " + j);
-					//prints to the console every time a point on the grid is updated
-					gp.contents.removeAll(deadlist);
-					gp.render(g2);
-				}
-			}
+		for(GridPoint g: changed)
+		{
+			g.contents.removeAll(deadlist);
+			g.render(g2);
 		}
 		
-        m.render(g2,p);
+		System.out.println(changed.size());
 
+		changed.clear();
+		
+        m.render(g2,p);
 	}
 	
 	public void spawn()
@@ -78,7 +72,7 @@ public class DrawApplet extends JApplet implements ActionListener
 			int w = (int)(Math.random() * U.gridWidth);
 			int h = (int)(Math.random() * U.gridHeight);
 			
-			new Wall(w,h,Color.black);
+			new Wall(new Location(w,h),Color.black);
 		}
 	}
 	
@@ -133,12 +127,12 @@ public class DrawApplet extends JApplet implements ActionListener
 		else if(n==69)
 		{
 			p.color = Color.BLUE;
-			Grid.refresh(p.x, p.y);
+			Grid.refresh(p.loc);
 		}
 		else if(n==81)
 		{
 			p.color = Color.ORANGE;
-			Grid.refresh(p.x,p.y);
+			Grid.refresh(p.loc);
 		}	
 		else if(n==32)
 		{

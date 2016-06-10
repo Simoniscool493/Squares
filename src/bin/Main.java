@@ -2,6 +2,7 @@ package bin;
 
 import javax.swing.JFrame;
 
+
 public class Main 
 {
 	public static Grid g = new Grid();

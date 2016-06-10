@@ -6,11 +6,10 @@ public class Wall extends Entity
 {
 	Wall () {}
 	
-	Wall(int xpos,int ypos,Color c)
+	Wall(Location l,Color c)
 	{
-		x = xpos;
-		y = ypos;
+		loc = l.copy();
 		color = c;
-		Grid.addWall(this, xpos, ypos);
+		Grid.addWall(this,loc);
 	}
 }

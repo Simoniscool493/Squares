@@ -7,9 +7,9 @@ public class Player extends Entity
 {
 	int points; 
 	
-	Player(int xPos,int yPos)
+	Player(Location l)
 	{
-		super(xPos,yPos);
+		super(l);
 		align = 3;
 		clipping = true;
 		points = 0;
@@ -24,29 +24,29 @@ public class Player extends Entity
 	{
 		g2.setColor(color);
 
-        g2.fillRect((width*x)+5,(height*y)+5,width-10,height-10);
+        g2.fillRect((width*loc.x)+5,(height*loc.y)+5,width-10,height-10);
         
         if(align == 0)//up
         {
-        	g2.fillRect((width*x)+(width/2)-2,(height*y)+1,5,5);
+        	g2.fillRect((width*loc.x)+(width/2)-2,(height*loc.y)+1,5,5);
         }
         else if(align == 1)//right
         {
-        	g2.fillRect((width*x)+width-5,(height*y)+height/2-2,5,5);
+        	g2.fillRect((width*loc.x)+width-5,(height*loc.y)+height/2-2,5,5);
         }
         else if(align == 2)//down
         {
-        	g2.fillRect((width*x)+(width/2)-2,(height*y)+height-5,5,5);
+        	g2.fillRect((width*loc.x)+(width/2)-2,(height*loc.y)+height-5,5,5);
         }
         else if(align == 3)//left
         {
-        	g2.fillRect((width*x)+1,(height*y)+height/2-2,5,5);
+        	g2.fillRect((width*loc.x)+1,(height*loc.y)+height/2-2,5,5);
         }
 	}
 	
 	void laser()
 	{
-		DrawApplet.projectiles.add(new Projectile(this,x,y,align,10,color));
+		DrawApplet.projectiles.add(new Projectile(this,loc,align,40,color));
 	}
 
 }
