@@ -20,8 +20,8 @@ public class DrawApplet extends JApplet implements ActionListener
 	
 	static boolean started = false;
 	
-	Timer t = new Timer(50,this);
 	Menu m = new Menu();
+	Timer t = new Timer(50,this);
 	Player p = new Player(new Location(10,10));
 
 	public void paint(Graphics g)
@@ -31,6 +31,7 @@ public class DrawApplet extends JApplet implements ActionListener
         if(!started)
         {
         	init(g2);
+        	m.init(g2);
             t.start();
         }
         

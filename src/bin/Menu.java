@@ -5,11 +5,13 @@ import java.awt.Graphics2D;
 
 public class Menu 
 {
-	int totalHeight = (int)U.drawHeight;
-	int menuHeight = 100;
-	int menuWidth = 150;
+	int menuHeight = (int)U.drawHeight;
+	int menuWidth = (int)U.menuWidth;
+	int oWidth = (int)U.drawWidth;
 	
-	Color background = Color.black;
+	static boolean pointsChanged = true;
+	
+	Color background = Color.darkGray;
 	Color textColor = Color.white;
 	
 	Menu()
@@ -17,12 +19,21 @@ public class Menu
 		
 	}
 	
-	void render(Graphics2D g2,Player p)
+	void init(Graphics2D g2)
 	{
 		g2.setColor(background);
-		g2.fillRect(0, totalHeight-menuHeight, menuWidth, menuHeight);	
-		g2.setColor(textColor);
-		g2.drawString(String.valueOf(p.points),menuWidth*0.2f,totalHeight-menuHeight*0.2f);
+		g2.fillRect(oWidth, menuHeight-menuHeight, menuWidth, menuHeight);	
 	}
 	
+	void render(Graphics2D g2,Player p)
+	{
+		if(pointsChanged)
+		{
+			g2.setColor(background);
+			g2.fillRect(oWidth, menuHeight-menuHeight, menuWidth, menuHeight);	
+			g2.setColor(textColor);
+			g2.drawString(String.valueOf(p.points),oWidth+menuWidth*0.2f,menuHeight-menuHeight*0.2f);
+			pointsChanged = false;
+		}
+	}	
 }

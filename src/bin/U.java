@@ -7,6 +7,8 @@ public final class U
     public static float drawWidth = 1000;
     public static float drawHeight = 1000;
     
+    public static float menuWidth = 300;
+    
 	public static boolean showGrid = true;
 
 	public static int gridWidth = 40;

@@ -44,6 +44,12 @@ public class Player extends Entity
         }
 	}
 	
+	void addPoints(int n)
+	{
+		points+=n;
+		Menu.pointsChanged = true;
+	}
+	
 	void laser()
 	{
 		DrawApplet.projectiles.add(new Projectile(this,loc,align,40,color));

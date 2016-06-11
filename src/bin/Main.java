@@ -22,7 +22,7 @@ public class Main
         df.getContentPane().add("Center",d);
 		
         df.pack();
-		df.setSize((int)U.drawWidth+33,(int)U.drawHeight+89);
+		df.setSize((int)U.drawWidth+(int)U.menuWidth+33,(int)U.drawHeight+89);
 		df.setVisible(true);
 	}
 }
