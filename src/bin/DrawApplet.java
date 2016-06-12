@@ -38,7 +38,7 @@ public class DrawApplet extends JApplet implements ActionListener
         update(g2);
         spawn();
         
-        //System.out.println(Grid.grid[4][0].contents.size());
+        //System.out.println((int)(Math.random()*3)+1);
 	}
 	
 	public void update(Graphics2D g2)
@@ -59,7 +59,7 @@ public class DrawApplet extends JApplet implements ActionListener
 			g.render(g2);
 		}
 		
-		System.out.println(changed.size());
+		//System.out.println(changed.size());
 
 		changed.clear();
 		
@@ -68,12 +68,16 @@ public class DrawApplet extends JApplet implements ActionListener
 	
 	public void spawn()
 	{
-		if(U.r.nextInt()>2100000000)
+		//if(U.r.nextInt()>2100000000)
+		if(U.r.nextInt()>200000000)
 		{
 			int w = (int)(Math.random() * U.gridWidth);
 			int h = (int)(Math.random() * U.gridHeight);
+			int lv = (int)((Math.random()*3)+1);
 			
-			new Wall(new Location(w,h),Color.black);
+			System.out.println(lv);
+			
+			new Wall(new Location(w,h),Color.black,lv);
 		}
 	}
 	

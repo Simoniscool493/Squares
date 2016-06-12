@@ -13,6 +13,8 @@ public class Entity
 	
 	Location loc;
 	int align;
+	int lv = 1;
+	int hp;
 	boolean clipping = true;
 	Color color = Color.black;
 	
@@ -86,7 +88,17 @@ public class Entity
 	
 	void placeWall()
 	{
-		new Wall(loc,color);
+		new Wall(loc,color,lv);
+	}
+	
+	void damage(int n)
+	{
+		hp-=n;
+		
+		if(hp<1)
+		{
+			kill();
+		}
 	}
 	
 	public String toString()

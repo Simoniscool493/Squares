@@ -63,7 +63,7 @@ public class Projectile extends Entity
 		
 		if(g.hasWall())
 		{
-			Grid.removeWall(g.getLocation());
+			g.wall.damage(1);
 			((Player)source).addPoints(100);
 		}
 	}
