@@ -5,8 +5,6 @@ import javax.swing.JFrame;
 
 public class Main 
 {
-	public static Grid g = new Grid();
-
 	public static JFrame df = new JFrame("Drawing");
 	public static KeyInput k = new KeyInput();
 	public static DrawApplet d = new DrawApplet();

@@ -19,36 +19,10 @@ public class Grid
 			}
 		}
 	}
-	
-	static void addEntity(Entity e,Location l)
+		
+	static GridPoint getPoint(int x,int y)
 	{
-		grid[l.x][l.y].contents.add(e);
-		refresh(l);
-	}
-	
-	static void removeEntity(Entity e)
-	{
-		grid[e.loc.x][e.loc.y].contents.remove(e);
-		refresh(e.loc);
-	}
-	
-	static void addWall(Wall w,Location l)
-	{
-		grid[l.x][l.y].wall = w;
-		refresh(l);
-	}
-	
-	static void removeWall(Location l)
-	{	
-		grid[l.x][l.y].wall = null;
-		refresh(l);
-	}
-	
-	static void refresh(Location l)
-	{
-		grid[l.x][l.y].changed = true;
-		DrawApplet.changed.add(grid[l.x][l.y]);
-
+		return grid[x][y];
 	}
 	
 }

@@ -55,10 +55,35 @@ public class GridPoint
         changed = false;
         
 	}
-	
-	public Location getLocation()
+
+	public void addEntity(Entity e)
 	{
-		return new Location(x,y);
+		contents.add(e);
+		refresh();
+	}
+	
+	public void removeEntity(Entity e)
+	{
+		contents.remove(e);
+		refresh();
+	}
+	
+	public void addWall(Wall w)
+	{
+		wall = w;
+		refresh();
+	}
+	
+	public void removeWall()
+	{	
+		wall = null;
+		refresh();
+	}
+	
+	public void refresh()
+	{
+		changed = true;
+		DrawApplet.changed.add(this);
 	}
 
 	public Entity getWall()

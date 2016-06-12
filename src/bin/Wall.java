@@ -8,18 +8,18 @@ public class Wall extends Entity
 	
 	Wall () {}
 	
-	Wall(Location l,Color c,int level)
+	Wall(GridPoint g,Color c,int level)
 	{
-		loc = l.copy();
+		loc = g;
 		color = c;
-		Grid.addWall(this,loc);
+		loc.addWall(this);
 		lv = level;
 		hp = lv*2;
 	}
 	
 	void kill()
 	{
-		Grid.removeWall(loc);
+		loc.removeWall();
 	}
 	
 	void damage(int n)

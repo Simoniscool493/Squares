@@ -7,9 +7,9 @@ public class Player extends Entity
 {
 	int points; 
 	
-	Player(Location l)
+	Player(GridPoint g)
 	{
-		super(l);
+		super(g);
 		align = 3;
 		clipping = true;
 		points = 0;

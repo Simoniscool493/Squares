@@ -14,6 +14,8 @@ public class DrawApplet extends JApplet implements ActionListener
 {
 	private static final long serialVersionUID = 1L;
 	
+	public static Grid g = new Grid();
+	
 	public static ArrayList<Projectile> projectiles = new ArrayList<Projectile>();
 	public static ArrayList<Projectile> deadlist = new ArrayList<Projectile>();
 	public static ArrayList<GridPoint> changed = new ArrayList<GridPoint>();
@@ -22,7 +24,8 @@ public class DrawApplet extends JApplet implements ActionListener
 	
 	Menu m = new Menu();
 	Timer t = new Timer(50,this);
-	Player p = new Player(new Location(10,10));
+	Player p = new Player(Grid.getPoint(10,10));
+
 
 	public void paint(Graphics g)
 	{
@@ -68,8 +71,8 @@ public class DrawApplet extends JApplet implements ActionListener
 	
 	public void spawn()
 	{
-		//if(U.r.nextInt()>2100000000)
-		if(U.r.nextInt()>200000000)
+		if(U.r.nextInt()>2100000000)
+		//if(U.r.nextInt()>200000000)
 		{
 			int w = (int)(Math.random() * U.gridWidth);
 			int h = (int)(Math.random() * U.gridHeight);
@@ -77,7 +80,7 @@ public class DrawApplet extends JApplet implements ActionListener
 			
 			System.out.println(lv);
 			
-			new Wall(new Location(w,h),Color.black,lv);
+			new Wall(Grid.getPoint(w,h),Color.black,lv);
 		}
 	}
 	
@@ -132,12 +135,12 @@ public class DrawApplet extends JApplet implements ActionListener
 		else if(n==69)
 		{
 			p.color = Color.BLUE;
-			Grid.refresh(p.loc);
+			p.loc.refresh();
 		}
 		else if(n==81)
 		{
 			p.color = Color.ORANGE;
-			Grid.refresh(p.loc);
+			p.loc.refresh();
 		}	
 		else if(n==32)
 		{

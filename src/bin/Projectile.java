@@ -8,9 +8,9 @@ public class Projectile extends Entity
 	int life;
 	Entity source;
 	
-	Projectile(Entity s,Location l,int a,int li,Color c)
+	Projectile(Entity s,GridPoint g,int a,int li,Color c)
 	{
-		super(l,c);
+		super(g,c);
 		align = a;
 		life = li;
 		source = s;

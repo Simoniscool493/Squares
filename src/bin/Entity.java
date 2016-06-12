@@ -11,7 +11,7 @@ public class Entity
 	static float gridWidth = U.gridWidth;
 	static float gridHeight = U.gridHeight;
 	
-	Location loc;
+	GridPoint loc;
 	int align;
 	int lv = 1;
 	int hp;
@@ -20,15 +20,15 @@ public class Entity
 	
 	Entity(){}
 	
-	Entity(Location l)
+	Entity(GridPoint g)
 	{
-		loc = l.copy();
-		Grid.addEntity(this,loc);
+		loc = g;
+		loc.addEntity(this);
 	}
 	
-	Entity(Location l,Color c)
+	Entity(GridPoint g,Color c)
 	{
-		this(l);
+		this(g);
 		color = c;
 	}
 		
@@ -40,12 +40,12 @@ public class Entity
 	
 	void move(int Xoffs,int Yoffs)
 	{
-		Grid.refresh(loc);
+		loc.refresh();
 
 		int newX = loc.x+Xoffs;
 		int newY = loc.y+Yoffs;
 		
-		if(newX >= gridWidth || newY >= gridHeight ||newX<0||newY<0)
+		if( newX >= gridWidth || newY >= gridHeight || newX<0 || newY<0 )
 		//if out of bounds
 		{
 			if(this instanceof Projectile)
@@ -56,18 +56,16 @@ public class Entity
 		}
 		else
 		{
-			GridPoint oldG = Grid.grid[loc.x][loc.y];
-			GridPoint newG = Grid.grid[newX][newY];
+			GridPoint newG = Grid.getPoint(newX,newY);
 			
 			if(!newG.hasWall()||!clipping)
 			{
-				oldG.contents.remove(this);
+				loc.contents.remove(this);
 				newG.contents.add(this);
 
-				Grid.refresh(newG.getLocation());
+				newG.refresh();
 				
-				loc.x+=Xoffs;
-				loc.y+=Yoffs;	
+				loc = newG;
 			}
 			else
 			{
@@ -83,7 +81,7 @@ public class Entity
 	
 	void kill()
 	{
-		Grid.removeEntity(this);
+		loc.removeEntity(this);
 	}
 	
 	void placeWall()
