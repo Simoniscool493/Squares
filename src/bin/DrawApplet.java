@@ -1,6 +1,7 @@
 package bin;
 
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.event.ActionEvent;
@@ -22,15 +23,16 @@ public class DrawApplet extends JApplet implements ActionListener
 	
 	static boolean started = false;
 	
-	Menu m = new Menu();
 	Timer t = new Timer(50,this);
 	Player p = new Player(Grid.getPoint(10,10));
-
+	Menu m = new Menu(p);
+	
+	Font font = new Font("TimesRoman", Font.PLAIN, 25);
 
 	public void paint(Graphics g)
 	{
         Graphics2D g2 = (Graphics2D)g;
-  
+
         if(!started)
         {
         	init(g2);
@@ -40,8 +42,8 @@ public class DrawApplet extends JApplet implements ActionListener
         
         update(g2);
         spawn();
-        
-        //System.out.println((int)(Math.random()*3)+1);
+       
+        //System.out.println(p.toNextLv);
 	}
 	
 	public void update(Graphics2D g2)
@@ -66,7 +68,7 @@ public class DrawApplet extends JApplet implements ActionListener
 
 		changed.clear();
 		
-        m.render(g2,p);
+        m.render(g2);
 	}
 	
 	public void spawn()
@@ -77,9 +79,7 @@ public class DrawApplet extends JApplet implements ActionListener
 			int w = (int)(Math.random() * U.gridWidth);
 			int h = (int)(Math.random() * U.gridHeight);
 			int lv = (int)((Math.random()*3)+1);
-			
-			System.out.println(lv);
-			
+						
 			new Wall(Grid.getPoint(w,h),Color.black,lv);
 		}
 	}
@@ -108,6 +108,9 @@ public class DrawApplet extends JApplet implements ActionListener
 	        }
 	        started = true;
 		}
+		
+		this.setFont(font);
+		g2.setFont(font);
 	}
 	
 	public void getKeyInput(int n)

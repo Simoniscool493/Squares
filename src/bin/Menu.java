@@ -9,14 +9,16 @@ public class Menu
 	int menuWidth = (int)U.menuWidth;
 	int oWidth = (int)U.drawWidth;
 	
-	static boolean pointsChanged = true;
+	Player p;
+	
+	static boolean dataChanged = true;
 	
 	Color background = Color.darkGray;
 	Color textColor = Color.white;
 	
-	Menu()
+	Menu(Player player)
 	{
-		
+		p = player;
 	}
 	
 	void init(Graphics2D g2)
@@ -25,15 +27,16 @@ public class Menu
 		g2.fillRect(oWidth, menuHeight-menuHeight, menuWidth, menuHeight);	
 	}
 	
-	void render(Graphics2D g2,Player p)
+	void render(Graphics2D g2)
 	{
-		if(pointsChanged)
+		if(dataChanged)
 		{
 			g2.setColor(background);
 			g2.fillRect(oWidth, menuHeight-menuHeight, menuWidth, menuHeight);	
 			g2.setColor(textColor);
-			g2.drawString(String.valueOf(p.points),oWidth+menuWidth*0.2f,menuHeight-menuHeight*0.2f);
-			pointsChanged = false;
+			g2.drawString("Level:    " + String.valueOf(p.lv),oWidth+menuWidth*0.2f,menuHeight-menuHeight*0.1f);
+			g2.drawString("Points:    " + String.valueOf(p.points),oWidth+menuWidth*0.2f,menuHeight-menuHeight*0.2f);
+			dataChanged = false;
 		}
 	}	
 }

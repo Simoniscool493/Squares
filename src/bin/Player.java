@@ -6,6 +6,7 @@ import java.awt.Graphics2D;
 public class Player extends Entity
 {
 	int points; 
+	int toNextLv = 1000;
 	
 	Player(GridPoint g)
 	{
@@ -47,7 +48,15 @@ public class Player extends Entity
 	void addPoints(int n)
 	{
 		points+=n;
-		Menu.pointsChanged = true;
+		toNextLv-=n;
+		
+		while(toNextLv<1)
+		{
+			lv++;
+			toNextLv+=lv*1000;
+		}
+		
+		Menu.dataChanged = true;
 	}
 	
 	void laser()
