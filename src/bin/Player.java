@@ -7,6 +7,7 @@ public class Player extends Entity
 {
 	int points; 
 	int toNextLv = 1000;
+	boolean strafing = false;
 	
 	Player(GridPoint g)
 	{
