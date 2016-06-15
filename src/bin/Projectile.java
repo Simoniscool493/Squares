@@ -105,7 +105,7 @@ public class Projectile extends Entity
 	
 	void kill()
 	{
-		DrawApplet.projectiles.remove(this);
+		DrawApplet.deadlist.add(this);
 		loc.removeProjectile();
 	}
 }

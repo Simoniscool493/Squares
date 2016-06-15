@@ -61,7 +61,10 @@ public class Player extends Entity
 	
 	void laser()
 	{
-		DrawApplet.projectiles.add(new Projectile(this,loc,align,40,color));
+		if(!loc.hasProjectile())
+		{
+			DrawApplet.projectiles.add(new Projectile(this,loc,align,40,color));
+		}
 	}
 	
 	void placeWall()

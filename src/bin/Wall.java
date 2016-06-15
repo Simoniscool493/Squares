@@ -26,8 +26,6 @@ public class Wall extends Entity
 	{
 		hp-=n;
 		
-		System.out.println(hp);
-
 		if(hp<1)
 		{
 			kill();

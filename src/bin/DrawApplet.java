@@ -6,7 +6,7 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
+import java.util.LinkedHashSet;
 
 import javax.swing.JApplet;
 import javax.swing.Timer;
@@ -17,8 +17,9 @@ public class DrawApplet extends JApplet implements ActionListener
 	
 	public static Grid g = new Grid();
 	
-	public static ArrayList<Projectile> projectiles = new ArrayList<Projectile>();
-	public static ArrayList<GridPoint> changed = new ArrayList<GridPoint>();
+	public static LinkedHashSet<Projectile> projectiles = new LinkedHashSet<Projectile>();
+	public static LinkedHashSet<Projectile> deadlist = new LinkedHashSet<Projectile>();
+	public static LinkedHashSet<GridPoint> changed = new LinkedHashSet<GridPoint>();
 	
 	static boolean started = false;
 	
@@ -41,28 +42,28 @@ public class DrawApplet extends JApplet implements ActionListener
         
         update(g2);
         spawn();
-       
-        //System.out.println(changed.size());
+        
+        System.out.println(projectiles.size());
 	}
 	
 	public void update(Graphics2D g2)
-	{
+	{	
+		projectiles.removeAll(deadlist);
+		deadlist.clear();
+				
 		if(!projectiles.isEmpty())
-		{
-			for(int i = 0;i<projectiles.size();i++)
+		{			
+			for(Projectile p:projectiles)
 			{
-				projectiles.get(i).update();
+				p.update();
 			}
 		}
 				
 		for(GridPoint g: changed)
 		{
 			g.render(g2);
-			//System.out.print(g);
 		}
-		
-		System.out.println(changed.size());
-		
+				
 		changed.clear();
 		
         m.render(g2);
