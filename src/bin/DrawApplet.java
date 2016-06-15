@@ -18,7 +18,6 @@ public class DrawApplet extends JApplet implements ActionListener
 	public static Grid g = new Grid();
 	
 	public static ArrayList<Projectile> projectiles = new ArrayList<Projectile>();
-	public static ArrayList<Projectile> deadlist = new ArrayList<Projectile>();
 	public static ArrayList<GridPoint> changed = new ArrayList<GridPoint>();
 	
 	static boolean started = false;
@@ -43,13 +42,11 @@ public class DrawApplet extends JApplet implements ActionListener
         update(g2);
         spawn();
        
-        //System.out.println(p.toNextLv);
+        //System.out.println(changed.size());
 	}
 	
 	public void update(Graphics2D g2)
 	{
-		projectiles.removeAll(deadlist);
-
 		if(!projectiles.isEmpty())
 		{
 			for(int i = 0;i<projectiles.size();i++)
@@ -60,12 +57,12 @@ public class DrawApplet extends JApplet implements ActionListener
 				
 		for(GridPoint g: changed)
 		{
-			g.contents.removeAll(deadlist);
 			g.render(g2);
+			//System.out.print(g);
 		}
 		
-		//System.out.println(changed.size());
-
+		System.out.println(changed.size());
+		
 		changed.clear();
 		
         m.render(g2);

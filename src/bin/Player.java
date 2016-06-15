@@ -1,6 +1,5 @@
 package bin;
 
-import java.awt.Color;
 import java.awt.Graphics2D;
 
 public class Player extends Entity
@@ -64,5 +63,9 @@ public class Player extends Entity
 	{
 		DrawApplet.projectiles.add(new Projectile(this,loc,align,40,color));
 	}
-
+	
+	void placeWall()
+	{
+		new Wall(loc.front(align),color,lv);
+	}
 }

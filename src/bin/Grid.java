@@ -22,7 +22,14 @@ public class Grid
 		
 	static GridPoint getPoint(int x,int y)
 	{
-		return grid[x][y];
+		if(x>U.gridWidth||y>U.gridHeight||x<0||y<0)
+		{
+			return null;
+		}
+		else
+		{
+			return grid[x][y];
+		}	
 	}
 	
 }

@@ -41,7 +41,7 @@ public class GridPoint
 				}
 			}
 			
-			if(projectile!=null)
+			if(hasProjectile())
 			{
 				projectile.render(g2);
 			}
@@ -80,17 +80,6 @@ public class GridPoint
 		refresh();
 	}
 	
-	public void refresh()
-	{
-		changed = true;
-		DrawApplet.changed.add(this);
-	}
-
-	public Entity getWall()
-	{
-		return wall;
-	}
-	
 	public boolean hasWall()
 	{
 		if(wall == null)
@@ -103,8 +92,73 @@ public class GridPoint
 		}
 	}
 	
+	public Entity getWall()
+	{
+		return wall;
+	}
+	
+	public void addProjectile(Projectile p)
+	{
+		projectile = p;
+		refresh();
+	}
+	
+	public void removeProjectile()
+	{
+		projectile = null;
+		refresh();
+	}
+	
+	public boolean hasProjectile()
+	{
+		if(projectile == null)
+		{
+			return false;
+		}
+		else
+		{
+			return true;
+		}
+	}
+	
+	public Projectile getProjectile()
+	{
+		return projectile;
+	}
+	
+	public void refresh()
+	{
+		changed = true;
+		DrawApplet.changed.add(this);
+	}
+
+	public String toString()
+	{
+		return Integer.toString(x) + " " + Integer.toString(y) + " ";
+	}
+	
 	public void init()
 	{
 		
+	}
+	
+	public GridPoint front(int n)
+	{
+		if(n==0)
+		{
+			return Grid.getPoint(x,y-1);
+		}
+		else if(n==1)
+		{
+			return Grid.getPoint(x+1,y);
+		}
+		else if(n==2)
+		{
+			return Grid.getPoint(x,y+1);
+		}
+		else
+		{
+			return Grid.getPoint(x-1,y);
+		}
 	}
 }

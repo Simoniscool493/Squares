@@ -48,10 +48,6 @@ public class Entity
 		if( newX >= gridWidth || newY >= gridHeight || newX<0 || newY<0 )
 		//if out of bounds
 		{
-			if(this instanceof Projectile)
-			{
-				kill();
-			}
 			//System.out.println("Out Of Bounds " + (x+Xoffs) + " " + (y+Yoffs));
 		}
 		else
@@ -83,12 +79,7 @@ public class Entity
 	{
 		loc.removeEntity(this);
 	}
-	
-	void placeWall()
-	{
-		new Wall(loc,color,lv);
-	}
-	
+		
 	void damage(int n)
 	{
 		hp-=n;

@@ -10,7 +10,9 @@ public class Projectile extends Entity
 	
 	Projectile(Entity s,GridPoint g,int a,int li,Color c)
 	{
-		super(g,c);
+		loc = g;
+		loc.addProjectile(this);
+		color = c;
 		align = a;
 		life = li;
 		source = s;
@@ -43,6 +45,39 @@ public class Projectile extends Entity
 		}
 	}
 	
+	void move(int Xoffs,int Yoffs)
+	{
+		loc.refresh();
+
+		int newX = loc.x+Xoffs;
+		int newY = loc.y+Yoffs;
+		
+		if( newX >= gridWidth || newY >= gridHeight || newX<0 || newY<0 )
+		//if out of bounds
+		{
+			kill();
+			//System.out.println("Out Of Bounds " + (x+Xoffs) + " " + (y+Yoffs));
+		}
+		else
+		{
+			GridPoint newG = Grid.getPoint(newX,newY);
+			
+			if(!newG.hasWall()||!clipping)
+			{
+				loc.removeProjectile();
+				newG.addProjectile(this);
+
+				newG.refresh();
+				
+				loc = newG;
+			}
+			else
+			{
+				bump(newG);
+			}
+		}
+	}
+	
 	void render(Graphics2D g2)
 	{
 		g2.setColor(color);
@@ -70,8 +105,8 @@ public class Projectile extends Entity
 	
 	void kill()
 	{
-		DrawApplet.deadlist.add(this);
-		Grid.grid[loc.x][loc.y].changed = true;	
+		DrawApplet.projectiles.remove(this);
+		loc.removeProjectile();
 	}
 }
 
