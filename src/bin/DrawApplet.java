@@ -43,7 +43,7 @@ public class DrawApplet extends JApplet implements ActionListener
         update(g2);
         spawn();
         
-        System.out.println(projectiles.size());
+        //System.out.println(projectiles.size());
 	}
 	
 	public void update(Graphics2D g2)
@@ -71,8 +71,8 @@ public class DrawApplet extends JApplet implements ActionListener
 	
 	public void spawn()
 	{
-		if(U.r.nextInt()>2100000000)
-		//if(U.r.nextInt()>200000000)
+		//if(U.r.nextInt()>2100000000)
+		if(U.r.nextInt()>200000000)
 		{
 			int w = (int)(Math.random() * U.gridWidth);
 			int h = (int)(Math.random() * U.gridHeight);
