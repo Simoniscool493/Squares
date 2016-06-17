@@ -8,11 +8,22 @@ public class Menu
 	int menuHeight = (int)U.drawHeight;
 	int menuWidth = (int)U.menuWidth;
 	int oWidth = (int)U.drawWidth;
+	int menuComponentHeight = 30;
+	
+	int energyBarX = (int)(oWidth+(menuWidth*0.2));
+	int energyBarY = (int)(menuWidth*0.4);
+	int expBarX = (int)(oWidth+(menuWidth*0.2));
+	int expBarY = (int)(menuWidth*0.2);
+	float levelTextX = oWidth+menuWidth*0.2f;
+	float levelTextY = menuHeight-menuHeight*0.1f;
+	float pointsTextX = oWidth+menuWidth*0.2f;
+	float pointsTextY = menuHeight-menuHeight*0.2f;
 	
 	Player p;
 	
-	static boolean dataChanged = true;
-	
+	static boolean pointsChanged = true;
+	static boolean levelChanged = true;
+
 	Color background = Color.darkGray;
 	Color textColor = Color.white;
 	
@@ -25,42 +36,67 @@ public class Menu
 	{
 		g2.setColor(background);
 		g2.fillRect(oWidth, menuHeight-menuHeight, menuWidth, menuHeight);	
-		
-		g2.setColor(Color.BLACK);
-		g2.fillRect((int)(oWidth+(menuWidth*0.2)),(int)(menuWidth+0.2), (int)(menuWidth*0.6), 30);
 	}
 	
 	void render(Graphics2D g2)
 	{
-		if(dataChanged)
+		if(levelChanged)
 		{
-			g2.setColor(background);
-			g2.fillRect(oWidth, menuHeight-menuHeight, menuWidth, menuHeight);	
-		
-			drawExpBar(g2);
-			drawStats(g2);
-			dataChanged = false;
+			drawLevelText(g2);
+			levelChanged = false;
 		}
+		if(pointsChanged)
+		{
+			drawPointsText(g2);
+			drawExpBar(g2);	
+			pointsChanged = false;
+		}
+		
+		drawEnergyBar(g2);
 	}	
 	
 	void drawExpBar(Graphics2D g2)
 	{		
 		g2.setColor(Color.black);
-		g2.fillRect((int)(oWidth+(menuWidth*0.2)),(int)(menuWidth*0.2), (int)(menuWidth*0.6), 30);
+		g2.fillRect(expBarX,expBarY,(int)(menuWidth*0.6), menuComponentHeight);
 
 		g2.setColor(Color.yellow);
-		g2.fillRect((int)(oWidth+(menuWidth*0.2)),(int)(menuWidth*0.2),mapExp(), 30);
+		g2.fillRect(expBarX,expBarY,mapExp(), menuComponentHeight);
 	}
 	
 	int mapExp()
 	{
-		return (int)((1-(p.toNextLv/(p.lv*1000f)))*menuWidth*0.6);
+		return (int)((1-(p.toNextLv/(float)(p.toNextLvReq)))*menuWidth*0.6);
+	}
+
+	void drawEnergyBar(Graphics2D g2)
+	{		
+		g2.setColor(Color.black);
+		g2.fillRect(energyBarX,energyBarY, (int)(menuWidth*0.6), menuComponentHeight);
+
+		g2.setColor(Color.blue);
+		g2.fillRect(energyBarX,energyBarY,mapEnergy(), menuComponentHeight);
 	}
 	
-	void drawStats(Graphics2D g2)
+	int mapEnergy()
 	{
-		g2.setColor(textColor);
-		g2.drawString("Level:    " + String.valueOf(p.lv),oWidth+menuWidth*0.2f,menuHeight-menuHeight*0.1f);
-		g2.drawString("Points:    " + String.valueOf(p.points),oWidth+menuWidth*0.2f,menuHeight-menuHeight*0.2f);
+		return (int)(((float)p.energy/((float)p.maxEnergy))*menuWidth*0.6f);
 	}
+	
+	void drawLevelText(Graphics2D g2)
+	{
+		g2.setColor(background);
+		g2.fillRect((int)levelTextX,(int)levelTextY-menuComponentHeight, menuWidth/2, menuComponentHeight);
+		g2.setColor(textColor);
+		g2.drawString("Level:    " + String.valueOf(p.lv),levelTextX,levelTextY);
+	}
+	
+	void drawPointsText(Graphics2D g2)
+	{
+		g2.setColor(background);
+		g2.fillRect((int)pointsTextX,(int)pointsTextY-menuComponentHeight, (int)(menuWidth/1.5), menuComponentHeight);
+		g2.setColor(textColor);
+		g2.drawString("Points:    " + String.valueOf(p.points),pointsTextX,pointsTextY);
+	}
+	
 }

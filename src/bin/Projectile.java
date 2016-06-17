@@ -99,7 +99,7 @@ public class Projectile extends Entity
 		if(g.hasWall())
 		{
 			g.wall.damage(source.lv);
-			((Player)source).addPoints(100);
+			((Player)source).addPoints(1);
 		}
 	}
 	

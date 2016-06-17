@@ -84,6 +84,7 @@ public class DrawApplet extends JApplet implements ActionListener
 	
 	public void actionPerformed(ActionEvent e)
 	{
+		p.regen();
 		repaint();
 	}
 	

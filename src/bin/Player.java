@@ -4,9 +4,15 @@ import java.awt.Graphics2D;
 
 public class Player extends Entity
 {
-	int points; 
-	int toNextLv = 1000;
+	int points;
+	int toNextLvReq = 10;
+	int toNextLv = 10;
+	int energy = 150;
+	int maxEnergy = 150;
+	int laserCost = 10;
+	
 	boolean strafing = false;
+	
 	
 	Player(GridPoint g)
 	{
@@ -53,17 +59,29 @@ public class Player extends Entity
 		while(toNextLv<1)
 		{
 			lv++;
-			toNextLv+=lv*1000;
+			toNextLvReq = (int)(toNextLvReq*1.2f);
+			System.out.println(toNextLvReq);
+			toNextLv+=toNextLvReq;
+			Menu.levelChanged = true;
 		}
 		
-		Menu.dataChanged = true;
+		Menu.pointsChanged = true;
 	}
 	
 	void laser()
 	{
-		if(!loc.hasProjectile())
+		if(!loc.hasProjectile()&&energy>laserCost-1)
 		{
 			DrawApplet.projectiles.add(new Projectile(this,loc,align,40,color));
+			energy-=laserCost;
+		}
+	}
+	
+	void regen()
+	{
+		if(energy<maxEnergy)
+		{
+			energy++;
 		}
 	}
 	
