@@ -71,8 +71,8 @@ public class DrawApplet extends JApplet implements ActionListener
 	
 	public void spawn()
 	{
-		//if(U.r.nextInt()>2100000000)
-		if(U.r.nextInt()>200000000)
+		if(U.r.nextInt()>2100000000)
+		//if(U.r.nextInt()>200000000)
 		{
 			int w = (int)(Math.random() * U.gridWidth);
 			int h = (int)(Math.random() * U.gridHeight);
@@ -130,7 +130,8 @@ public class DrawApplet extends JApplet implements ActionListener
 			if(!p.strafing)
 			{
 				p.align = 2;
-			}		}
+			}	
+		}
 		else if(n==65) //left
 		{
 			p.move(-1,0);
@@ -138,7 +139,7 @@ public class DrawApplet extends JApplet implements ActionListener
 			if(!p.strafing)
 			{
 				p.align = 3;
-			}		
+			}	
 		}
 		else if(n==68) //right
 		{
@@ -163,14 +164,22 @@ public class DrawApplet extends JApplet implements ActionListener
 		{
 			p.placeWall();
 		}		
-		else if(n==70)
+		else if(n==72)
 		{
 			p.laser();
 		}
-		else if(n==72)
+		else if(n==74)
 		{
 			p.strafing = !p.strafing;
-		}		
+		}
+		else if(n==75)
+		{
+			if(!p.buildMode)
+			{
+				p.strafing = true;
+			}
+			p.buildMode = !p.buildMode;
+		}
 	}
 	
 	public void randColor()

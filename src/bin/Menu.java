@@ -18,11 +18,14 @@ public class Menu
 	float levelTextY = menuHeight-menuHeight*0.1f;
 	float pointsTextX = oWidth+menuWidth*0.2f;
 	float pointsTextY = menuHeight-menuHeight*0.2f;
+	float modeTextX = oWidth+menuWidth*0.2f;
+	float modeTextY = menuHeight-menuHeight*0.3f;
 	
 	Player p;
 	
 	static boolean pointsChanged = true;
 	static boolean levelChanged = true;
+	static boolean modeChanged = true;
 
 	Color background = Color.darkGray;
 	Color textColor = Color.white;
@@ -50,6 +53,10 @@ public class Menu
 			drawPointsText(g2);
 			drawExpBar(g2);	
 			pointsChanged = false;
+		}
+		if(modeChanged)
+		{
+			drawModeText(g2);
 		}
 		
 		drawEnergyBar(g2);
@@ -99,4 +106,11 @@ public class Menu
 		g2.drawString("Points:    " + String.valueOf(p.points),pointsTextX,pointsTextY);
 	}
 	
+	void drawModeText(Graphics2D g2)
+	{
+		g2.setColor(background);
+		g2.fillRect((int)modeTextX,(int)modeTextY-menuComponentHeight, (int)(menuWidth/1.5), menuComponentHeight);
+		g2.setColor(textColor);
+		g2.drawString("Build:    " + String.valueOf(p.buildMode),modeTextX,modeTextY);
+	}
 }

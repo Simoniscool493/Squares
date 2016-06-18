@@ -12,6 +12,7 @@ public class Player extends Entity
 	int laserCost = 10;
 	
 	boolean strafing = false;
+	boolean buildMode = false;
 	
 	
 	Player(GridPoint g)
@@ -22,9 +23,14 @@ public class Player extends Entity
 		points = 0;
 	}
 	
-	void move()
+	void move(int Xoffs,int Yoffs)
 	{
+		super.move(Xoffs, Yoffs);
 		
+		if(buildMode)
+		{
+			placeWall();
+		}
 	}
 	
 	void render(Graphics2D g2)
@@ -58,14 +64,19 @@ public class Player extends Entity
 		
 		while(toNextLv<1)
 		{
-			lv++;
-			toNextLvReq = (int)(toNextLvReq*1.2f);
-			System.out.println(toNextLvReq);
-			toNextLv+=toNextLvReq;
-			Menu.levelChanged = true;
+			levelUp();
 		}
 		
 		Menu.pointsChanged = true;
+	}
+	
+	void levelUp()
+	{
+		lv++;
+		toNextLvReq = (int)(toNextLvReq*1.2f);
+		toNextLv+=toNextLvReq;
+		maxEnergy+=10;
+		Menu.levelChanged = true;
 	}
 	
 	void laser()
@@ -87,6 +98,9 @@ public class Player extends Entity
 	
 	void placeWall()
 	{
-		new Wall(loc.front(align),color,lv);
+		if(loc.front(align)!=null)
+		{
+			new Wall(loc.front(align),color,lv);
+		}
 	}
 }
