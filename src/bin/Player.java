@@ -10,6 +10,7 @@ public class Player extends Entity
 	int energy = 150;
 	int maxEnergy = 150;
 	int laserCost = 10;
+	int energyRegen = 1;
 	
 	boolean strafing = false;
 	boolean buildMode = false;
@@ -73,6 +74,10 @@ public class Player extends Entity
 	void levelUp()
 	{
 		lv++;
+		if(lv%3==0)
+		{
+			energyRegen++;
+		}
 		toNextLvReq = (int)(toNextLvReq*1.2f);
 		toNextLv+=toNextLvReq;
 		maxEnergy+=10;
@@ -92,7 +97,11 @@ public class Player extends Entity
 	{
 		if(energy<maxEnergy)
 		{
-			energy++;
+			energy+=energyRegen;
+			if(energy>maxEnergy)
+			{
+				energy=maxEnergy;
+			}
 		}
 	}
 	

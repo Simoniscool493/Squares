@@ -22,14 +22,14 @@ public class Grid
 		
 	static GridPoint getPoint(int x,int y)
 	{
-		if(x>U.gridWidth||y>U.gridHeight||x<0||y<0)
-		{
-			return null;
-		}
-		else
+		try
 		{
 			return grid[x][y];
 		}	
+		catch(ArrayIndexOutOfBoundsException e)
+		{
+			System.out.println("Out of bounds");
+			return null;
+		}
 	}
-	
 }

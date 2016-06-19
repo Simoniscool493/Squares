@@ -168,7 +168,7 @@ public class DrawApplet extends JApplet implements ActionListener
 		{
 			p.laser();
 		}
-		else if(n==74)
+		else if(n==85)
 		{
 			p.strafing = !p.strafing;
 		}
@@ -177,6 +177,7 @@ public class DrawApplet extends JApplet implements ActionListener
 			if(!p.buildMode)
 			{
 				p.strafing = true;
+				p.placeWall();
 			}
 			p.buildMode = !p.buildMode;
 		}

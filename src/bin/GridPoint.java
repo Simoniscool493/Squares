@@ -159,6 +159,6 @@ public class GridPoint
 		else
 		{
 			return Grid.getPoint(x-1,y);
-		}
+		}	
 	}
 }
