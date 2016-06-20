@@ -5,7 +5,7 @@ import javax.swing.JFrame;
 
 public class Main 
 {
-	public static JFrame df = new JFrame("Drawing");
+	public static JFrame df = new JFrame("Squares");
 	public static KeyInput k = new KeyInput();
 	public static DrawApplet d = new DrawApplet();
 	

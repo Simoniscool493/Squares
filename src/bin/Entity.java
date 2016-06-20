@@ -53,8 +53,12 @@ public class Entity
 		else
 		{
 			GridPoint newG = Grid.getPoint(newX,newY);
-			
-			if(!newG.hasWall()||!clipping)
+						
+			if((newG.hasWall()||newG.hasConstruct())&&clipping)
+			{
+				bump(newG);
+			}
+			else
 			{
 				loc.contents.remove(this);
 				newG.contents.add(this);
@@ -62,10 +66,6 @@ public class Entity
 				newG.refresh();
 				
 				loc = newG;
-			}
-			else
-			{
-				bump(newG);
 			}
 		}
 	}

@@ -88,7 +88,7 @@ public class Player extends Entity
 	{
 		if(!loc.hasProjectile()&&energy>laserCost-1)
 		{
-			DrawApplet.projectiles.add(new Projectile(this,loc,align,40,color));
+			new Projectile(this,loc,align,40,color);
 			energy-=laserCost;
 		}
 	}
@@ -110,6 +110,14 @@ public class Player extends Entity
 		if(loc.front(align)!=null)
 		{
 			new Wall(loc.front(align),color,lv);
+		}
+	}
+	
+	void placeTurret()
+	{
+		if(loc.front(align)!=null)
+		{
+			new Turret(loc.front(align),this,align);
 		}
 	}
 }

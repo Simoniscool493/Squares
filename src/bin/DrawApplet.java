@@ -18,6 +18,7 @@ public class DrawApplet extends JApplet implements ActionListener
 	public static Grid g = new Grid();
 	
 	public static LinkedHashSet<Projectile> projectiles = new LinkedHashSet<Projectile>();
+	public static LinkedHashSet<ConstructedEntity> constructs = new LinkedHashSet<ConstructedEntity>();
 	public static LinkedHashSet<Projectile> deadlist = new LinkedHashSet<Projectile>();
 	public static LinkedHashSet<GridPoint> changed = new LinkedHashSet<GridPoint>();
 	
@@ -49,6 +50,7 @@ public class DrawApplet extends JApplet implements ActionListener
 	public void update(Graphics2D g2)
 	{	
 		projectiles.removeAll(deadlist);
+		constructs.removeAll(deadlist);
 		deadlist.clear();
 				
 		if(!projectiles.isEmpty())
@@ -56,6 +58,14 @@ public class DrawApplet extends JApplet implements ActionListener
 			for(Projectile p:projectiles)
 			{
 				p.update();
+			}
+		}
+		
+		if(!constructs.isEmpty())
+		{			
+			for(ConstructedEntity c:constructs)
+			{
+				c.update();
 			}
 		}
 				
@@ -71,8 +81,8 @@ public class DrawApplet extends JApplet implements ActionListener
 	
 	public void spawn()
 	{
-		if(U.r.nextInt()>2100000000)
-		//if(U.r.nextInt()>200000000)
+		//if(U.r.nextInt()>2100000000)
+		if(U.r.nextInt()>200000000)
 		{
 			int w = (int)(Math.random() * U.gridWidth);
 			int h = (int)(Math.random() * U.gridHeight);
@@ -181,8 +191,12 @@ public class DrawApplet extends JApplet implements ActionListener
 			}
 			p.buildMode = !p.buildMode;
 		}
+		else if(n==73)
+		{
+			p.placeTurret();
+		}
+		
 	}
-	
 	public void randColor()
 	{
 		int r1 = (int)(Math.random() * 255 + 1);

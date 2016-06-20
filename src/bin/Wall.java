@@ -1,6 +1,7 @@
 package bin;
 
 import java.awt.Color;
+import java.awt.Graphics2D;
 
 public class Wall extends Entity
 {
@@ -32,4 +33,9 @@ public class Wall extends Entity
 		}
 	}
 	
+	void render(Graphics2D g2)
+	{
+		g2.setColor(color);
+        g2.fillRect((width*loc.x)+1,(height*loc.y)+1,width-1,height-1);
+	}
 }

@@ -6,12 +6,16 @@ import java.util.ArrayList;
 
 public class GridPoint 
 {
+	static int width = (int)(U.incWidth);
+	static int height = (int)(U.incHeight);
+
 	int x;
 	int y;
 	Color background;
 	boolean changed;
 	Projectile projectile;
 	Wall wall;
+	ConstructedEntity construct;
 	
 	ArrayList<Entity> contents = new ArrayList<Entity>();
 	
@@ -25,10 +29,16 @@ public class GridPoint
 
 	public void render(Graphics2D g2)
 	{
-		int width = (int)(U.incWidth);
-		int height = (int)(U.incHeight);
-		
-		if(!hasWall())
+		if(hasConstruct())
+		{
+			g2.setColor(construct.color);
+	        g2.fillRect((width*x)+1,(height*y)+1,width-1,height-1);
+		}
+		else if(hasWall())
+		{
+			wall.render(g2);
+		}
+		else
 		{
 			g2.setColor(background);
 	        g2.fillRect((width*x)+1,(height*y)+1,width-1,height-1);
@@ -46,14 +56,8 @@ public class GridPoint
 				projectile.render(g2);
 			}
 		}
-		else
-		{
-			g2.setColor(wall.color);
-	        g2.fillRect((width*x)+1,(height*y)+1,width-1,height-1);
-		}
         
         changed = false;
-        
 	}
 
 	public void addEntity(Entity e)
@@ -124,6 +128,35 @@ public class GridPoint
 	public Projectile getProjectile()
 	{
 		return projectile;
+	}
+	
+	public void addConstruct(ConstructedEntity c)
+	{
+		construct = c;
+		refresh();
+	}
+	
+	public void removeConstruct()
+	{
+		construct = null;
+		refresh();
+	}
+	
+	public boolean hasConstruct()
+	{
+		if(construct == null)
+		{
+			return false;
+		}
+		else
+		{
+			return true;
+		}
+	}
+	
+	public ConstructedEntity getConstruct()
+	{
+		return construct;
 	}
 	
 	public void refresh()

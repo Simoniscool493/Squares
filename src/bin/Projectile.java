@@ -16,6 +16,7 @@ public class Projectile extends Entity
 		align = a;
 		life = li;
 		source = s;
+		DrawApplet.projectiles.add(this);
 	}
 	
 	void update()
