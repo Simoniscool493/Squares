@@ -31,8 +31,7 @@ public class GridPoint
 	{
 		if(hasConstruct())
 		{
-			g2.setColor(construct.color);
-	        g2.fillRect((width*x)+1,(height*y)+1,width-1,height-1);
+			construct.render(g2);
 		}
 		else if(hasWall())
 		{
@@ -74,8 +73,11 @@ public class GridPoint
 	
 	public void addWall(Wall w)
 	{
-		wall = w;
-		refresh();
+		if(!hasConstruct())
+		{
+			wall = w;
+			refresh();
+		}
 	}
 	
 	public void removeWall()
@@ -132,8 +134,11 @@ public class GridPoint
 	
 	public void addConstruct(ConstructedEntity c)
 	{
-		construct = c;
-		refresh();
+		if(!hasWall())
+		{
+			construct = c;
+			refresh();
+		}
 	}
 	
 	public void removeConstruct()

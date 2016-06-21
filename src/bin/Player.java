@@ -117,7 +117,10 @@ public class Player extends Entity
 	{
 		if(loc.front(align)!=null)
 		{
-			new Turret(loc.front(align),this,align);
+			if(!(loc.front(align).hasWall()))
+			{
+				new Turret(loc.front(align),this,align);
+			}
 		}
 	}
 }

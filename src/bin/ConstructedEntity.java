@@ -11,9 +11,10 @@ public abstract class ConstructedEntity extends Entity
 	
 	ConstructedEntity(GridPoint g,Player p)
 	{
-		source = p;
 		loc = g;
 		loc.addConstruct(this);
+
+		source = p;
 		DrawApplet.constructs.add(this);
 	}
 	

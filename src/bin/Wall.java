@@ -12,8 +12,9 @@ public class Wall extends Entity
 	Wall(GridPoint g,Color c,int level)
 	{
 		loc = g;
-		color = c;
 		loc.addWall(this);
+
+		color = c;
 		lv = level;
 		hp = lv*2;
 	}
