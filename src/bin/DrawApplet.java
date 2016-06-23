@@ -19,16 +19,43 @@ public class DrawApplet extends JApplet implements ActionListener
 	
 	public static LinkedHashSet<Projectile> projectiles = new LinkedHashSet<Projectile>();
 	public static LinkedHashSet<ConstructedEntity> constructs = new LinkedHashSet<ConstructedEntity>();
-	public static LinkedHashSet<Projectile> deadlist = new LinkedHashSet<Projectile>();
+	public static LinkedHashSet<Entity> deadlist = new LinkedHashSet<Entity>();
 	public static LinkedHashSet<GridPoint> changed = new LinkedHashSet<GridPoint>();
 	
 	static boolean started = false;
 	
+	int gw = U.gridWidth;
+	int gh = U.gridHeight;
+
 	Timer t = new Timer(50,this);
 	Player p = new Player(Grid.getPoint(10,10));
 	Menu m = new Menu(p);
 	
 	Font font = new Font("TimesRoman", Font.PLAIN, 25);
+
+	public void init(Graphics2D g2)
+	{
+		float dw = U.drawWidth;
+		float dh = U.drawHeight;
+		float iw = U.incWidth;
+		float ih = U.incHeight;
+		
+		if(U.showGrid)
+		{
+	        for(float i=0;i<dw+10;i+=iw)
+	        {
+	           g2.drawLine((int)i,0,(int)i,(int)dw);
+	        }
+	        for(float i=0;i<dh+10;i+=ih)
+	        {
+	            g2.drawLine(0,(int)i,(int)dw,(int)i);
+	        }
+	        started = true;
+		}
+		
+		this.setFont(font);
+		g2.setFont(font);
+	}
 
 	public void paint(Graphics g)
 	{
@@ -81,11 +108,11 @@ public class DrawApplet extends JApplet implements ActionListener
 	
 	public void spawn()
 	{
-		//if(U.r.nextInt()>2100000000)
-		if(U.r.nextInt()>200000000)
+		if(U.r.nextInt()>2100000000)
+		//if(U.r.nextInt()>200000000)
 		{
-			int w = (int)(Math.random() * U.gridWidth);
-			int h = (int)(Math.random() * U.gridHeight);
+			int w = (int)(Math.random() * gw);
+			int h = (int)(Math.random() * gh);
 			int lv = (int)((Math.random()*3)+1);
 						
 			new Wall(Grid.getPoint(w,h),Color.black,lv);
@@ -96,30 +123,6 @@ public class DrawApplet extends JApplet implements ActionListener
 	{
 		p.regen();
 		repaint();
-	}
-	
-	public void init(Graphics2D g2)
-	{
-		float dw = U.drawWidth;
-		float dh = U.drawHeight;
-		float iw = U.incWidth;
-		float ih = U.incHeight;
-		
-		if(U.showGrid)
-		{
-	        for(float i=0;i<dw+10;i+=iw)
-	        {
-	           g2.drawLine((int)i,0,(int)i,(int)dw);
-	        }
-	        for(float i=0;i<dh+10;i+=ih)
-	        {
-	            g2.drawLine(0,(int)i,(int)dw,(int)i);
-	        }
-	        started = true;
-		}
-		
-		this.setFont(font);
-		g2.setFont(font);
 	}
 	
 	public void getKeyInput(int n)
@@ -190,19 +193,11 @@ public class DrawApplet extends JApplet implements ActionListener
 				p.placeWall();
 			}
 			p.buildMode = !p.buildMode;
+			Menu.modeChanged = true;
 		}
 		else if(n==73)
 		{
 			p.placeTurret();
 		}
-		
-	}
-	public void randColor()
-	{
-		int r1 = (int)(Math.random() * 255 + 1);
-		int r2 = (int)(Math.random() * 255 + 1);
-		int r3 = (int)(Math.random() * 255 + 1);
-
-		//drawColor = new Color(r1,r2,r3);
 	}
 }

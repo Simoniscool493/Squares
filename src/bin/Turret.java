@@ -4,6 +4,8 @@ import java.awt.Graphics2D;
 
 public class Turret extends ConstructedEntity
 {
+	int buildCost = 20;
+
 	Turret(GridPoint g,Player p,int a)
 	{
 		super(g,p);

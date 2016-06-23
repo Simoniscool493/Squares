@@ -22,4 +22,10 @@ public abstract class ConstructedEntity extends Entity
 	{
 		
 	}
+	
+	void die()
+	{
+		DrawApplet.deadlist.add(this);
+		loc.removeConstruct();
+	}
 }

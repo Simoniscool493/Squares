@@ -5,16 +5,21 @@ import java.awt.Graphics2D;
 public class Player extends Entity
 {
 	int points;
+	
 	int toNextLvReq = 10;
 	int toNextLv = 10;
+	
 	int energy = 150;
 	int maxEnergy = 150;
+	
+	int build = 10;
+	int maxBuild = 50;
+
 	int laserCost = 10;
 	int energyRegen = 1;
 	
 	boolean strafing = false;
 	boolean buildMode = false;
-	
 	
 	Player(GridPoint g)
 	{
@@ -71,10 +76,36 @@ public class Player extends Entity
 		Menu.pointsChanged = true;
 	}
 	
+	void addBuild(int n)
+	{
+		if(build+n>maxBuild)
+		{
+			build = maxBuild;
+		}
+		else
+		{
+			build+=n;
+		}
+		
+		Menu.buildChanged = true;
+	}
+	
+	boolean takeBuild(int n)
+	{
+		if(build-n<0)
+		{
+			return false;
+		}
+		
+		build-=n;
+		Menu.buildChanged = true;
+		return true;
+	}
+	
 	void levelUp()
 	{
 		lv++;
-		if(lv%3==0)
+		if(lv%5==0)
 		{
 			energyRegen++;
 		}
@@ -107,7 +138,7 @@ public class Player extends Entity
 	
 	void placeWall()
 	{
-		if(loc.front(align)!=null)
+		if(loc.front(align)!=null&&takeBuild(1))
 		{
 			new Wall(loc.front(align),color,lv);
 		}
@@ -115,12 +146,19 @@ public class Player extends Entity
 	
 	void placeTurret()
 	{
-		if(loc.front(align)!=null)
+		if(loc.front(align)!=null&&takeBuild(20))
 		{
-			if(!(loc.front(align).hasWall()))
+			if(!(loc.front(align).hasWall())&&!(loc.front(align).hasConstruct()))
 			{
 				new Turret(loc.front(align),this,align);
 			}
 		}
 	}
+	
+	void kill(Entity e)
+	{
+		addBuild(e.buildCost);
+		e.die();
+	}
+
 }

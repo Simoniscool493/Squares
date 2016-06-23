@@ -134,7 +134,7 @@ public class GridPoint
 	
 	public void addConstruct(ConstructedEntity c)
 	{
-		if(!hasWall())
+		if(!hasWall()&&!hasConstruct())
 		{
 			construct = c;
 			refresh();

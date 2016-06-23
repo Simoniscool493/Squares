@@ -15,6 +15,7 @@ public class Entity
 	int align;
 	int lv = 1;
 	int hp;
+	int buildCost = 1;
 	boolean clipping = true;
 	Color color = Color.black;
 	
@@ -75,7 +76,7 @@ public class Entity
 		
 	}
 	
-	void kill()
+	void die()
 	{
 		loc.removeEntity(this);
 	}
@@ -86,7 +87,7 @@ public class Entity
 		
 		if(hp<1)
 		{
-			kill();
+			die();
 		}
 	}
 	

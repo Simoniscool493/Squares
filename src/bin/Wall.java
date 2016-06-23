@@ -6,6 +6,7 @@ import java.awt.Graphics2D;
 public class Wall extends Entity
 {
 	Player attacker;
+	int buildCost = 1;
 	
 	Wall () {}
 	
@@ -19,18 +20,18 @@ public class Wall extends Entity
 		hp = lv*2;
 	}
 	
-	void kill()
+	void die()
 	{
 		loc.removeWall();
 	}
 	
-	void damage(int n)
+	void damage(Player p,int n)
 	{
 		hp-=n;
 		
 		if(hp<1)
 		{
-			kill();
+			p.kill(this);
 		}
 	}
 	

@@ -6,16 +6,16 @@ import java.awt.Graphics2D;
 public class Projectile extends Entity
 {
 	int life;
-	Entity source;
+	Player source;
 	
-	Projectile(Entity s,GridPoint g,int a,int li,Color c)
+	Projectile(Player p,GridPoint g,int a,int li,Color c)
 	{
 		loc = g;
 		loc.addProjectile(this);
 		color = c;
 		align = a;
 		life = li;
-		source = s;
+		source = p;
 		DrawApplet.projectiles.add(this);
 	}
 	
@@ -42,7 +42,7 @@ public class Projectile extends Entity
 		
 		if(life==0)
 		{
-			kill();
+			die();
 		}
 	}
 	
@@ -56,7 +56,7 @@ public class Projectile extends Entity
 		if( newX >= gridWidth || newY >= gridHeight || newX<0 || newY<0 )
 		//if out of bounds
 		{
-			kill();
+			die();
 			//System.out.println("Out Of Bounds " + (x+Xoffs) + " " + (y+Yoffs));
 		}
 		else
@@ -95,16 +95,16 @@ public class Projectile extends Entity
 		
 	void bump(GridPoint g)
 	{
-		kill();
+		die();
 		
 		if(g.hasWall())
 		{
-			g.wall.damage(source.lv);
+			g.wall.damage(source,source.lv);
 			((Player)source).addPoints(1);
 		}
 	}
 	
-	void kill()
+	void die()
 	{
 		DrawApplet.deadlist.add(this);
 		loc.removeProjectile();

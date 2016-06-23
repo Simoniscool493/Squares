@@ -10,10 +10,12 @@ public class Menu
 	int oWidth = (int)U.drawWidth;
 	int menuComponentHeight = 30;
 	
-	int energyBarX = (int)(oWidth+(menuWidth*0.2));
-	int energyBarY = (int)(menuWidth*0.4);
 	int expBarX = (int)(oWidth+(menuWidth*0.2));
 	int expBarY = (int)(menuWidth*0.2);
+	int energyBarX = (int)(oWidth+(menuWidth*0.2));
+	int energyBarY = (int)(menuWidth*0.4);
+	int buildBarX = (int)(oWidth+(menuWidth*0.2));
+	int buildBarY = (int)(menuWidth*0.6);
 	float levelTextX = oWidth+menuWidth*0.2f;
 	float levelTextY = menuHeight-menuHeight*0.1f;
 	float pointsTextX = oWidth+menuWidth*0.2f;
@@ -26,6 +28,7 @@ public class Menu
 	static boolean pointsChanged = true;
 	static boolean levelChanged = true;
 	static boolean modeChanged = true;
+	static boolean buildChanged = true;
 
 	Color background = Color.darkGray;
 	Color textColor = Color.white;
@@ -54,9 +57,16 @@ public class Menu
 			drawExpBar(g2);	
 			pointsChanged = false;
 		}
+		if(buildChanged)
+		{
+			drawBuildBar(g2);
+			buildChanged = false;
+		}
+
 		if(modeChanged)
 		{
 			drawModeText(g2);
+			modeChanged = false;
 		}
 		
 		drawEnergyBar(g2);
@@ -88,6 +98,20 @@ public class Menu
 	int mapEnergy()
 	{
 		return (int)(((float)p.energy/((float)p.maxEnergy))*menuWidth*0.6f);
+	}
+	
+	void drawBuildBar(Graphics2D g2)
+	{		
+		g2.setColor(Color.black);
+		g2.fillRect(buildBarX,buildBarY, (int)(menuWidth*0.6), menuComponentHeight);
+
+		g2.setColor(Color.green);
+		g2.fillRect(buildBarX,buildBarY,mapBuild(), menuComponentHeight);
+	}
+	
+	int mapBuild()
+	{
+		return (int)(((float)p.build/((float)p.maxBuild))*menuWidth*0.6f);
 	}
 	
 	void drawLevelText(Graphics2D g2)
