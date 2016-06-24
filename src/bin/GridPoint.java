@@ -11,13 +11,20 @@ public class GridPoint
 
 	int x;
 	int y;
-	Color background;
+	
 	boolean changed;
+	Color background;
 	Projectile projectile;
 	Wall wall;
 	ConstructedEntity construct;
 	
 	ArrayList<Entity> contents = new ArrayList<Entity>();
+	
+	public GridPoint() 
+	{
+		x = -1;
+		y = -1;
+	}
 	
 	public GridPoint(int pointX,int pointY)
 	{
@@ -180,7 +187,7 @@ public class GridPoint
 		
 	}
 	
-	public GridPoint front(int n)
+	public GridPoint getFront(int n)
 	{
 		if(n==0)
 		{
@@ -198,5 +205,21 @@ public class GridPoint
 		{
 			return Grid.getPoint(x-1,y);
 		}	
+	}
+	
+	public void drawSelectionBox(Graphics2D g2,Color c)
+	{
+		g2.setColor(c);
+		g2.drawRect((width*x)+1, (width*y)+1, width-2, height-2);
+	}
+	
+	public boolean isNullPoint()
+	{
+		if(x<0)
+		{
+			return true;
+		}
+		
+		return false;
 	}
 }

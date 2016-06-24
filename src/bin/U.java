@@ -18,7 +18,7 @@ public final class U
     public static float incHeight = drawHeight/gridHeight;
     
 	public static Random r = new Random();
-
+	
 	private U()
 	{
 		

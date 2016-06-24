@@ -27,8 +27,9 @@ public class DrawApplet extends JApplet implements ActionListener
 	int gw = U.gridWidth;
 	int gh = U.gridHeight;
 
+	static Player p = new Player(Grid.getPoint(10,10));
+	
 	Timer t = new Timer(50,this);
-	Player p = new Player(Grid.getPoint(10,10));
 	Menu m = new Menu(p);
 	
 	Font font = new Font("TimesRoman", Font.PLAIN, 25);
@@ -68,13 +69,14 @@ public class DrawApplet extends JApplet implements ActionListener
             t.start();
         }
         
-        update(g2);
+        render(g2);
+        p.update();
         spawn();
         
-        //System.out.println(projectiles.size());
+        //System.out.println(p.turning);
 	}
 	
-	public void update(Graphics2D g2)
+	public void render(Graphics2D g2)
 	{	
 		projectiles.removeAll(deadlist);
 		constructs.removeAll(deadlist);
@@ -108,8 +110,8 @@ public class DrawApplet extends JApplet implements ActionListener
 	
 	public void spawn()
 	{
-		if(U.r.nextInt()>2100000000)
-		//if(U.r.nextInt()>200000000)
+		//if(U.r.nextInt()>2100000000)
+		if(U.r.nextInt()>200000000)
 		{
 			int w = (int)(Math.random() * gw);
 			int h = (int)(Math.random() * gh);
@@ -127,77 +129,61 @@ public class DrawApplet extends JApplet implements ActionListener
 	
 	public void getKeyInput(int n)
 	{	
-		if(n==87) //up
+		if(n=='W') //up
 		{
 			p.move(0,-1);
 			
-			if(!p.strafing)
+			if(p.turning)
 			{
 				p.align = 0;
 			}
 		}
-		else if(n==83) //down
+		else if(n=='S') //down
 		{
 			p.move(0,1);
 			
-			if(!p.strafing)
+			if(p.turning)
 			{
 				p.align = 2;
 			}	
 		}
-		else if(n==65) //left
+		else if(n=='A') //left
 		{
 			p.move(-1,0);
 			
-			if(!p.strafing)
+			if(p.turning)
 			{
 				p.align = 3;
 			}	
 		}
-		else if(n==68) //right
+		else if(n=='D') //right
 		{
 			p.move(1,0);
 			
-			if(!p.strafing)
+			if(p.turning)
 			{
 				p.align = 1;
 			}		
 		}
-		else if(n==69)
-		{
-			p.color = Color.BLUE;
-			p.loc.refresh();
-		}
-		else if(n==81)
-		{
-			p.color = Color.ORANGE;
-			p.loc.refresh();
-		}	
-		else if(n==32)
+		else if(n==' ')
 		{
 			p.placeWall();
 		}		
-		else if(n==72)
+		else if(n=='H')
 		{
-			p.laser();
+			p.active = true;
 		}
-		else if(n==85)
+		else if(n=='K')
 		{
-			p.strafing = !p.strafing;
+			p.toggleBuildMode();
 		}
-		else if(n==75)
-		{
-			if(!p.buildMode)
-			{
-				p.strafing = true;
-				p.placeWall();
-			}
-			p.buildMode = !p.buildMode;
-			Menu.modeChanged = true;
-		}
-		else if(n==73)
+		else if(n=='I')
 		{
 			p.placeTurret();
 		}
-	}
+		else if(n=='U')
+		{
+			p.startTurning();
+		}
+	}	
 }

@@ -1,7 +1,5 @@
 package bin;
 
-import java.awt.Graphics2D;
-
 public abstract class ConstructedEntity extends Entity
 {
 	int timer = 0;

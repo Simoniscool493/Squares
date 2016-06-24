@@ -1,12 +1,25 @@
 package bin;
 
+import java.awt.event.KeyEvent;
 import javax.swing.JFrame;
-
 
 public class Main 
 {
 	public static JFrame df = new JFrame("Squares");
-	public static KeyInput k = new KeyInput();
+	public static KeyInput k = new KeyInput()
+	{
+		public void keyReleased(KeyEvent e)
+		{
+			if(e.getKeyCode()=='U')
+			{
+				DrawApplet.p.stopTurning();
+			}
+			if(e.getKeyCode()=='H')
+			{
+				DrawApplet.p.active = false;
+			}
+		}
+	};
 	public static DrawApplet d = new DrawApplet();
 	
 	public static void main(String[] args)
