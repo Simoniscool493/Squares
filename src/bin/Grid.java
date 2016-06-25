@@ -10,7 +10,7 @@ public class Grid
 	{
 		public void refresh() {};
 		public void drawSelectionBox(Graphics2D g2,Color c) {};
-
+		public void startClaim(Player p) {};
 	};
 
 	Grid()
@@ -37,7 +37,6 @@ public class Grid
 		}	
 		catch(ArrayIndexOutOfBoundsException e)
 		{
-			System.out.println("Out of bounds");
 			return nullPoint;
 		}
 	}

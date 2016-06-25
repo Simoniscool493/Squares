@@ -21,13 +21,16 @@ public class DrawApplet extends JApplet implements ActionListener
 	public static LinkedHashSet<ConstructedEntity> constructs = new LinkedHashSet<ConstructedEntity>();
 	public static LinkedHashSet<Entity> deadlist = new LinkedHashSet<Entity>();
 	public static LinkedHashSet<GridPoint> changed = new LinkedHashSet<GridPoint>();
+	public static LinkedHashSet<GridPoint> activeBirthList = new LinkedHashSet<GridPoint>();
+	public static LinkedHashSet<GridPoint> activeSpots = new LinkedHashSet<GridPoint>();
+	public static LinkedHashSet<GridPoint> activeDeadList = new LinkedHashSet<GridPoint>();
 	
 	static boolean started = false;
 	
 	int gw = U.gridWidth;
 	int gh = U.gridHeight;
 
-	static Player p = new Player(Grid.getPoint(10,10));
+	static Player p = new Player(Grid.getPoint(1,1));
 	
 	Timer t = new Timer(50,this);
 	Menu m = new Menu(p);
@@ -73,7 +76,7 @@ public class DrawApplet extends JApplet implements ActionListener
         p.update();
         spawn();
         
-        //System.out.println(p.turning);
+        //System.out.println(activeSpots.size());
 	}
 	
 	public void render(Graphics2D g2)
@@ -81,21 +84,26 @@ public class DrawApplet extends JApplet implements ActionListener
 		projectiles.removeAll(deadlist);
 		constructs.removeAll(deadlist);
 		deadlist.clear();
+		
+		activeSpots.removeAll(activeDeadList);
+		activeDeadList.clear();
+
+		activeSpots.addAll(activeBirthList);
+		activeBirthList.clear();
 				
-		if(!projectiles.isEmpty())
-		{			
-			for(Projectile p:projectiles)
-			{
-				p.update();
-			}
+		for(GridPoint g:activeSpots)
+		{
+			g.progress();
 		}
 		
-		if(!constructs.isEmpty())
-		{			
-			for(ConstructedEntity c:constructs)
-			{
-				c.update();
-			}
+		for(Projectile p:projectiles)
+		{
+			p.update();
+		}
+				
+		for(ConstructedEntity c:constructs)
+		{
+			c.update();
 		}
 				
 		for(GridPoint g: changed)
@@ -111,7 +119,8 @@ public class DrawApplet extends JApplet implements ActionListener
 	public void spawn()
 	{
 		//if(U.r.nextInt()>2100000000)
-		if(U.r.nextInt()>200000000)
+		//if(U.r.nextInt()>200000000)
+		if(false)
 		{
 			int w = (int)(Math.random() * gw);
 			int h = (int)(Math.random() * gh);

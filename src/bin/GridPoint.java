@@ -12,6 +12,11 @@ public class GridPoint
 	int x;
 	int y;
 	
+	Player claimer;
+	boolean claimed = false;
+	int claimCount = 0;
+	int claimCap = 100;
+	
 	boolean changed;
 	Color background;
 	Projectile projectile;
@@ -36,6 +41,9 @@ public class GridPoint
 
 	public void render(Graphics2D g2)
 	{
+		g2.setColor(background);
+        g2.fillRect((width*x)+1,(height*y)+1,width-1,height-1);
+
 		if(hasConstruct())
 		{
 			construct.render(g2);
@@ -45,10 +53,7 @@ public class GridPoint
 			wall.render(g2);
 		}
 		else
-		{
-			g2.setColor(background);
-	        g2.fillRect((width*x)+1,(height*y)+1,width-1,height-1);
-	        
+		{	        
 			if(contents!=null)
 			{
 				for(Entity e:contents)
@@ -221,5 +226,44 @@ public class GridPoint
 		}
 		
 		return false;
+	}
+	
+	public void startClaim(Player p,int c,boolean personal)
+	{
+		if(claimer==null&&!hasWall())
+		{
+			claimer = p;
+			claimCap = c;
+			DrawApplet.activeBirthList.add(this);
+		}
+		else if(personal&&p==claimer&&!claimed)
+		{
+			claimCount = 0;
+			claimCap=p.claimTime;
+		}
+	}
+	
+	public void progress()
+	{
+		claimCount++;
+		
+		if(claimCount==claimCap)
+		{
+			claimed = true;
+			background = claimer.claimColor;
+			DrawApplet.activeDeadList.add(this);
+
+			refresh();
+
+			spreadClaim((int)(claimCap*1.2));
+		}
+	}
+	
+	public void spreadClaim(int i)
+	{
+		getFront(0).startClaim(claimer,i,false);
+		getFront(1).startClaim(claimer,i,false);
+		getFront(2).startClaim(claimer,i,false);
+		getFront(3).startClaim(claimer,i,false);
 	}
 }

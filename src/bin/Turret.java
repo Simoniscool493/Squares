@@ -15,9 +15,7 @@ public class Turret extends ConstructedEntity
 	
 	void render(Graphics2D g2)
 	{
-		//System.out.println("yes");
 		g2.setColor(color);
-
         g2.drawRect((width*loc.x)+5,(height*loc.y)+5,width-10,height-10);
         
         if(align == 0)//up
