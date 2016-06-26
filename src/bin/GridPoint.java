@@ -18,6 +18,7 @@ public class GridPoint
 	int claimCap = 100;
 	
 	boolean changed;
+	Color defaultBackground = Color.white;
 	Color background;
 	Projectile projectile;
 	Wall wall;
@@ -35,7 +36,7 @@ public class GridPoint
 	{
 		x = pointX;
 		y = pointY;
-		background = Color.white;
+		background = defaultBackground;
 		changed = true;
 	}
 
@@ -228,7 +229,47 @@ public class GridPoint
 		return false;
 	}
 	
-	public void startClaim(Player p,int c,boolean personal)
+	public void takeControl(Player p)
+	{
+		if(claimer==null)
+		{
+			claimer=p;
+			claimCap = p.claimCap;
+		}
+		else if(claimer!=p)
+		{
+			claimCount-=2;
+			if(claimCount==0)
+			{
+				claimer = p;
+				claimCap = p.claimCap;
+				background = defaultBackground;
+				claimed = false;
+				DrawApplet.activeDeadList.add(this);
+			}
+		}
+		else if(!claimed)
+		{
+			claimCount++;
+			if(p.claimCap<claimCap)
+			{
+				claimCap=p.claimCap;
+			}
+			
+			if(claimCount>=claimCap)
+			{
+				claimed = true;
+				background = claimer.claimColor;
+				refresh();
+				spreadClaim((int)(p.claimCap*1.2));
+
+				DrawApplet.activeDeadList.add(this);
+			}
+		}
+		
+	}
+	
+	public void startClaim(Player p,int c)
 	{
 		if(claimer==null&&!hasWall())
 		{
@@ -236,34 +277,39 @@ public class GridPoint
 			claimCap = c;
 			DrawApplet.activeBirthList.add(this);
 		}
-		else if(personal&&p==claimer&&!claimed)
+		else if(p==claimer&&!claimed)
 		{
-			claimCount = 0;
-			claimCap=p.claimTime;
+			if(c<claimCap)
+			{
+				claimCap=c;
+			}
+			DrawApplet.activeBirthList.add(this);
 		}
+		
+		
+		System.out.println(claimCap);
+
 	}
 	
 	public void progress()
 	{
 		claimCount++;
 		
-		if(claimCount==claimCap)
+		if(claimCount>=claimCap)
 		{
 			claimed = true;
 			background = claimer.claimColor;
 			DrawApplet.activeDeadList.add(this);
-
 			refresh();
-
 			spreadClaim((int)(claimCap*1.2));
 		}
 	}
 	
 	public void spreadClaim(int i)
 	{
-		getFront(0).startClaim(claimer,i,false);
-		getFront(1).startClaim(claimer,i,false);
-		getFront(2).startClaim(claimer,i,false);
-		getFront(3).startClaim(claimer,i,false);
+		getFront(0).startClaim(claimer,i);
+		getFront(1).startClaim(claimer,i);
+		getFront(2).startClaim(claimer,i);
+		getFront(3).startClaim(claimer,i);
 	}
 }

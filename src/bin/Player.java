@@ -13,13 +13,13 @@ public class Player extends Entity
 	int energy = 150;
 	int maxEnergy = 150;
 	
-	int build = 0;
-	int maxBuild = 50;
+	int build = 5000;
+	int maxBuild = 5000;
 
 	int laserCost = 10;
 	int energyRegen = 1;
 	
-	int claimTime = 100;
+	int claimCap = 300;
 	
 	Color claimColor = new Color(255, 213, 214);
 	
@@ -49,6 +49,8 @@ public class Player extends Entity
 				laser();
 			}
 		}
+		
+		loc.takeControl(this);
 	}
 	
 	void move(int Xoffs,int Yoffs)
@@ -61,13 +63,13 @@ public class Player extends Entity
 	        }
 	
 			super.move(Xoffs, Yoffs);
-			loc.startClaim(this,claimTime,true);
 		}
 		else
 		{
 			front().refresh();
 			loc.refresh();
 		}
+		
 	}
 	
 	void render(Graphics2D g2)
@@ -190,7 +192,7 @@ public class Player extends Entity
 			if(!(front().hasWall())&&!(front().hasConstruct()))
 			{
 				new Turret(front(),this,align);
-				front().startClaim(this,claimTime,true);
+				front().startClaim(this,claimCap/3);
 			}
 		}
 	}

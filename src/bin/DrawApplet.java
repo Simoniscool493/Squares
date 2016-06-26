@@ -119,8 +119,8 @@ public class DrawApplet extends JApplet implements ActionListener
 	public void spawn()
 	{
 		//if(U.r.nextInt()>2100000000)
-		//if(U.r.nextInt()>200000000)
-		if(false)
+		if(U.r.nextInt()>200000000)
+		//if(false)
 		{
 			int w = (int)(Math.random() * gw);
 			int h = (int)(Math.random() * gh);
