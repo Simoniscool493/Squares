@@ -26,6 +26,7 @@ public class DrawApplet extends JApplet implements ActionListener
 	public static LinkedHashSet<GridPoint> activeDeadList = new LinkedHashSet<GridPoint>();
 	
 	static boolean started = false;
+	static boolean refreshScreen = false;
 	
 	int gw = U.gridWidth;
 	int gh = U.gridHeight;
@@ -39,23 +40,7 @@ public class DrawApplet extends JApplet implements ActionListener
 
 	public void init(Graphics2D g2)
 	{
-		float dw = U.drawWidth;
-		float dh = U.drawHeight;
-		float iw = U.incWidth;
-		float ih = U.incHeight;
-		
-		if(U.showGrid)
-		{
-	        for(float i=0;i<dw+10;i+=iw)
-	        {
-	           g2.drawLine((int)i,0,(int)i,(int)dw);
-	        }
-	        for(float i=0;i<dh+10;i+=ih)
-	        {
-	            g2.drawLine(0,(int)i,(int)dw,(int)i);
-	        }
-	        started = true;
-		}
+		Grid.drawGrid(g2);
 		
 		this.setFont(font);
 		g2.setFont(font);
@@ -70,6 +55,12 @@ public class DrawApplet extends JApplet implements ActionListener
         	init(g2);
         	m.init(g2);
             t.start();
+            started = true;
+        }
+        if(refreshScreen)
+        {
+        	refreshScreen(g2);
+        	refreshScreen = false;
         }
         
         render(g2);
@@ -118,8 +109,8 @@ public class DrawApplet extends JApplet implements ActionListener
 	
 	public void spawn()
 	{
-		//if(U.r.nextInt()>2100000000)
 		if(U.r.nextInt()>200000000)
+		//if(U.r.nextInt()>2100000000)
 		//if(false)
 		{
 			int w = (int)(Math.random() * gw);
@@ -195,4 +186,10 @@ public class DrawApplet extends JApplet implements ActionListener
 			p.startTurning();
 		}
 	}	
+	
+	public void refreshScreen(Graphics2D g2)
+	{
+		m.refresh(g2);
+		Grid.refresh(g2);
+	}
 }

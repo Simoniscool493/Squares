@@ -1,6 +1,9 @@
 package bin;
 
 import java.awt.event.KeyEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+
 import javax.swing.JFrame;
 
 public class Main 
@@ -20,21 +23,31 @@ public class Main
 			}
 		}
 	};
-	public static DrawApplet d = new DrawApplet();
+	public static DrawApplet da = new DrawApplet();
 	
 	public static void main(String[] args)
 	{		
         System.out.println("Git version\n");
-
-		d.init();
+        		
+		da.init();
+		
+		df.addWindowListener(new WindowAdapter() 
+        {
+            public void windowDeiconified(WindowEvent e)
+            {
+            	DrawApplet.refreshScreen = true;
+            }
+        }
+        );
 
 		df.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		df.addKeyListener(k);
-        df.getContentPane().add("Center",d);
+        df.getContentPane().add("Center",da);
 		
         df.pack();
-		df.setSize((int)U.drawWidth+(int)U.menuWidth+33,(int)U.drawHeight+89);
+		df.setSize((int)U.drawWidth+(int)U.menuWidth+6,(int)U.drawHeight+63);
 		df.setVisible(true);
+		df.setResizable(false);
 	}
 }
 

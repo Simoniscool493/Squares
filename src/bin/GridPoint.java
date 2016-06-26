@@ -216,7 +216,7 @@ public class GridPoint
 	public void drawSelectionBox(Graphics2D g2,Color c)
 	{
 		g2.setColor(c);
-		g2.drawRect((width*x)+1, (width*y)+1, width-2, height-2);
+		g2.drawRect((width*x)+1, (height*y)+1, width-2, height-2);
 	}
 	
 	public boolean isNullPoint()
@@ -285,10 +285,6 @@ public class GridPoint
 			}
 			DrawApplet.activeBirthList.add(this);
 		}
-		
-		
-		System.out.println(claimCap);
-
 	}
 	
 	public void progress()

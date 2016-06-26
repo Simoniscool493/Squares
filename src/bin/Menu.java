@@ -41,7 +41,7 @@ public class Menu
 	void init(Graphics2D g2)
 	{
 		g2.setColor(background);
-		g2.fillRect(oWidth, menuHeight-menuHeight, menuWidth, menuHeight);	
+		g2.fillRect(oWidth, menuHeight-menuHeight, menuWidth, menuHeight+1);	
 	}
 	
 	void render(Graphics2D g2)
@@ -136,5 +136,14 @@ public class Menu
 		g2.fillRect((int)modeTextX,(int)modeTextY-menuComponentHeight, (int)(menuWidth/1.5), menuComponentHeight);
 		g2.setColor(textColor);
 		g2.drawString("Build:    " + String.valueOf(p.buildMode),modeTextX,modeTextY);
+	}
+	
+	void refresh(Graphics2D g2)
+	{
+		init(g2);
+		pointsChanged = true;
+		levelChanged = true;
+		modeChanged = true;
+		buildChanged = true;
 	}
 }

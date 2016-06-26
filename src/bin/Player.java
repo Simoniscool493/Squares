@@ -13,8 +13,8 @@ public class Player extends Entity
 	int energy = 150;
 	int maxEnergy = 150;
 	
-	int build = 5000;
-	int maxBuild = 5000;
+	int build = 50;
+	int maxBuild = 100;
 
 	int laserCost = 10;
 	int energyRegen = 1;
@@ -69,7 +69,6 @@ public class Player extends Entity
 			front().refresh();
 			loc.refresh();
 		}
-		
 	}
 	
 	void render(Graphics2D g2)

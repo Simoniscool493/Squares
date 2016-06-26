@@ -1,13 +1,17 @@
 package bin;
 
+import java.awt.Dimension;
+import java.awt.Toolkit;
 import java.util.Random;
 
 public final class U
 {
-    public static float drawWidth = 1000;
-    public static float drawHeight = 1000;
+    public static Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+
+    public static float drawWidth = (float)(screenSize.getHeight())/1.5f;
+    public static float drawHeight = (float)(screenSize.getHeight())/1.5f;
     
-    public static float menuWidth = 300;
+    public static float menuWidth = (float)screenSize.getHeight()/5f;
     
 	public static boolean showGrid = true;
 
@@ -23,4 +27,5 @@ public final class U
 	{
 		
 	}
+
 }
