@@ -5,6 +5,8 @@ import java.awt.Graphics2D;
 
 public class Player extends Entity
 {
+	boolean godmode = true;
+	
 	int points;
 	
 	int toNextLvReq = 10;
@@ -19,9 +21,10 @@ public class Player extends Entity
 	int laserCost = 10;
 	int energyRegen = 1;
 	
-	int claimCap = 300;
+	int claimCap = 1;
 	
-	Color claimColor = new Color(255, 213, 214);
+	//Color claimColor = new Color(255, 213, 214);
+	Color claimColor = Color.blue;
 	
 	boolean buildMode = false;
 	boolean turning = false;
@@ -34,6 +37,13 @@ public class Player extends Entity
 		clipping = true;
 		points = 0;
 		color = Color.red;
+		
+		if(godmode)
+		{
+			laserCost = 0;
+			build = 10000;
+			maxBuild = 10000;
+		}
 	}
 	
 	void update()
@@ -50,7 +60,7 @@ public class Player extends Entity
 			}
 		}
 		
-		loc.takeControl(this);
+		//loc.takeControl(this);
 	}
 	
 	void move(int Xoffs,int Yoffs)

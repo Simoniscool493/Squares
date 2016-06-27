@@ -18,7 +18,7 @@ public class Grid
 		init();
 	}
 	
-	void init()
+	static void init()
 	{
 		for(int i=0;i<U.gridWidth;i++)
 		{
@@ -43,6 +43,12 @@ public class Grid
 	
 	static void refresh(Graphics2D g2)
 	{
+		drawPoints();
+		drawGrid(g2);
+	}
+	
+	static void drawPoints()
+	{
 		for(int i=0;i<U.gridWidth;i++)
 		{
 			for(int j=0;j<U.gridHeight;j++)
@@ -50,8 +56,6 @@ public class Grid
 				getPoint(i,j).refresh();
 			}
 		}
-		
-		drawGrid(g2);
 	}
 	
 	static void drawGrid(Graphics2D g2)
@@ -71,6 +75,20 @@ public class Grid
 	        {
 	            g2.drawLine(0,(int)i,(int)dw,(int)i);
 	        }
+		}
+	}
+	
+	static void coverGrid(int f)
+	{
+		for(int i=0;i<U.gridWidth;i++)
+		{
+			for(int j=0;j<U.gridHeight;j++)
+			{
+				if((int)(Math.random() * 100)<f)
+				{
+					new Wall(getPoint(i,j),1);
+				}
+			}
 		}
 	}
 }

@@ -31,7 +31,7 @@ public class DrawApplet extends JApplet implements ActionListener
 	int gw = U.gridWidth;
 	int gh = U.gridHeight;
 
-	static Player p = new Player(Grid.getPoint(1,1));
+	static Player p = new Player(Grid.getPoint(U.gridWidth/2,U.gridHeight/2));
 	
 	Timer t = new Timer(50,this);
 	Menu m = new Menu(p);
@@ -67,7 +67,7 @@ public class DrawApplet extends JApplet implements ActionListener
         p.update();
         spawn();
         
-        //System.out.println(activeSpots.size());
+        System.out.println(activeSpots.size());
 	}
 	
 	public void render(Graphics2D g2)
@@ -109,9 +109,9 @@ public class DrawApplet extends JApplet implements ActionListener
 	
 	public void spawn()
 	{
-		if(U.r.nextInt()>200000000)
+		//if(U.r.nextInt()>200000000)
 		//if(U.r.nextInt()>2100000000)
-		//if(false)
+		if(false)
 		{
 			int w = (int)(Math.random() * gw);
 			int h = (int)(Math.random() * gh);
@@ -120,7 +120,7 @@ public class DrawApplet extends JApplet implements ActionListener
 			new Wall(Grid.getPoint(w,h),Color.black,lv);
 		}
 	}
-	
+		
 	public void actionPerformed(ActionEvent e)
 	{
 		p.regen();
@@ -185,11 +185,41 @@ public class DrawApplet extends JApplet implements ActionListener
 		{
 			p.startTurning();
 		}
+		else if(n=='X')
+		{
+			p.loc.takeControl(p);
+		}
+		else if(n=='1')
+		{
+			reset();
+		}
+		else if(n=='2')
+		{
+			Grid.coverGrid(40);
+		}
 	}	
 	
 	public void refreshScreen(Graphics2D g2)
 	{
 		m.refresh(g2);
 		Grid.refresh(g2);
+	}
+	
+	public void reset()
+	{
+		projectiles.clear();
+		constructs.clear();
+		deadlist.clear();
+		changed.clear();
+		activeBirthList.clear();
+		activeSpots.clear();
+		activeDeadList.clear();
+
+		Grid.init();
+
+		p.loc = Grid.getPoint(p.loc.x, p.loc.y);
+		Grid.getPoint(p.loc.x, p.loc.y).addEntity(p);
+
+		Grid.drawPoints();
 	}
 }

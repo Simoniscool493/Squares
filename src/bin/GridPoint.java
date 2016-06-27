@@ -44,6 +44,8 @@ public class GridPoint
 	{
 		g2.setColor(background);
         g2.fillRect((width*x)+1,(height*y)+1,width-1,height-1);
+        
+        //if(x==45&&y==45) { System.out.println(contents.size()); }
 
 		if(hasConstruct())
 		{
@@ -277,7 +279,7 @@ public class GridPoint
 			claimCap = c;
 			DrawApplet.activeBirthList.add(this);
 		}
-		else if(p==claimer&&!claimed)
+		else if(p==claimer&&!claimed&!hasWall())
 		{
 			if(c<claimCap)
 			{
@@ -307,5 +309,13 @@ public class GridPoint
 		getFront(1).startClaim(claimer,i);
 		getFront(2).startClaim(claimer,i);
 		getFront(3).startClaim(claimer,i);
+	}
+	
+	public void wallOn()
+	{
+		if(DrawApplet.activeSpots.contains(this))
+		{
+			DrawApplet.activeDeadList.add(this);
+		}
 	}
 }

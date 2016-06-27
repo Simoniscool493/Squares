@@ -5,19 +5,29 @@ import java.awt.Graphics2D;
 
 public class Wall extends Entity
 {
+	static Color defaultColor = Color.black;
+	
 	Player attacker;
 	int buildCost = 1;
 	
 	Wall () {}
 	
-	Wall(GridPoint g,Color c,int level)
+	Wall(GridPoint g,int level)
 	{
 		loc = g;
 		loc.addWall(this);
 
-		color = c;
+		color = defaultColor;
 		lv = level;
 		hp = lv*2;
+		
+		loc.wallOn();
+	}
+	
+	Wall(GridPoint g,Color c,int level)
+	{
+		this(g,level);
+		color = c;	
 	}
 	
 	void die()
