@@ -26,7 +26,7 @@ public class Grid
 			{
 				grid[i][j] = new GridPoint(i,j);
 			}
-		}
+		}		
 	}
 		
 	static GridPoint getPoint(int x,int y)
@@ -64,6 +64,8 @@ public class Grid
 		float dh = U.drawHeight;
 		float iw = U.incWidth;
 		float ih = U.incHeight;
+						
+		g2.setColor(U.gridColor);
 		
 		if(U.showGrid)
 		{
@@ -88,6 +90,17 @@ public class Grid
 				{
 					new Wall(getPoint(i,j),1);
 				}
+			}
+		}
+	}
+	
+	static void wallRect(int x,int y,int w,int h,Color c,int lv)
+	{
+		for(int i=y;i<h;i++)
+		{
+			for(int j=x;j<w;j++)
+			{
+				new Wall(getPoint(i,j),c,10);
 			}
 		}
 	}

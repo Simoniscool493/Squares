@@ -85,11 +85,11 @@ public class Projectile extends Entity
 		
 		if(align == 1||align == 3)//horizontal
 		{
-			g2.fillRect((width*loc.x)+2,(height*loc.y)+height/2-1,width-2,3);
+			g2.fillRect((int)(width*loc.x)+2,(int)(height*loc.y)+(int)height/2-1,(int)width-2,3);
 		}
 		else//vertical
 		{
-			g2.fillRect((width*loc.x)+width/2-1, (height*loc.y)+2,3,height-2);
+			g2.fillRect((int)(width*loc.x)+(int)width/2-1,(int)(height*loc.y)+2,3,(int)height-2);
 		}
 	}
 		

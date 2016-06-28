@@ -6,20 +6,26 @@ import java.util.ArrayList;
 
 public class GridPoint 
 {
-	static int width = (int)(U.incWidth);
-	static int height = (int)(U.incHeight);
+	static Color defaultBackground = U.background;
+
+	//static int width = (int)(U.incWidth);
+	//static int height = (int)(U.incHeight);
+	static float width = (U.incWidth);
+	static float height = (U.incHeight);
+
+	
+	boolean changed;
+	
+	Color background;
 
 	int x;
 	int y;
 	
-	Player claimer;
 	boolean claimed = false;
+	Player claimer;
 	int claimCount = 0;
 	int claimCap = 100;
 	
-	boolean changed;
-	Color defaultBackground = Color.white;
-	Color background;
 	Projectile projectile;
 	Wall wall;
 	ConstructedEntity construct;
@@ -43,10 +49,9 @@ public class GridPoint
 	public void render(Graphics2D g2)
 	{
 		g2.setColor(background);
-        g2.fillRect((width*x)+1,(height*y)+1,width-1,height-1);
+        //g2.fillRect((width*x)+1,(height*y)+1,width-1,height-1);
+        g2.fillRect(((int)(width*x))+1,((int)(height*y))+1,((int)width)-1,((int)height)-1);
         
-        //if(x==45&&y==45) { System.out.println(contents.size()); }
-
 		if(hasConstruct())
 		{
 			construct.render(g2);
@@ -113,11 +118,6 @@ public class GridPoint
 		}
 	}
 	
-	public Entity getWall()
-	{
-		return wall;
-	}
-	
 	public void addProjectile(Projectile p)
 	{
 		projectile = p;
@@ -140,11 +140,6 @@ public class GridPoint
 		{
 			return true;
 		}
-	}
-	
-	public Projectile getProjectile()
-	{
-		return projectile;
 	}
 	
 	public void addConstruct(ConstructedEntity c)
@@ -172,11 +167,6 @@ public class GridPoint
 		{
 			return true;
 		}
-	}
-	
-	public ConstructedEntity getConstruct()
-	{
-		return construct;
 	}
 	
 	public void refresh()
@@ -218,7 +208,9 @@ public class GridPoint
 	public void drawSelectionBox(Graphics2D g2,Color c)
 	{
 		g2.setColor(c);
-		g2.drawRect((width*x)+1, (height*y)+1, width-2, height-2);
+		//g2.drawRect((width*x)+1, (height*y)+1, width-2, height-2);
+	     g2.drawRect(((int)(width*x))+1,((int)(height*y))+1,((int)width)-2,((int)height)-2);
+
 	}
 	
 	public boolean isNullPoint()
@@ -317,5 +309,15 @@ public class GridPoint
 		{
 			DrawApplet.activeDeadList.add(this);
 		}
+	}
+	
+	public boolean isEmpty()
+	{
+		if(hasWall()||hasProjectile()||hasConstruct()||!(contents.isEmpty()))
+		{
+			return false;
+		}
+		
+		return true;
 	}
 }

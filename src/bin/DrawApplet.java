@@ -15,7 +15,6 @@ public class DrawApplet extends JApplet implements ActionListener
 {
 	private static final long serialVersionUID = 1L;
 	
-	public static Grid g = new Grid();
 	
 	public static LinkedHashSet<Projectile> projectiles = new LinkedHashSet<Projectile>();
 	public static LinkedHashSet<ConstructedEntity> constructs = new LinkedHashSet<ConstructedEntity>();
@@ -31,19 +30,22 @@ public class DrawApplet extends JApplet implements ActionListener
 	int gw = U.gridWidth;
 	int gh = U.gridHeight;
 
-	static Player p = new Player(Grid.getPoint(U.gridWidth/2,U.gridHeight/2));
+	public static Grid g = new Grid();
+	public static Player p = new Player(Grid.getPoint(U.gridWidth/2,U.gridHeight/2));
 	
 	Timer t = new Timer(50,this);
 	Menu m = new Menu(p);
 	
 	Font font = new Font("TimesRoman", Font.PLAIN, 25);
-
+	
 	public void init(Graphics2D g2)
 	{
 		Grid.drawGrid(g2);
 		
 		this.setFont(font);
-		g2.setFont(font);
+		g2.setFont(font);	
+		
+		Grid.wallRect(1,1,10,20,Color.red,30);
 	}
 
 	public void paint(Graphics g)
@@ -67,7 +69,7 @@ public class DrawApplet extends JApplet implements ActionListener
         p.update();
         spawn();
         
-        System.out.println(activeSpots.size());
+        //System.out.println(activeSpots.size());
 	}
 	
 	public void render(Graphics2D g2)
@@ -117,7 +119,11 @@ public class DrawApplet extends JApplet implements ActionListener
 			int h = (int)(Math.random() * gh);
 			int lv = (int)((Math.random()*3)+1);
 						
-			new Wall(Grid.getPoint(w,h),Color.black,lv);
+			GridPoint point = Grid.getPoint(w,h);
+			if(point.isEmpty())
+			{
+				new Wall(point,Color.black,lv);
+			}
 		}
 	}
 		

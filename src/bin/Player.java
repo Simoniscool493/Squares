@@ -9,8 +9,8 @@ public class Player extends Entity
 	
 	int points;
 	
-	int toNextLvReq = 10;
-	int toNextLv = 10;
+	int toNextLvReq = 2000;
+	int toNextLv = 2000;
 	
 	int energy = 150;
 	int maxEnergy = 150;
@@ -23,8 +23,7 @@ public class Player extends Entity
 	
 	int claimCap = 1;
 	
-	//Color claimColor = new Color(255, 213, 214);
-	Color claimColor = Color.blue;
+	Color claimColor = U.p1cap;
 	
 	boolean buildMode = false;
 	boolean turning = false;
@@ -36,7 +35,7 @@ public class Player extends Entity
 		align = 3;
 		clipping = true;
 		points = 0;
-		color = Color.red;
+		color = U.p1;
 		
 		if(godmode)
 		{
@@ -83,24 +82,34 @@ public class Player extends Entity
 	
 	void render(Graphics2D g2)
 	{
+		int curWidth = ((int)(width*loc.x));
+		int curHeight = ((int)(height*loc.y));
+
 		g2.setColor(color);
-        g2.fillRect((width*loc.x)+5,(height*loc.y)+5,width-10,height-10);
+		
+        //g2.fillRect((width*loc.x)+5,(height*loc.y)+5,width-10,height-10);
+        g2.fillRect((curWidth)+5,(curHeight)+5,((int)(width))-10,((int)height)-10);
+
         
         if(align == 0)//up
         {
-        	g2.fillRect((width*loc.x)+(width/2)-2,(height*loc.y)+1,5,5);
+        	//g2.fillRect((width*loc.x)+(width/2)-2,(height*loc.y)+1,5,5);
+        	g2.fillRect((curWidth)+(int)(width/2)-2,(curHeight)+1,5,5);
         }
         else if(align == 1)//right
         {
-        	g2.fillRect((width*loc.x)+width-5,(height*loc.y)+height/2-2,5,5);
+        	//g2.fillRect((width*loc.x)+width-5,(height*loc.y)+height/2-2,5,5);
+        	g2.fillRect((curWidth)+(int)width-5,(curHeight)+(int)height/2-2,5,5);
         }
         else if(align == 2)//down
         {
-        	g2.fillRect((width*loc.x)+(width/2)-2,(height*loc.y)+height-5,5,5);
+        	//g2.fillRect((width*loc.x)+(width/2)-2,(height*loc.y)+height-5,5,5);
+        	g2.fillRect((curWidth)+(int)(width/2)-2,(curHeight)+(int)height-5,5,5);
         }
         else if(align == 3)//left
         {
-        	g2.fillRect((width*loc.x)+1,(height*loc.y)+height/2-2,5,5);
+        	//g2.fillRect((width*loc.x)+1,(height*loc.y)+height/2-2,5,5);
+        	g2.fillRect((curWidth)+1,(curHeight)+(int)height/2-2,5,5);
         }
        
         if(turning)

@@ -30,8 +30,8 @@ public class Menu
 	static boolean modeChanged = true;
 	static boolean buildChanged = true;
 
-	Color background = Color.darkGray;
-	Color textColor = Color.white;
+	Color background = U.menu;
+	Color textColor = U.menuText;
 	
 	Menu(Player player)
 	{
