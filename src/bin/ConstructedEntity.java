@@ -26,4 +26,10 @@ public abstract class ConstructedEntity extends Entity
 		DrawApplet.deadlist.add(this);
 		loc.removeConstruct();
 	}
+	
+	static int getCost()
+	{
+		return 1;
+	}
+	
 }

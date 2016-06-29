@@ -5,12 +5,12 @@ import java.awt.Graphics2D;
 
 public class Player extends Entity
 {
-	boolean godmode = true;
+	boolean godmode = false;
 	
 	int points;
 	
-	int toNextLvReq = 2000;
-	int toNextLv = 2000;
+	int toNextLvReq = 10;
+	int toNextLv = 10;
 	
 	int energy = 150;
 	int maxEnergy = 150;
@@ -28,6 +28,7 @@ public class Player extends Entity
 	boolean buildMode = false;
 	boolean turning = false;
 	boolean active = false;
+	boolean deleting = false;
 	
 	Player(GridPoint g)
 	{
@@ -51,12 +52,16 @@ public class Player extends Entity
 		{
 			if(buildMode)
 			{
-				placeWall();
+				placeWall();	
 			}
 			else
 			{
 				laser();
 			}
+		}
+		else if(deleting)
+		{
+			delete();
 		}
 		
 		//loc.takeControl(this);
@@ -120,6 +125,19 @@ public class Player extends Entity
         {
         	front().drawSelectionBox(g2,color);
         }
+	}
+	
+	void delete()
+	{
+		if(front().hasWall()&&front().wall.source==this)
+		{
+			front().wall.die();
+		}
+		if(front().hasConstruct()&&front().construct.source==this)
+		{
+			addBuild(Turret.getCost()/2);
+			front().construct.die();
+		}
 	}
 		
 	void addPoints(int n)
@@ -199,13 +217,13 @@ public class Player extends Entity
 	{
 		if((!front().hasWall())&&!(front().isNullPoint())&&takeBuild(1))
 		{
-			new Wall(front(),color,lv);
+			new Wall(front(),this);
 		}
 	}
 	
 	void placeTurret()
 	{
-		if((!front().isNullPoint())&&takeBuild(20))
+		if((!front().isNullPoint())&&takeBuild(Turret.getCost()))
 		{
 			if(!(front().hasWall())&&!(front().hasConstruct()))
 			{

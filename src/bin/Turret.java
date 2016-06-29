@@ -4,6 +4,7 @@ import java.awt.Graphics2D;
 
 public class Turret extends ConstructedEntity
 {
+	static int defaultCost = 20;
 	int buildCost = 20;
 
 	Turret(GridPoint g,Player p,int a)
@@ -11,6 +12,12 @@ public class Turret extends ConstructedEntity
 		super(g,p);
 		align = a;
 		color = source.color;
+		System.out.println(buildCost);
+	}
+	
+	static int getCost()
+	{
+		return defaultCost;
 	}
 	
 	void render(Graphics2D g2)

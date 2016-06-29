@@ -15,7 +15,6 @@ public class DrawApplet extends JApplet implements ActionListener
 {
 	private static final long serialVersionUID = 1L;
 	
-	
 	public static LinkedHashSet<Projectile> projectiles = new LinkedHashSet<Projectile>();
 	public static LinkedHashSet<ConstructedEntity> constructs = new LinkedHashSet<ConstructedEntity>();
 	public static LinkedHashSet<Entity> deadlist = new LinkedHashSet<Entity>();
@@ -190,6 +189,10 @@ public class DrawApplet extends JApplet implements ActionListener
 		else if(n=='U')
 		{
 			p.startTurning();
+		}
+		else if(n=='J'&&!p.active&&p.buildMode)
+		{
+			p.deleting = true;
 		}
 		else if(n=='X')
 		{

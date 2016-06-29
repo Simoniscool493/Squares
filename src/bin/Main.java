@@ -21,6 +21,10 @@ public class Main
 			{
 				DrawApplet.p.active = false;
 			}
+			if(e.getKeyCode()=='J')
+			{
+				DrawApplet.p.deleting = false;
+			}
 		}
 	};
 	public static DrawApplet da = new DrawApplet();
