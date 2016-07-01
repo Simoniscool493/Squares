@@ -7,6 +7,8 @@ public class Player extends Entity
 {
 	boolean godmode = false;
 	
+	KeyMapping mapping;
+	
 	int points;
 	
 	int toNextLvReq = 10;
@@ -31,10 +33,14 @@ public class Player extends Entity
 	boolean turning = false;
 	boolean active = false;
 	boolean deleting = false;
+
+	int moving = -1;
 	
-	Player(GridPoint g)
+	Player(KeyMapping m,GridPoint g)
 	{
 		super(g);
+		mapping = m;
+		m.p = this;
 		align = 3;
 		clipping = true;
 		points = 0;
@@ -48,8 +54,20 @@ public class Player extends Entity
 		}
 	}
 	
+	void checkInput(int n)
+	{
+		mapping.input(n);
+	}
+	
+	void checkReleased(int n)
+	{
+		mapping.released(n);
+	}
+	
 	void update()
 	{		
+		checkMoving();
+		
 		if(active)
 		{
 			if(buildMode)
@@ -67,6 +85,26 @@ public class Player extends Entity
 		}
 		
 		loc.takeControl(this);
+	}
+	
+	void checkMoving()
+	{
+		if(moving == 0)
+		{
+			move(0,-1);
+		}
+		else if(moving == 1)
+		{
+			move(1,0);
+		}
+		else if(moving == 2)
+		{
+			move(0,1);
+		}
+		else if(moving == 3)
+		{
+			move(-1,0);
+		}
 	}
 	
 	void move(int Xoffs,int Yoffs)

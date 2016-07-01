@@ -18,6 +18,7 @@ public class KeyInput implements KeyListener
 	
 	public void keyReleased(KeyEvent k)
 	{
-		
+		int i = k.getKeyCode();
+		Main.da.getKeyReleased(i);
 	}
 }

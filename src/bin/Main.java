@@ -1,38 +1,28 @@
 package bin;
 
-import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-
 import javax.swing.JFrame;
 
 public class Main 
 {
 	public static JFrame df = new JFrame("Squares");
-	public static KeyInput k = new KeyInput()
-	{
-		public void keyReleased(KeyEvent e)
-		{
-			if(e.getKeyCode()=='U')
-			{
-				DrawApplet.p.stopTurning();
-			}
-			if(e.getKeyCode()=='H')
-			{
-				DrawApplet.p.active = false;
-			}
-			if(e.getKeyCode()=='J')
-			{
-				DrawApplet.p.deleting = false;
-			}
-		}
-	};
+	public static KeyInput k = new KeyInput();
 	public static DrawApplet da = new DrawApplet();
+	
+	public static int dir1;
+	public static int dir2;
 	
 	public static void main(String[] args)
 	{		
         System.out.println("Git version\n");
-        		
+          
+        //String path = System.getProperty("java.library.path");
+        //System.out.println(path);
+        //System.loadLibrary("jxinput");
+
+        new ControllerMapping();
+                
 		da.init();
 		
 		df.addWindowListener(new WindowAdapter() 

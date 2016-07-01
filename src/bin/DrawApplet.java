@@ -30,10 +30,15 @@ public class DrawApplet extends JApplet implements ActionListener
 	int gh = U.gridHeight;
 
 	public static Grid g = new Grid();
-	public static Player p = new Player(Grid.getPoint(U.gridWidth/2,U.gridHeight/2));
+	//up down left right turn fire build place delete
+	public static KeyMapping m1 = new KeyMapping('W','S','A','D','U','H','K','I','J');
+	public static KeyMapping m2 = new KeyMapping(624,622,623,621,604,603,602,619,601);
+
+	public static Player p1 = new Player(m1,Grid.getPoint(U.gridWidth/2,U.gridHeight/2));
+
 	
 	Timer t = new Timer(50,this);
-	Menu m = new Menu(p);
+	Menu m = new Menu(p1);
 	
 	Font font = new Font("TimesRoman", Font.PLAIN, 25);
 	
@@ -65,7 +70,7 @@ public class DrawApplet extends JApplet implements ActionListener
         }
         
         render(g2);
-        p.update();
+        p1.update();
         spawn();
         
         //System.out.println(activeSpots.size());
@@ -128,77 +133,15 @@ public class DrawApplet extends JApplet implements ActionListener
 		
 	public void actionPerformed(ActionEvent e)
 	{
-		p.regen();
+		p1.regen();
 		repaint();
 	}
 	
 	public void getKeyInput(int n)
 	{	
-		if(n=='W') //up
-		{
-			p.move(0,-1);
-			
-			if(p.turning)
-			{
-				p.align = 0;
-			}
-		}
-		else if(n=='S') //down
-		{
-			p.move(0,1);
-			
-			if(p.turning)
-			{
-				p.align = 2;
-			}	
-		}
-		else if(n=='A') //left
-		{
-			p.move(-1,0);
-			
-			if(p.turning)
-			{
-				p.align = 3;
-			}	
-		}
-		else if(n=='D') //right
-		{
-			p.move(1,0);
-			
-			if(p.turning)
-			{
-				p.align = 1;
-			}		
-		}
-		else if(n==' ')
-		{
-			p.placeWall();
-		}		
-		else if(n=='H')
-		{
-			p.active = true;
-		}
-		else if(n=='K')
-		{
-			p.toggleBuildMode();
-		}
-		else if(n=='I')
-		{
-			p.placeTurret();
-		}
-		else if(n=='U')
-		{
-			p.startTurning();
-		}
-		else if(n=='J'&&!p.active&&p.buildMode)
-		{
-			p.deleting = true;
-		}
-		else if(n=='X')
-		{
-			p.loc.takeControl(p);
-		}
-		else if(n=='1')
+		p1.checkInput(n);
+		
+		if(n=='1')
 		{
 			reset();
 		}
@@ -206,7 +149,14 @@ public class DrawApplet extends JApplet implements ActionListener
 		{
 			Grid.coverGrid(40);
 		}
-	}	
+
+		System.out.println(n);
+	}
+	
+	public void getKeyReleased(int n)
+	{
+		p1.checkReleased(n);
+	}
 	
 	public void refreshScreen(Graphics2D g2)
 	{
@@ -226,8 +176,8 @@ public class DrawApplet extends JApplet implements ActionListener
 
 		Grid.init();
 
-		p.loc = Grid.getPoint(p.loc.x, p.loc.y);
-		Grid.getPoint(p.loc.x, p.loc.y).addEntity(p);
+		p1.loc = Grid.getPoint(p1.loc.x, p1.loc.y);
+		Grid.getPoint(p1.loc.x, p1.loc.y).addEntity(p1);
 
 		Grid.drawPoints();
 	}
