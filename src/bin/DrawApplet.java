@@ -34,7 +34,9 @@ public class DrawApplet extends JApplet implements ActionListener
 	public static KeyMapping m1 = new KeyMapping('W','S','A','D','U','H','K','I','J');
 	public static KeyMapping m2 = new KeyMapping(624,622,623,621,604,603,602,619,601);
 
-	public static Player p1 = new Player(m1,Grid.getPoint(U.gridWidth/2,U.gridHeight/2));
+	public static Player p1 = new Player(m1,Grid.getPoint(20,2),U.p1,U.p1cap);
+	public static Player p2 = new Player(m2,Grid.getPoint(20,3),U.p2,U.p2cap);
+
 
 	
 	Timer t = new Timer(50,this);
@@ -71,6 +73,7 @@ public class DrawApplet extends JApplet implements ActionListener
         
         render(g2);
         p1.update();
+        p2.update();
         spawn();
         
         //System.out.println(activeSpots.size());
@@ -134,13 +137,14 @@ public class DrawApplet extends JApplet implements ActionListener
 	public void actionPerformed(ActionEvent e)
 	{
 		p1.regen();
+		p2.regen();
 		repaint();
 	}
 	
 	public void getKeyInput(int n)
 	{	
 		p1.checkInput(n);
-		
+		p2.checkInput(n);
 		if(n=='1')
 		{
 			reset();
@@ -156,6 +160,7 @@ public class DrawApplet extends JApplet implements ActionListener
 	public void getKeyReleased(int n)
 	{
 		p1.checkReleased(n);
+		p2.checkReleased(n);
 	}
 	
 	public void refreshScreen(Graphics2D g2)

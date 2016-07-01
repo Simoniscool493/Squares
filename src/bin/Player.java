@@ -36,7 +36,7 @@ public class Player extends Entity
 
 	int moving = -1;
 	
-	Player(KeyMapping m,GridPoint g)
+	Player(KeyMapping m,GridPoint g,Color c,Color ccap)
 	{
 		super(g);
 		mapping = m;
@@ -44,7 +44,8 @@ public class Player extends Entity
 		align = 3;
 		clipping = true;
 		points = 0;
-		color = U.p1;
+		color = c;
+		claimColor = ccap; 
 		
 		if(godmode)
 		{
