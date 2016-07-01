@@ -1,6 +1,6 @@
 package bin;
 
-public abstract class ConstructedEntity extends Entity
+public abstract class ConstructedEntity extends Entity implements Cloneable
 {
 	int timer = 0;
 	Player source;
@@ -10,10 +10,7 @@ public abstract class ConstructedEntity extends Entity
 	ConstructedEntity(GridPoint g,Player p)
 	{
 		loc = g;
-		loc.addConstruct(this);
-
 		source = p;
-		DrawApplet.constructs.add(this);
 	}
 	
 	void update()
@@ -27,9 +24,27 @@ public abstract class ConstructedEntity extends Entity
 		loc.removeConstruct();
 	}
 	
-	static int getCost()
+	int getCost()
 	{
 		return 1;
+	}
+	
+	void init()
+	{
+		loc.addConstruct(this);
+		DrawApplet.constructs.add(this);
+	}
+	
+	public Object clone()
+	{  
+	    try
+	    {  
+	        return super.clone();  
+	    }
+	    catch(Exception e)
+	    { 
+	        return null; 
+	    }
 	}
 	
 }

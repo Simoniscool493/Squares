@@ -44,7 +44,7 @@ public class DrawApplet extends JApplet implements ActionListener
 		this.setFont(font);
 		g2.setFont(font);	
 		
-		Grid.wallRect(1,1,10,20,Color.red,30);
+		Grid.wallRect(1,1,10,20,Color.green,30);
 	}
 
 	public void paint(Graphics g)
@@ -110,9 +110,9 @@ public class DrawApplet extends JApplet implements ActionListener
 	
 	public void spawn()
 	{
-		//if(U.r.nextInt()>200000000)
+		if(U.r.nextInt()>200000000)
 		//if(U.r.nextInt()>2100000000)
-		if(false)
+		//if(false)
 		{
 			int w = (int)(Math.random() * gw);
 			int h = (int)(Math.random() * gh);

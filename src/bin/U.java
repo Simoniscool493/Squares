@@ -16,8 +16,8 @@ public final class U
     
 	public static boolean showGrid = true;
 
-	public static int gridWidth = 30;
-	public static int gridHeight = 30;
+	public static int gridWidth = 60;
+	public static int gridHeight = 60;
 	
     public static float incWidth = drawWidth/(float)gridWidth;
     public static float incHeight = drawHeight/(float)gridHeight;

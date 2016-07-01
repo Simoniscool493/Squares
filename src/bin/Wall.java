@@ -2,7 +2,6 @@ package bin;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
-import java.util.logging.Level;
 
 public class Wall extends Entity
 {
@@ -26,9 +25,6 @@ public class Wall extends Entity
 		lv = source.lv;
 		maxHp = hp = lv*2;
 		loc.wallOn();
-		
-		System.out.println("yes");
-
 	}
 	
 	Wall(GridPoint g,int level)

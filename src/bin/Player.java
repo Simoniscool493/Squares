@@ -21,9 +21,11 @@ public class Player extends Entity
 	int laserCost = 10;
 	int energyRegen = 1;
 	
-	int claimCap = 1;
+	int claimCap = 300;
 	
 	Color claimColor = U.p1cap;
+	
+	ConstructedEntity selected = new Turret(null,this,align);
 	
 	boolean buildMode = false;
 	boolean turning = false;
@@ -64,7 +66,7 @@ public class Player extends Entity
 			delete();
 		}
 		
-		//loc.takeControl(this);
+		loc.takeControl(this);
 	}
 	
 	void move(int Xoffs,int Yoffs)
@@ -135,7 +137,7 @@ public class Player extends Entity
 		}
 		if(front().hasConstruct()&&front().construct.source==this)
 		{
-			addBuild(Turret.getCost()/2);
+			addBuild(front().construct.getCost()/2);
 			front().construct.die();
 		}
 	}
@@ -215,7 +217,7 @@ public class Player extends Entity
 	
 	void placeWall()
 	{
-		if((!front().hasWall())&&!(front().isNullPoint())&&takeBuild(1))
+		if((front().isEmpty())&&!(front().isNullPoint())&&takeBuild(1))
 		{
 			new Wall(front(),this);
 		}
@@ -223,13 +225,12 @@ public class Player extends Entity
 	
 	void placeTurret()
 	{
-		if((!front().isNullPoint())&&takeBuild(Turret.getCost()))
+		if((!front().isNullPoint())&&takeBuild(selected.getCost())&&(front().isEmpty()))
 		{
-			if(!(front().hasWall())&&!(front().hasConstruct()))
-			{
-				new Turret(front(),this,align);
-				front().startClaim(this,claimCap/3);
-			}
+			Turret t = (Turret)selected.clone();
+			t.setStats();
+			t.init();
+			front().startClaim(this,claimCap/3);
 		}
 	}
 	

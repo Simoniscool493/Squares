@@ -2,22 +2,28 @@ package bin;
 
 import java.awt.Graphics2D;
 
-public class Turret extends ConstructedEntity
+public class Turret extends ConstructedEntity 
 {
 	static int defaultCost = 20;
 	int buildCost = 20;
-
+	
 	Turret(GridPoint g,Player p,int a)
 	{
 		super(g,p);
 		align = a;
 		color = source.color;
-		System.out.println(buildCost);
 	}
 	
-	static int getCost()
+	int getCost()
 	{
-		return defaultCost;
+		return buildCost;
+	}
+
+	void setStats()
+	{
+		align = source.align;
+		loc = source.front();
+		color = source.color;
 	}
 	
 	void render(Graphics2D g2)
