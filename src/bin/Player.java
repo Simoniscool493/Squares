@@ -34,7 +34,11 @@ public class Player extends Entity
 	boolean active = false;
 	boolean deleting = false;
 
-	int moving = -1;
+	boolean movingUp;
+	boolean movingDown;
+	boolean movingLeft;
+	boolean movingRight;
+	boolean justPressed = false;
 	
 	Player(KeyMapping m,GridPoint g,Color c,Color ccap)
 	{
@@ -90,19 +94,19 @@ public class Player extends Entity
 	
 	void checkMoving()
 	{
-		if(moving == 0)
+		if(movingUp)
 		{
 			move(0,-1);
 		}
-		else if(moving == 1)
+		else if(movingRight)
 		{
 			move(1,0);
 		}
-		else if(moving == 2)
+		else if(movingDown)
 		{
 			move(0,1);
 		}
-		else if(moving == 3)
+		else if(movingLeft)
 		{
 			move(-1,0);
 		}
@@ -119,10 +123,29 @@ public class Player extends Entity
 	
 			super.move(Xoffs, Yoffs);
 		}
-		else
+		else if(justPressed)
 		{
 			front().refresh();
+
+			if(movingUp)
+			{
+				align = 0;
+			}
+			if(movingRight)
+			{
+				align = 1;
+			}
+			if(movingDown)
+			{
+				align = 2;
+			}
+			if(movingLeft)
+			{
+				align = 3;
+			}
+			
 			loc.refresh();
+			justPressed = false;
 		}
 	}
 	

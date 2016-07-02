@@ -30,39 +30,23 @@ public class KeyMapping
 	{
 		if(n==up) //up
 		{
-			p.moving = 0;
-			
-			if(p.turning)
-			{
-				p.align = 0;
-			}
+			p.movingUp = true;
+			p.justPressed = true;	
 		}
 		else if(n==down) //down
 		{
-			p.moving = 2;
-			
-			if(p.turning)
-			{
-				p.align = 2;
-			}	
+			p.movingDown = true;
+			p.justPressed = true;
 		}
 		else if(n==left) //left
 		{
-			p.moving = 3;
-			
-			if(p.turning)
-			{
-				p.align = 3;
-			}	
+			p.movingLeft = true;
+			p.justPressed = true;
 		}
 		else if(n==right) //right
 		{
-			p.moving = 1;
-			
-			if(p.turning)
-			{
-				p.align = 1;
-			}		
+			p.movingRight = true;
+			p.justPressed = true;
 		}
 		else if(n==fire)
 		{
@@ -104,9 +88,21 @@ public class KeyMapping
 		{
 			p.deleting = false;
 		}
-		if(n==up||n==down||n==left||n==right)
+		if(n==up)
 		{
-			p.moving = -1;
+			p.movingUp = false;
+		}
+		if(n==down)
+		{
+			p.movingDown = false;
+		}
+		if(n==left)
+		{
+			p.movingLeft = false;
+		}
+		if(n==right)
+		{
+			p.movingRight = false;
 		}
 	}
 }

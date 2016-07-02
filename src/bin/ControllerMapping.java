@@ -142,9 +142,31 @@ public class ControllerMapping
 	        				Main.da.getKeyInput(621);
 	        			}
 	        		}
+	        		else if(magnitude<0.2)
+	        		{
+        				Main.da.getKeyReleased(621);
+        				Main.da.getKeyReleased(622);
+        				Main.da.getKeyReleased(623);
+        				Main.da.getKeyReleased(624);
+	        		}
 	        		else
 	        		{
-	        			Main.da.getKeyReleased(624);
+	        			if(dir1>305||dir1<45)
+	        			{
+	        				Main.da.getKeyReleased(624);
+	        			}
+	        			else if(dir1>225)
+	        			{
+	        				Main.da.getKeyReleased(623);
+	        			}
+	        			else if(dir1>135)
+	        			{
+	        				Main.da.getKeyReleased(622);
+	        			}
+	        			else if(dir1>45)
+	        			{
+	        				Main.da.getKeyReleased(621);
+	        			};
 	        		}
 	        	}
 	        	public void leftThumbDirection(double direction)
