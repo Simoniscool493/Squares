@@ -36,6 +36,7 @@ public class GridPoint
 	{
 		x = -1;
 		y = -1;
+		
 	}
 	
 	public GridPoint(int pointX,int pointY)
@@ -44,6 +45,23 @@ public class GridPoint
 		y = pointY;
 		background = defaultBackground;
 		changed = true;
+	}
+	
+	public void zoomRender(Graphics2D g2,int newX,int newY)
+	{
+		int realX = this.x;
+		int realY = this.y;
+		this.x = newX;
+		this.y = newY;
+		//width = U.zoomIncWidth;
+		//height = U.zoomIncHeight;
+		
+		render(g2);
+		
+		this.x = realX;
+		this.y = realY;
+		//width = U.incWidth;
+		//height = U.incHeight;
 	}
 
 	public void render(Graphics2D g2)
@@ -318,11 +336,6 @@ public class GridPoint
 			return false;
 		}
 		
-		return true;
-	}
-	
-	public boolean inView()
-	{
 		return true;
 	}
 }

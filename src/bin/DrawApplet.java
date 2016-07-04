@@ -31,13 +31,18 @@ public class DrawApplet extends JApplet implements ActionListener
 	
 	int gw = U.gridWidth;
 	int gh = U.gridHeight;
+	
+	public static int p1startX = 20;
+	public static int p1startY = 20;
 
 	public static Grid g = new Grid();
+	public static ZoomGrid zg = new ZoomGrid(p1startX,p1startY);
+	
 	//up down left right turn fire build place delete
 	public static KeyMapping m1 = new KeyMapping('W','S','A','D','U','H','K','I','J');
 	public static KeyMapping m2 = new KeyMapping(624,622,623,621,604,603,602,619,601);
 
-	public static Player p1 = new Player(m1,Grid.getPoint(40,40),U.p1,U.p1cap);
+	public static Player p1 = new Player(m1,Grid.getPoint(p1startX,p1startY),U.p1,U.p1cap);
 	public static Player p2 = new Player(m2,Grid.getPoint(20,3),U.p2,U.p2cap);
 
 	Timer t = new Timer(50,this);
@@ -53,6 +58,14 @@ public class DrawApplet extends JApplet implements ActionListener
 		g2.setFont(font);	
 		
 		//Grid.wallRect(1,1,40,45,Color.green,30);
+		
+		if(U.zoom)
+		{
+			GridPoint.width = (U.zoomIncWidth);
+			GridPoint.height = (U.zoomIncHeight);
+			Entity.width = (U.zoomIncWidth);
+			Entity.height = (U.zoomIncHeight);
+		}
 	}
 
 	public void paint(Graphics g)
@@ -87,7 +100,7 @@ public class DrawApplet extends JApplet implements ActionListener
 
         spawn();
         
-        System.out.println(projectiles.size());
+        //System.out.println(projectiles.size());
 	}
 	
 	public void update()
@@ -133,14 +146,7 @@ public class DrawApplet extends JApplet implements ActionListener
 	
 	public void zoomRender(Graphics2D g2)
 	{			
-		for(GridPoint g: changed)
-		{
-			if(g.inView())
-			{
-				g.render(g2);
-			}
-		}
-				
+		ZoomGrid.render(g2);
 		changed.clear();
 	}
 	

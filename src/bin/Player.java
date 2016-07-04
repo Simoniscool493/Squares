@@ -114,6 +114,9 @@ public class Player extends Entity
 	
 	void move(int Xoffs,int Yoffs)
 	{
+		int x = loc.x;
+		int y = loc.y;
+		
 		if(!turning)
 		{
 	        if(buildMode)
@@ -122,6 +125,11 @@ public class Player extends Entity
 	        }
 	
 			super.move(Xoffs, Yoffs);
+			
+			if(U.zoom&&((x!=loc.x)||(y!=loc.y)))
+			{
+				ZoomGrid.move(Xoffs,Yoffs);
+			}
 		}
 		else if(justPressed)
 		{

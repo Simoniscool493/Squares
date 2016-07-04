@@ -22,8 +22,9 @@ public final class U
     public static float incWidth = drawWidth/(float)gridWidth;
     public static float incHeight = drawHeight/(float)gridHeight;
     
-    public static boolean zoom = false;
-    public static int zoomRad = 3;
+    public static boolean zoom = true;
+    public static int zoomRad = 20;
+    public static int zoomGridSize = (zoomRad*2) + 1;
     
     public static float zoomIncWidth = drawWidth/(float)((zoomRad*2)+1);
     public static float zoomIncHeight = drawHeight/(float)((zoomRad*2)+1);

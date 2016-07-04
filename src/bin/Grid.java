@@ -11,6 +11,11 @@ public class Grid
 		public void refresh() {};
 		public void drawSelectionBox(Graphics2D g2,Color c) {};
 		public void startClaim(Player p,int c) {};
+		public void zoomRender(Graphics2D g2,int newX,int newY)
+		{
+			g2.setColor(Color.darkGray);
+	        g2.fillRect(((int)(width*newX))+1,((int)(height*newY))+1,((int)width)-1,((int)height)-1);
+		}
 	};
 
 	Grid()
