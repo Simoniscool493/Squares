@@ -26,6 +26,9 @@ public class DrawApplet extends JApplet implements ActionListener
 	static boolean started = false;
 	static boolean refreshScreen = false;
 	
+	static int maxWalls = 100;
+	static int numWalls = 0;
+	
 	int gw = U.gridWidth;
 	int gh = U.gridHeight;
 
@@ -34,7 +37,7 @@ public class DrawApplet extends JApplet implements ActionListener
 	public static KeyMapping m1 = new KeyMapping('W','S','A','D','U','H','K','I','J');
 	public static KeyMapping m2 = new KeyMapping(624,622,623,621,604,603,602,619,601);
 
-	public static Player p1 = new Player(m1,Grid.getPoint(20,2),U.p1,U.p1cap);
+	public static Player p1 = new Player(m1,Grid.getPoint(40,40),U.p1,U.p1cap);
 	public static Player p2 = new Player(m2,Grid.getPoint(20,3),U.p2,U.p2cap);
 
 	Timer t = new Timer(50,this);
@@ -49,7 +52,7 @@ public class DrawApplet extends JApplet implements ActionListener
 		this.setFont(font);
 		g2.setFont(font);	
 		
-		Grid.wallRect(1,1,10,20,Color.green,30);
+		//Grid.wallRect(1,1,40,45,Color.green,30);
 	}
 
 	public void paint(Graphics g)
@@ -69,16 +72,29 @@ public class DrawApplet extends JApplet implements ActionListener
         	refreshScreen = false;
         }
         
-        render(g2);
-        p1.update();
-        p2.update();
+        update();
+        
+        if(U.zoom)
+        {
+        	zoomRender(g2);
+        }
+        else
+        {
+        	fullRender(g2);
+        }
+        
+        m.render(g2);
+
         spawn();
         
-        //System.out.println(p2.movingUp + " " + p2.movingDown + " " + p2.movingLeft + " " + p2.movingRight);
+        System.out.println(projectiles.size());
 	}
 	
-	public void render(Graphics2D g2)
-	{	
+	public void update()
+	{
+        p1.update();
+        p2.update();
+
 		projectiles.removeAll(deadlist);
 		constructs.removeAll(deadlist);
 		deadlist.clear();
@@ -103,20 +119,34 @@ public class DrawApplet extends JApplet implements ActionListener
 		{
 			c.update();
 		}
-				
+	}
+	
+	public void fullRender(Graphics2D g2)
+	{			
 		for(GridPoint g: changed)
 		{
 			g.render(g2);
 		}
 				
 		changed.clear();
-		
-        m.render(g2);
+	}
+	
+	public void zoomRender(Graphics2D g2)
+	{			
+		for(GridPoint g: changed)
+		{
+			if(g.inView())
+			{
+				g.render(g2);
+			}
+		}
+				
+		changed.clear();
 	}
 	
 	public void spawn()
 	{
-		if(U.r.nextInt()>200000000)
+		if(U.r.nextInt()>200000000&&numWalls<maxWalls)
 		//if(U.r.nextInt()>2100000000)
 		//if(false)
 		{
@@ -176,6 +206,7 @@ public class DrawApplet extends JApplet implements ActionListener
 		activeBirthList.clear();
 		activeSpots.clear();
 		activeDeadList.clear();
+		numWalls = 0;
 
 		Grid.init();
 

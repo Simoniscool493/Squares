@@ -22,12 +22,18 @@ public final class U
     public static float incWidth = drawWidth/(float)gridWidth;
     public static float incHeight = drawHeight/(float)gridHeight;
     
+    public static boolean zoom = false;
+    public static int zoomRad = 3;
+    
+    public static float zoomIncWidth = drawWidth/(float)((zoomRad*2)+1);
+    public static float zoomIncHeight = drawHeight/(float)((zoomRad*2)+1);
+
     public static Color gridColor = Color.black;
     public static Color background  = Color.white;
     public static Color wallColor = Color.black;
     public static Color wallHalfColor = Color.gray;
     public static Color p1 = Color.red;
-    public static Color p1cap =  new Color(255, 233, 234);
+    public static Color p1cap =  new Color(255, 213, 214);
     public static Color p2 = Color.blue;
     public static Color p2cap = new Color(204, 235, 255);
 

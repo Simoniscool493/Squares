@@ -8,11 +8,11 @@ public class GridPoint
 {
 	static Color defaultBackground = U.background;
 
-	//static int width = (int)(U.incWidth);
-	//static int height = (int)(U.incHeight);
 	static float width = (U.incWidth);
 	static float height = (U.incHeight);
-
+	static float zoomWidth = (U.zoomIncWidth);
+	static float zoomHeight = (U.zoomIncHeight);
+	static int zoomRad = U.zoomRad;
 	
 	boolean changed;
 	
@@ -318,6 +318,11 @@ public class GridPoint
 			return false;
 		}
 		
+		return true;
+	}
+	
+	public boolean inView()
+	{
 		return true;
 	}
 }

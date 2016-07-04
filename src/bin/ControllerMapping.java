@@ -1,7 +1,7 @@
 package bin;
 
-import ch.aplu.xboxcontroller.XboxController;
-import ch.aplu.xboxcontroller.XboxControllerAdapter;
+//import ch.aplu.xboxcontroller.XboxController;
+//import ch.aplu.xboxcontroller.XboxControllerAdapter;
 
 public class ControllerMapping 
 {
@@ -10,7 +10,7 @@ public class ControllerMapping
 	
 	ControllerMapping()
 	{
-		   XboxController xc = new XboxController();  
+		   /*XboxController xc = new XboxController();  
 	        
 	    	//up down left right turn fire build place delete
 	    	//601,602,603,  604  605, 606, 607,   608,  609);
@@ -199,6 +199,6 @@ public class ControllerMapping
 	        	{
 	        		dir2 = (int)direction;
 	        	}
-	        });
+	        });*/
 	}
 }

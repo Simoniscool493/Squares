@@ -62,21 +62,39 @@ public class Grid
 	{
 		float dw = U.drawWidth;
 		float dh = U.drawHeight;
-		float iw = U.incWidth;
-		float ih = U.incHeight;
 						
 		g2.setColor(U.gridColor);
 		
 		if(U.showGrid)
 		{
-	        for(float i=0;i<dw+10;i+=iw)
-	        {
-	           g2.drawLine((int)i,0,(int)i,(int)dw);
-	        }
-	        for(float i=0;i<dh+10;i+=ih)
-	        {
-	            g2.drawLine(0,(int)i,(int)dw,(int)i);
-	        }
+			if(U.zoom)
+			{
+				float iw = U.zoomIncWidth;
+				float ih = U.zoomIncHeight;
+
+				for(float i=0;i<dw+10;i+=iw)
+		        {
+		           g2.drawLine((int)i,0,(int)i,(int)dw);
+		        }
+		        for(float i=0;i<dh+10;i+=ih)
+		        {
+		            g2.drawLine(0,(int)i,(int)dw,(int)i);
+		        }
+			}
+			else
+			{
+				float iw = U.incWidth;
+				float ih = U.incHeight;
+
+		        for(float i=0;i<dw+10;i+=iw)
+		        {
+		           g2.drawLine((int)i,0,(int)i,(int)dw);
+		        }
+		        for(float i=0;i<dh+10;i+=ih)
+		        {
+		            g2.drawLine(0,(int)i,(int)dw,(int)i);
+		        }
+			}
 		}
 	}
 	

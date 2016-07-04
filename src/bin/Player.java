@@ -5,7 +5,7 @@ import java.awt.Graphics2D;
 
 public class Player extends Entity
 {
-	boolean godmode = false;
+	boolean godmode = true;
 	
 	KeyMapping mapping;
 	
@@ -89,7 +89,7 @@ public class Player extends Entity
 			delete();
 		}
 		
-		loc.takeControl(this);
+		//loc.takeControl(this);
 	}
 	
 	void checkMoving()
@@ -287,7 +287,7 @@ public class Player extends Entity
 	
 	void placeTurret()
 	{
-		if((!front().isNullPoint())&&takeBuild(selected.getCost())&&(front().isEmpty()))
+		if((!front().isNullPoint())&&(front().isEmpty())&&takeBuild(selected.getCost()))
 		{
 			Turret t = (Turret)selected.clone();
 			t.setStats();
