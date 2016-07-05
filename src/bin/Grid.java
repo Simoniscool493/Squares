@@ -14,7 +14,8 @@ public class Grid
 		public void zoomRender(Graphics2D g2,int newX,int newY)
 		{
 			g2.setColor(Color.darkGray);
-	        g2.fillRect(((int)(width*newX))+1,((int)(height*newY))+1,((int)width)-1,((int)height)-1);
+	        g2.fillRect(((int)(width*newX)),((int)(height*newY)),((int)width),((int)height));
+	        //g2.fillRect(((int)(width*newX))+1,((int)(height*newY))+1,((int)width)-1,((int)height)-1);
 		}
 	};
 

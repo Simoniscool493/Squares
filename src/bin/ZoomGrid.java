@@ -20,6 +20,11 @@ public class ZoomGrid
 			Grid.getPoint(x,y).zoomRender(g2,x2,y2);
 		}
 		
+		public void refresh()
+		{
+			Grid.getPoint(x,y).refresh();
+		}
+		
 		public String toString()
 		{
 			return(x + "," + y);
@@ -62,6 +67,7 @@ public class ZoomGrid
 			{
 				zoomGrid[j][i].x += Xoffs;
 				zoomGrid[j][i].y += Yoffs;
+				zoomGrid[j][i].refresh();
 			}
 		}
 	}

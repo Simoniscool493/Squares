@@ -49,26 +49,36 @@ public class GridPoint
 	
 	public void zoomRender(Graphics2D g2,int newX,int newY)
 	{
-		int realX = this.x;
-		int realY = this.y;
-		this.x = newX;
-		this.y = newY;
-		//width = U.zoomIncWidth;
-		//height = U.zoomIncHeight;
-		
-		render(g2);
-		
-		this.x = realX;
-		this.y = realY;
-		//width = U.incWidth;
-		//height = U.incHeight;
+		if(changed)
+		{
+			int realX = this.x;
+			int realY = this.y;
+			this.x = newX;
+			this.y = newY;
+			//width = U.zoomIncWidth;
+			//height = U.zoomIncHeight;
+			
+			render(g2);
+			
+			this.x = realX;
+			this.y = realY;
+			//width = U.incWidth;
+			//height = U.incHeight;
+		}
 	}
 
 	public void render(Graphics2D g2)
 	{
 		g2.setColor(background);
         //g2.fillRect((width*x)+1,(height*y)+1,width-1,height-1);
-        g2.fillRect(((int)(width*x))+1,((int)(height*y))+1,((int)width)-1,((int)height)-1);
+		if(U.showGrid)
+		{
+			g2.fillRect(((int)(width*x))+1,((int)(height*y))+1,((int)width)-1,((int)height)-1);
+		}
+		else
+		{
+			g2.fillRect(((int)(width*x)),((int)(height*y)),((int)width),((int)height));
+		}
         
 		if(hasConstruct())
 		{
