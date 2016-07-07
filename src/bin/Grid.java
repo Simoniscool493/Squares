@@ -50,7 +50,10 @@ public class Grid
 	static void refresh(Graphics2D g2)
 	{
 		drawPoints();
-		drawGrid(g2);
+		if(U.showGrid)	
+		{
+			drawGrid(g2);
+		}
 	}
 	
 	static void drawPoints()
@@ -66,6 +69,7 @@ public class Grid
 	
 	static void drawGrid(Graphics2D g2)
 	{
+
 		float dw = U.drawWidth;
 		float dh = U.drawHeight;
 						
@@ -124,7 +128,7 @@ public class Grid
 		{
 			for(int j=x;j<w;j++)
 			{
-				new Wall(getPoint(i,j),c,10);
+				new Wall(getPoint(i,j),c,lv);
 			}
 		}
 	}

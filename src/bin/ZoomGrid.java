@@ -6,6 +6,7 @@ public class ZoomGrid
 {
 	public class ZoomGridPoint
 	{
+		int prev;
 		int x;
 		int y;
 		
@@ -17,7 +18,12 @@ public class ZoomGrid
 		
 		public void renderPoint(Graphics2D g2,int x2,int y2)
 		{
-			Grid.getPoint(x,y).zoomRender(g2,x2,y2);
+			getPoint().zoomRender(g2,x2,y2);
+		}
+		
+		public GridPoint getPoint()
+		{
+			return Grid.getPoint(x, y);
 		}
 		
 		public void refresh()
@@ -65,9 +71,14 @@ public class ZoomGrid
 		{
 			for(int j = 0;j<gridSize;j++)
 			{
-				zoomGrid[j][i].x += Xoffs;
-				zoomGrid[j][i].y += Yoffs;
-				zoomGrid[j][i].refresh();
+				ZoomGridPoint z = zoomGrid[j][i];
+
+				z.x += Xoffs;
+				z.y += Yoffs;
+
+				GridPoint newp = z.getPoint();
+				
+				z.refresh();
 			}
 		}
 	}

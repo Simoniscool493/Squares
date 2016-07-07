@@ -84,6 +84,13 @@ public class Wall extends Entity
 	void render(Graphics2D g2)
 	{
 		g2.setColor(color);
-        g2.fillRect((int)(width*loc.x)+1,(int)(height*loc.y)+1,(int)width-1,(int)height-1);
+		if(U.showGrid)
+		{
+			g2.fillRect((int)(width*loc.x)+1,(int)(height*loc.y)+1,(int)width-1,(int)height-1);
+        }
+		else
+		{
+			g2.fillRect((int)(width*loc.x),(int)(height*loc.y),(int)width,(int)height);
+		}
 	}
 }

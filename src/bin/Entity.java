@@ -5,10 +5,10 @@ import java.awt.Graphics2D;
 
 public class Entity 
 {
-	//static int width = (int)U.incWidth;
-	//static int height = (int)U.incHeight;
 	static float width = (U.incWidth);
 	static float height = (U.incHeight);
+	//static float width = 0;
+	//static float height = 0;
 
 	static float gridWidth = U.gridWidth;
 	static float gridHeight = U.gridHeight;
@@ -38,11 +38,7 @@ public class Entity
 	void render(Graphics2D g2)
 	{		
 		g2.setColor(color);
-        //g2.fillRect((width*loc.x)+1,(height*loc.y)+1,width-1,height-1);
         g2.fillRect((int)(width*loc.x)+1,(int)(height*loc.y)+1,((int)width)-1,((int)height)-1);
-
-        
-
 	}
 	
 	void move(int Xoffs,int Yoffs)
