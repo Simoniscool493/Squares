@@ -74,6 +74,13 @@ public class Entity
 		}
 	}
 	
+	void place(GridPoint g)
+	{
+		loc.removeEntity(this);
+		loc = g;
+		g.addEntity(this);
+	}
+	
 	void bump(GridPoint g)
 	{
 		

@@ -52,9 +52,8 @@ public final class U
 	
 	private static float getDrawDist()
 	{
-		//double main = (screenSize.getHeight()/1.25f);
-		double main = (screenSize.getHeight()/2f);
-
+		double main = (screenSize.getHeight()/1.25f);
+		//double main = (screenSize.getHeight()/2f);
 		
 		if(!zoom)
 		{

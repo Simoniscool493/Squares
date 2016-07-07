@@ -40,6 +40,8 @@ public class Player extends Entity
 	boolean movingRight;
 	boolean justPressed = false;
 	
+	SelectionBox box;
+	
 	Player(KeyMapping m,GridPoint g,Color c,Color ccap)
 	{
 		super(g);
@@ -119,11 +121,6 @@ public class Player extends Entity
 		
 		if(!turning)
 		{
-	        if(buildMode)
-	        {
-	        	front().refresh();
-	        }
-	
 			super.move(Xoffs, Yoffs);
 			
 			if(U.zoom&&((x!=loc.x)||(y!=loc.y)))
@@ -154,6 +151,11 @@ public class Player extends Entity
 			
 			loc.refresh();
 			justPressed = false;
+		}
+		
+		if(box!=null)
+		{
+			box.place(front());
 		}
 	}
 	
@@ -188,16 +190,7 @@ public class Player extends Entity
         	//g2.fillRect((width*loc.x)+1,(height*loc.y)+height/2-2,5,5);
         	g2.fillRect((curWidth)+1,(curHeight)+(int)height/2-2,5,5);
         }
-       
-        if(turning)
-        {
-        	front().drawSelectionBox(g2, Color.blue);
-        }
-        else if(buildMode)
-        {
-        	front().drawSelectionBox(g2,color);
-        }
-	}
+  	}
 	
 	void delete()
 	{
@@ -315,11 +308,16 @@ public class Player extends Entity
 		if(!buildMode)
 		{
 			loc.refresh();
+			box = new SelectionBox(this,front(),Color.red);
 		}
 		else
 		{
 			loc.refresh();
-			front().refresh();
+			box.die();
+			if(turning)
+			{
+				box = new SelectionBox(this,front(),Color.blue);
+			}
 		}
 		
 		buildMode = !buildMode;
@@ -330,14 +328,22 @@ public class Player extends Entity
 	{
 		turning = true;
 		loc.refresh();
+		if(buildMode)
+		{
+			box.die();
+		}
+		
+		box = new SelectionBox(this,front(),Color.blue);
 	}
 	
 	void stopTurning()
 	{
 		turning = false;
+		box.die();
+
 		if(buildMode)
 		{
-			loc.refresh();
+			box = new SelectionBox(this,front(),Color.red);
 		}
 		else
 		{

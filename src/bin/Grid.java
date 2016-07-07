@@ -9,7 +9,6 @@ public class Grid
 	public static GridPoint nullPoint = new GridPoint()
 	{
 		public void refresh() {};
-		public void drawSelectionBox(Graphics2D g2,Color c) {};
 		public void startClaim(Player p,int c) {};
 		public void zoomRender(Graphics2D g2,int newX,int newY)
 		{

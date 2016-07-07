@@ -29,6 +29,7 @@ public class GridPoint
 	Projectile projectile;
 	Wall wall;
 	ConstructedEntity construct;
+	SelectionBox box;
 	
 	ArrayList<Entity> contents = new ArrayList<Entity>();
 	
@@ -104,18 +105,63 @@ public class GridPoint
 			}
 		}
         
+		if(hasBox())
+		{
+			box.render(g2);
+		}
+		
         changed = false;
 	}
 
 	public void addEntity(Entity e)
 	{
-		contents.add(e);
+		if(e instanceof Wall)
+		{
+			addWall((Wall)e);
+		}
+		else if(e instanceof ConstructedEntity)
+		{
+			addConstruct((ConstructedEntity)e);
+		}
+		else if(e instanceof Projectile)
+		{
+			addProjectile((Projectile)e);
+		}
+		else if(e instanceof SelectionBox)
+		{
+			addBox((SelectionBox)e);
+		}
+		else
+		{
+			contents.add(e);
+		}
+		
 		refresh();
 	}
 	
 	public void removeEntity(Entity e)
 	{
-		contents.remove(e);
+		if(e instanceof Wall)
+		{
+			removeWall();
+		}
+		else if(e instanceof ConstructedEntity)
+		{
+			removeConstruct();
+		}
+		else if(e instanceof Projectile)
+		{
+			removeProjectile();
+		}
+		else if(e instanceof SelectionBox)
+		{
+			removeBox();
+		}
+		else
+		{
+			contents.remove(e);
+		}
+		
 		refresh();
 	}
 	
@@ -137,6 +183,30 @@ public class GridPoint
 	public boolean hasWall()
 	{
 		if(wall == null)
+		{
+			return false;
+		}
+		else
+		{
+			return true;
+		}
+	}
+	
+	public void addBox(SelectionBox s)
+	{
+		box = s;
+		refresh();
+	}
+	
+	public void removeBox()
+	{	
+		box = null;
+		refresh();
+	}
+	
+	public boolean hasBox()
+	{
+		if(box == null)
 		{
 			return false;
 		}
@@ -231,14 +301,6 @@ public class GridPoint
 		{
 			return Grid.getPoint(x-1,y);
 		}	
-	}
-	
-	public void drawSelectionBox(Graphics2D g2,Color c)
-	{
-		g2.setColor(c);
-		//g2.drawRect((width*x)+1, (height*y)+1, width-2, height-2);
-	     g2.drawRect(((int)(width*x))+1,((int)(height*y))+1,((int)width)-2,((int)height)-2);
-
 	}
 	
 	public boolean isNullPoint()
