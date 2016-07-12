@@ -21,6 +21,7 @@ public class Entity
 	boolean clipping = true;
 	Color color = Color.black;
 	
+	
 	Entity(){}
 	
 	Entity(GridPoint g)
@@ -54,8 +55,14 @@ public class Entity
 			//System.out.println("Out Of Bounds " + (x+Xoffs) + " " + (y+Yoffs));
 		}
 		else
-		{
+		{			
 			GridPoint newG = Grid.getPoint(newX,newY);
+			
+			if(U.zoom)
+			{
+				loc.zoomMoved = true;
+				newG.zoomMoved = true;
+			}
 						
 			if((newG.hasWall()||newG.hasConstruct())&&clipping)
 			{

@@ -1,5 +1,6 @@
 package bin;
 
+import java.awt.Color;
 import java.awt.Graphics2D;
 
 public class ZoomGrid 
@@ -7,6 +8,7 @@ public class ZoomGrid
 	public class ZoomGridPoint
 	{
 		int prev;
+		Color prevColor;
 		int x;
 		int y;
 		
@@ -67,6 +69,8 @@ public class ZoomGrid
 	
 	public static void move(int Xoffs,int Yoffs)
 	{
+		int n = 0;
+		
 		for(int i = 0;i<gridSize;i++)
 		{
 			for(int j = 0;j<gridSize;j++)
@@ -78,8 +82,42 @@ public class ZoomGrid
 
 				GridPoint newp = z.getPoint();
 				
-				z.refresh();
+				if(newp.zoomMoved)
+				{
+					z.refresh();
+					n++;
+					newp.zoomMoved=false;
+				}
+				else if(z.prev==1&&newp.hasWall()&&newp.wall.color==z.prevColor)
+				{
+					
+				}
+				/*else if(z.prev==2&&newp.isEmpty()&&newp.background==z.prevColor)
+				{
+					
+				}*/
+				else
+				{
+					z.refresh();
+					n++;
+				}
+				
+				if(newp.hasWall())
+				{
+					z.prev = 1;
+					z.prevColor = newp.wall.color;
+				}
+				/*else if(newp.isEmpty())
+				{
+					z.prev = 2;
+					z.prevColor = newp.background;
+				}*/
+				else
+				{
+					z.prev = 0;
+				}
 			}
 		}
+		System.out.println(n);
 	}
 }

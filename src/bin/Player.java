@@ -10,6 +10,7 @@ public class Player extends Entity
 	KeyMapping mapping;
 	
 	int points;
+	int spots = 0;
 	
 	int toNextLvReq = 10;
 	int toNextLv = 10;

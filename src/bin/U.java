@@ -9,11 +9,11 @@ public final class U
 {
 	public static Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 	
-    public static boolean zoom = true;
+    public static boolean zoom = false;
 	public static boolean showGrid = false;
 
-	public static int gridWidth = 100;
-	public static int gridHeight = 100;
+	public static int gridWidth = 40;
+	public static int gridHeight = 40;
 	
     public static int zoomRad = 15;
     public static int zoomGridSize = (zoomRad*2) + 1;
@@ -35,7 +35,7 @@ public final class U
     public static Color background  = Color.white;
     public static Color wallColor = Color.black;
     public static Color wallHalfColor = Color.gray;
-    public static Color p1 = Color.red;
+    public static Color p1 = Color.blue;
     public static Color p1cap =  new Color(255, 213, 214);
     public static Color p2 = Color.blue;
     public static Color p2cap = new Color(204, 235, 255);

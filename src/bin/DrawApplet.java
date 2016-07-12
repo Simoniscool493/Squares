@@ -32,8 +32,8 @@ public class DrawApplet extends JApplet implements ActionListener
 	int gw = U.gridWidth;
 	int gh = U.gridHeight;
 	
-	public static int p1startX = 20;
-	public static int p1startY = 20;
+	public static int p1startX = 1;
+	public static int p1startY = 1;
 
 	public static Grid g = new Grid();
 	public static ZoomGrid zg = new ZoomGrid(p1startX,p1startY);
@@ -57,7 +57,7 @@ public class DrawApplet extends JApplet implements ActionListener
 		this.setFont(font);
 		g2.setFont(font);	
 		
-		Grid.wallRect(1,1,20,22,Color.green,100);
+		//Grid.wallRect(1,1,20,22,Color.green,100);
 		
 		if(U.zoom)
 		{
@@ -98,9 +98,9 @@ public class DrawApplet extends JApplet implements ActionListener
         
         m.render(g2);
 
-        spawn();
+        //spawn();
         
-        //System.out.println(projectiles.size());
+        System.out.println(p1.spots);
 	}
 	
 	public void update()
@@ -187,6 +187,10 @@ public class DrawApplet extends JApplet implements ActionListener
 		{
 			Grid.coverGrid(40);
 		}
+		else if(n=='3')
+		{
+			p1.loc.startClaim(p1,1);
+		}
 
 		//System.out.println(n);
 	}
@@ -218,6 +222,8 @@ public class DrawApplet extends JApplet implements ActionListener
 
 		p1.loc = Grid.getPoint(p1.loc.x, p1.loc.y);
 		Grid.getPoint(p1.loc.x, p1.loc.y).addEntity(p1);
+		p1.spots = 0;
+		p2.spots = 0;
 
 		Grid.drawPoints();
 	}

@@ -15,6 +15,7 @@ public class GridPoint
 	static int zoomRad = U.zoomRad;
 	
 	boolean changed;
+	boolean zoomMoved = false;
 	
 	Color background;
 
@@ -378,6 +379,7 @@ public class GridPoint
 		if(claimCount>=claimCap)
 		{
 			claimed = true;
+			claimer.spots++;
 			background = claimer.claimColor;
 			DrawApplet.activeDeadList.add(this);
 			refresh();
