@@ -43,7 +43,7 @@ public class DrawApplet extends JApplet implements ActionListener
 	public static KeyMapping m2 = new KeyMapping(624,622,623,621,604,603,602,619,601);
 
 	public static Player p1 = new Player(m1,Grid.getPoint(p1startX,p1startY),U.p1,U.p1cap);
-	public static Player p2 = new Player(m2,Grid.getPoint(20,3),U.p2,U.p2cap);
+	//public static Player p2 = new Player(m2,Grid.getPoint(20,3),U.p2,U.p2cap);
 
 	Timer t = new Timer(50,this);
 	Menu m = new Menu(p1);
@@ -98,15 +98,13 @@ public class DrawApplet extends JApplet implements ActionListener
         
         m.render(g2);
 
-        //spawn();
-        
-        System.out.println(p1.spots);
+        //spawn();        
 	}
 	
 	public void update()
 	{
         p1.update();
-        p2.update();
+        //p2.update();
 
 		projectiles.removeAll(deadlist);
 		constructs.removeAll(deadlist);
@@ -132,6 +130,12 @@ public class DrawApplet extends JApplet implements ActionListener
 		{
 			c.update();
 		}
+
+		if(p1.buildMode&&p1.front().changed)
+		{
+			Menu.selectedChanged = true;
+		}
+
 	}
 	
 	public void fullRender(Graphics2D g2)
@@ -147,7 +151,6 @@ public class DrawApplet extends JApplet implements ActionListener
 	public void zoomRender(Graphics2D g2)
 	{			
 		ZoomGrid.render(g2);
-		changed.clear();
 	}
 	
 	public void spawn()
@@ -171,14 +174,14 @@ public class DrawApplet extends JApplet implements ActionListener
 	public void actionPerformed(ActionEvent e)
 	{
 		p1.regen();
-		p2.regen();
+		//p2.regen();
 		repaint();
 	}
 	
 	public void getKeyInput(int n)
 	{	
 		p1.checkInput(n);
-		p2.checkInput(n);
+		//p2.checkInput(n);
 		if(n=='1')
 		{
 			reset();
@@ -198,7 +201,7 @@ public class DrawApplet extends JApplet implements ActionListener
 	public void getKeyReleased(int n)
 	{
 		p1.checkReleased(n);
-		p2.checkReleased(n);
+		//p2.checkReleased(n);
 	}
 	
 	public void refreshScreen(Graphics2D g2)
@@ -223,7 +226,7 @@ public class DrawApplet extends JApplet implements ActionListener
 		p1.loc = Grid.getPoint(p1.loc.x, p1.loc.y);
 		Grid.getPoint(p1.loc.x, p1.loc.y).addEntity(p1);
 		p1.spots = 0;
-		p2.spots = 0;
+		//p2.spots = 0;
 
 		Grid.drawPoints();
 	}

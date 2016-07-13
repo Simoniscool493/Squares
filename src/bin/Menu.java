@@ -22,6 +22,9 @@ public class Menu
 	float pointsTextY = menuHeight-menuHeight*0.2f;
 	float modeTextX = oWidth+menuWidth*0.2f;
 	float modeTextY = menuHeight-menuHeight*0.3f;
+	float selectedTextX = oWidth+menuWidth*0.2f;
+	float selectedTextY = menuHeight-menuHeight*0.4f;
+
 	
 	Player p;
 	
@@ -29,6 +32,7 @@ public class Menu
 	static boolean levelChanged = true;
 	static boolean modeChanged = true;
 	static boolean buildChanged = true;
+	static boolean selectedChanged = true;
 
 	Color background = U.menu;
 	Color textColor = U.menuText;
@@ -69,8 +73,39 @@ public class Menu
 			modeChanged = false;
 		}
 		
+		if(selectedChanged)
+		{
+			drawSelected(g2);
+		}
+		
 		drawEnergyBar(g2);
 	}	
+	
+	void drawSelected(Graphics2D g2)
+	{
+		drawSelectedText(g2);
+		selectedChanged = false;
+	}
+
+	void drawSelectedText(Graphics2D g2)
+	{
+		g2.setColor(background);
+		g2.fillRect((int)selectedTextX,(int)selectedTextY-menuComponentHeight, (int)(menuWidth/1.2), (int)(menuComponentHeight*1.5));
+		g2.setColor(textColor);
+		
+		String sel;
+		
+		if(p.box==null)
+		{
+			sel = "null";
+		}
+		else
+		{
+			sel = p.box.loc.getContentsName();
+		}
+		
+		g2.drawString("Selected:    " + sel,selectedTextX,selectedTextY);
+	}
 	
 	void drawExpBar(Graphics2D g2)
 	{		

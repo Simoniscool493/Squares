@@ -66,6 +66,8 @@ public class GridPoint
 			this.y = realY;
 			//width = U.incWidth;
 			//height = U.incHeight;
+			
+			changed = false;
 		}
 	}
 
@@ -109,9 +111,7 @@ public class GridPoint
 		if(hasBox())
 		{
 			box.render(g2);
-		}
-		
-        changed = false;
+		}		
 	}
 
 	public void addEntity(Entity e)
@@ -270,8 +270,14 @@ public class GridPoint
 	
 	public void refresh()
 	{
-		changed = true;
-		DrawApplet.changed.add(this);
+		if(U.zoom)
+		{
+			changed = true;
+		}
+		else
+		{
+			DrawApplet.changed.add(this);
+		}
 	}
 
 	public String toString()
@@ -411,5 +417,23 @@ public class GridPoint
 		}
 		
 		return true;
+	}
+	
+	public String getContentsName()
+	{
+		if(hasWall())
+		{
+			return "Wall";
+		}
+		else if(hasProjectile())
+		{
+			return "Projectile";
+		}
+		else if(hasConstruct())
+		{
+			return construct.getClass().toString();
+		}
+		
+		return "Empty";
 	}
 }

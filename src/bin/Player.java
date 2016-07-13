@@ -74,6 +74,8 @@ public class Player extends Entity
 	
 	void update()
 	{		
+		//System.out.println(DrawApplet.changed.size());
+
 		checkMoving();
 		
 		if(active)
@@ -91,7 +93,8 @@ public class Player extends Entity
 		{
 			delete();
 		}
-		
+				
+	
 		//loc.takeControl(this);
 	}
 	
@@ -157,6 +160,10 @@ public class Player extends Entity
 		if(box!=null)
 		{
 			box.place(front());
+			if(buildMode)
+			{
+				Menu.selectedChanged = true;
+			}
 		}
 	}
 	
@@ -323,6 +330,7 @@ public class Player extends Entity
 		
 		buildMode = !buildMode;
 		Menu.modeChanged = true;
+		Menu.selectedChanged = true;
 	}
 	
 	void startTurning()

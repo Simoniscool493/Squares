@@ -26,4 +26,5 @@ public class SelectionBox extends Entity
 		loc.removeBox();
 		source.box = null;
 	}
+	
 }
