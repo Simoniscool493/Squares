@@ -180,5 +180,6 @@ public class Menu
 		levelChanged = true;
 		modeChanged = true;
 		buildChanged = true;
+		selectedChanged = true;
 	}
 }

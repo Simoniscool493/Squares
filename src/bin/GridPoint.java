@@ -31,9 +31,8 @@ public class GridPoint
 	Wall wall;
 	ConstructedEntity construct;
 	SelectionBox box;
-	
-	ArrayList<Entity> contents = new ArrayList<Entity>();
-	
+	Player player;
+		
 	public GridPoint() 
 	{
 		x = -1;
@@ -92,26 +91,20 @@ public class GridPoint
 		{
 			wall.render(g2);
 		}
-		else
-		{	        
-			if(contents!=null)
-			{
-				for(Entity e:contents)
-				{
-					e.render(g2);
-				}
-			}
-			
-			if(hasProjectile())
-			{
-				projectile.render(g2);
-			}
-		}
+		else if(hasProjectile())
+		{
+			projectile.render(g2);
+		}		
         
 		if(hasBox())
 		{
 			box.render(g2);
-		}		
+		}	
+		
+		if(hasPlayer())
+		{
+			player.render(g2);
+		}
 	}
 
 	public void addEntity(Entity e)
@@ -132,9 +125,9 @@ public class GridPoint
 		{
 			addBox((SelectionBox)e);
 		}
-		else
+		else if(e instanceof Player)
 		{
-			contents.add(e);
+			addPlayer((Player)e);
 		}
 		
 		refresh();
@@ -158,9 +151,9 @@ public class GridPoint
 		{
 			removeBox();
 		}
-		else
+		else if(e instanceof Player)
 		{
-			contents.remove(e);
+			removePlayer();
 		}
 		
 		refresh();
@@ -232,6 +225,30 @@ public class GridPoint
 	public boolean hasProjectile()
 	{
 		if(projectile == null)
+		{
+			return false;
+		}
+		else
+		{
+			return true;
+		}
+	}
+	
+	public void addPlayer(Player p)
+	{
+		player = p;
+		refresh();
+	}
+	
+	public void removePlayer()
+	{
+		player = null;
+		refresh();
+	}
+	
+	public boolean hasPlayer()
+	{
+		if(player == null)
 		{
 			return false;
 		}
@@ -411,7 +428,7 @@ public class GridPoint
 	
 	public boolean isEmpty()
 	{
-		if(hasWall()||hasProjectile()||hasConstruct()||!(contents.isEmpty()))
+		if(hasWall()||hasProjectile()||hasConstruct()||hasPlayer())
 		{
 			return false;
 		}
@@ -421,7 +438,11 @@ public class GridPoint
 	
 	public String getContentsName()
 	{
-		if(hasWall())
+		if(hasPlayer())
+		{
+			return "Player";
+		}
+		else if(hasWall())
 		{
 			return "Wall";
 		}
@@ -431,7 +452,8 @@ public class GridPoint
 		}
 		else if(hasConstruct())
 		{
-			return construct.getClass().toString();
+			//return construct.getClass().toString();
+			return String.valueOf(construct.lv);
 		}
 		
 		return "Empty";

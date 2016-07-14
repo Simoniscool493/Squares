@@ -1,21 +1,36 @@
 package bin;
 
-import java.awt.Color;
 import java.awt.Graphics2D;
 
 public class Projectile extends Entity
 {
 	int life;
+	int power;
 	Player source;
 	
-	Projectile(Player p,GridPoint g,int a,int li,Color c)
+	Projectile(Player p,GridPoint g,int li)
 	{
 		loc = g;
 		loc.addProjectile(this);
-		color = c;
-		align = a;
-		life = li;
 		source = p;
+
+		color = source.color;
+		align = source.align;
+		life = li;
+		power = source.lv;
+		DrawApplet.projectiles.add(this);
+	}
+	
+	Projectile(ConstructedEntity e,GridPoint g,int li)
+	{
+		loc = g;
+		loc.addProjectile(this);
+		source = e.source;
+		
+		color = source.color;
+		align = e.align;
+		life = li;
+		power = e.lv;
 		DrawApplet.projectiles.add(this);
 	}
 	
@@ -46,39 +61,6 @@ public class Projectile extends Entity
 		}
 	}
 	
-	void move(int Xoffs,int Yoffs)
-	{
-		loc.refresh();
-
-		int newX = loc.x+Xoffs;
-		int newY = loc.y+Yoffs;
-		
-		if( newX >= gridWidth || newY >= gridHeight || newX<0 || newY<0 )
-		//if out of bounds
-		{
-			die();
-			//System.out.println("Out Of Bounds " + (x+Xoffs) + " " + (y+Yoffs));
-		}
-		else
-		{
-			GridPoint newG = Grid.getPoint(newX,newY);
-			
-			if(!newG.hasWall()||!clipping)
-			{
-				loc.removeProjectile();
-				newG.addProjectile(this);
-
-				newG.refresh();
-				
-				loc = newG;
-			}
-			else
-			{
-				bump(newG);
-			}
-		}
-	}
-	
 	void render(Graphics2D g2)
 	{
 		g2.setColor(color);
@@ -92,6 +74,11 @@ public class Projectile extends Entity
 			g2.fillRect((int)(width*loc.x)+(int)width/2-1,(int)(height*loc.y)+2,3,(int)height-2);
 		}
 	}
+	
+	void outOfBounds()
+	{
+		die();
+	}
 		
 	void bump(GridPoint g)
 	{
@@ -99,7 +86,7 @@ public class Projectile extends Entity
 		
 		if(g.hasWall())
 		{
-			g.wall.damage(source,source.lv);
+			g.wall.damage(source,power);
 			((Player)source).addPoints(1);
 		}
 	}

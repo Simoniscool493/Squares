@@ -28,7 +28,7 @@ public class Player extends Entity
 	
 	Color claimColor = U.p1cap;
 	
-	ConstructedEntity selected = new Turret(null,this,align);
+	ConstructedEntity selected = new Turret(null,this);
 	
 	boolean buildMode = false;
 	boolean turning = false;
@@ -269,7 +269,7 @@ public class Player extends Entity
 	{
 		if(!loc.hasProjectile()&&energy>laserCost-1)
 		{
-			new Projectile(this,loc,align,40,color);
+			new Projectile(this,loc,40);
 			energy-=laserCost;
 		}
 	}

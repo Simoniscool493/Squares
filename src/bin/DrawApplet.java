@@ -50,6 +50,8 @@ public class DrawApplet extends JApplet implements ActionListener
 	
 	Font font = new Font("TimesRoman", Font.PLAIN, 25);
 	
+	static boolean pause;
+	
 	public void init(Graphics2D g2)
 	{
 		Grid.drawGrid(g2);
@@ -98,7 +100,9 @@ public class DrawApplet extends JApplet implements ActionListener
         
         m.render(g2);
 
-        //spawn();        
+        //spawn();  
+        
+        System.out.println(projectiles.size());
 	}
 	
 	public void update()
@@ -173,9 +177,12 @@ public class DrawApplet extends JApplet implements ActionListener
 		
 	public void actionPerformed(ActionEvent e)
 	{
-		p1.regen();
-		//p2.regen();
-		repaint();
+		if(!pause)
+		{
+			p1.regen();
+			//p2.regen();
+			repaint();
+		}
 	}
 	
 	public void getKeyInput(int n)
@@ -193,6 +200,10 @@ public class DrawApplet extends JApplet implements ActionListener
 		else if(n=='3')
 		{
 			p1.loc.startClaim(p1,1);
+		}
+		else if(n==' ')
+		{
+			pause = !pause;
 		}
 
 		//System.out.println(n);

@@ -43,7 +43,6 @@ public class ZoomGrid
 
 	public static ZoomGridPoint[][] zoomGrid = new ZoomGridPoint[gridSize][gridSize];
 	
-	
 	ZoomGrid(int x,int y)
 	{
 		for(int i = 0;i<gridSize;i++)

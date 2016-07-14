@@ -49,15 +49,15 @@ public class Entity
 		int newX = loc.x+Xoffs;
 		int newY = loc.y+Yoffs;
 		
-		if( newX >= gridWidth || newY >= gridHeight || newX<0 || newY<0 )
-		//if out of bounds
+		GridPoint newG = Grid.getPoint(newX,newY);
+
+		if(newG.isNullPoint())
+		//goes out of bounds
 		{
-			//System.out.println("Out Of Bounds " + (x+Xoffs) + " " + (y+Yoffs));
+			outOfBounds();
 		}
 		else
 		{			
-			GridPoint newG = Grid.getPoint(newX,newY);
-			
 			if(U.zoom)
 			{
 				loc.zoomMoved = true;
@@ -65,13 +65,15 @@ public class Entity
 			}
 						
 			if((newG.hasWall()||newG.hasConstruct())&&clipping)
+			//stops
 			{
 				bump(newG);
 			}
 			else
+			//keeps going
 			{
-				loc.contents.remove(this);
-				newG.contents.add(this);
+				loc.removeEntity(this);
+				newG.addEntity(this);
 
 				newG.refresh();
 				
@@ -79,6 +81,11 @@ public class Entity
 				
 			}
 		}
+	}
+	
+	void outOfBounds()
+	{
+		//System.out.println("Out Of Bounds " + (x+Xoffs) + " " + (y+Yoffs));
 	}
 	
 	void place(GridPoint g)

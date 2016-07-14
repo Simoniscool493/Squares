@@ -14,7 +14,6 @@ public class Grid
 		{
 			g2.setColor(Color.darkGray);
 	        g2.fillRect(((int)(width*newX)),((int)(height*newY)),((int)width),((int)height));
-	        //g2.fillRect(((int)(width*newX))+1,((int)(height*newY))+1,((int)width)-1,((int)height)-1);
 		}
 	};
 

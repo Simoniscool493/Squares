@@ -7,11 +7,9 @@ public class Turret extends ConstructedEntity
 	static int defaultCost = 20;
 	int buildCost = 20;
 	
-	Turret(GridPoint g,Player p,int a)
+	Turret(GridPoint g,Player p)
 	{
 		super(g,p);
-		align = a;
-		color = source.color;
 	}
 	
 	int getCost()
@@ -24,11 +22,11 @@ public class Turret extends ConstructedEntity
 		align = source.align;
 		loc = source.front();
 		color = source.color;
+		lv = source.lv;
 	}
 	
 	void render(Graphics2D g2)
 	{
-		
 		int curWidth = ((int)(width*loc.x));
 		int curHeight = ((int)(height*loc.y));
 
@@ -63,7 +61,7 @@ public class Turret extends ConstructedEntity
 		timer++;
 		if(timer == 10)
 		{
-			new Projectile(source,loc,align,20,color);
+			new Projectile(this,loc,20);
 			timer = 0;
 		}
 	}

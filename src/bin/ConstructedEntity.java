@@ -11,6 +11,9 @@ public abstract class ConstructedEntity extends Entity implements Cloneable
 	{
 		loc = g;
 		source = p;
+		lv = source.lv;
+		align = source.align;
+		color = source.color;
 	}
 	
 	void update()
