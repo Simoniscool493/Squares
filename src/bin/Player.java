@@ -329,7 +329,6 @@ public class Player extends Entity
 		}
 		
 		buildMode = !buildMode;
-		Menu.modeChanged = true;
 		Menu.selectedChanged = true;
 	}
 	

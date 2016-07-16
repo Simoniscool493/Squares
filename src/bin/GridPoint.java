@@ -293,7 +293,7 @@ public class GridPoint
 		}
 		else
 		{
-			DrawApplet.changed.add(this);
+			DrawApp.changed.add(this);
 		}
 	}
 
@@ -353,7 +353,7 @@ public class GridPoint
 				claimCap = p.claimCap;
 				background = defaultBackground;
 				claimed = false;
-				DrawApplet.activeDeadList.add(this);
+				DrawApp.activeDeadList.add(this);
 			}
 		}
 		else if(!claimed)
@@ -371,7 +371,7 @@ public class GridPoint
 				refresh();
 				spreadClaim((int)(p.claimCap*1.2));
 
-				DrawApplet.activeDeadList.add(this);
+				DrawApp.activeDeadList.add(this);
 			}
 		}
 		
@@ -383,7 +383,7 @@ public class GridPoint
 		{
 			claimer = p;
 			claimCap = c;
-			DrawApplet.activeBirthList.add(this);
+			DrawApp.activeBirthList.add(this);
 		}
 		else if(p==claimer&&!claimed&!hasWall())
 		{
@@ -391,7 +391,7 @@ public class GridPoint
 			{
 				claimCap=c;
 			}
-			DrawApplet.activeBirthList.add(this);
+			DrawApp.activeBirthList.add(this);
 		}
 	}
 	
@@ -404,7 +404,7 @@ public class GridPoint
 			claimed = true;
 			claimer.spots++;
 			background = claimer.claimColor;
-			DrawApplet.activeDeadList.add(this);
+			DrawApp.activeDeadList.add(this);
 			refresh();
 			spreadClaim((int)(claimCap*1.2));
 		}
@@ -420,9 +420,9 @@ public class GridPoint
 	
 	public void wallOn()
 	{
-		if(DrawApplet.activeSpots.contains(this))
+		if(DrawApp.activeSpots.contains(this))
 		{
-			DrawApplet.activeDeadList.add(this);
+			DrawApp.activeDeadList.add(this);
 		}
 	}
 	

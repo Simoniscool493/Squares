@@ -23,7 +23,7 @@ public abstract class ConstructedEntity extends Entity implements Cloneable
 	
 	void die()
 	{
-		DrawApplet.deadlist.add(this);
+		DrawApp.deadlist.add(this);
 		loc.removeConstruct();
 	}
 	
@@ -35,7 +35,7 @@ public abstract class ConstructedEntity extends Entity implements Cloneable
 	void init()
 	{
 		loc.addConstruct(this);
-		DrawApplet.constructs.add(this);
+		DrawApp.constructs.add(this);
 	}
 	
 	public Object clone()

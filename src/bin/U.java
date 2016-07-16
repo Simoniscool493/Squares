@@ -9,7 +9,7 @@ public final class U
 {
 	public static Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 	
-    public static boolean zoom = true;
+    public static boolean zoom = false;
 	public static boolean showGrid = false;
 
 	public static int gridWidth = 40;

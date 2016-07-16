@@ -18,7 +18,7 @@ public class Projectile extends Entity
 		align = source.align;
 		life = li;
 		power = source.lv;
-		DrawApplet.projectiles.add(this);
+		DrawApp.projectiles.add(this);
 	}
 	
 	Projectile(ConstructedEntity e,GridPoint g,int li)
@@ -31,7 +31,7 @@ public class Projectile extends Entity
 		align = e.align;
 		life = li;
 		power = e.lv;
-		DrawApplet.projectiles.add(this);
+		DrawApp.projectiles.add(this);
 	}
 	
 	void update()
@@ -93,7 +93,7 @@ public class Projectile extends Entity
 	
 	void die()
 	{
-		DrawApplet.deadlist.add(this);
+		DrawApp.deadlist.add(this);
 		loc.removeProjectile();
 	}
 }

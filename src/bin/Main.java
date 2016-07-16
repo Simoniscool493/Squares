@@ -8,7 +8,7 @@ public class Main
 {
 	public static JFrame df = new JFrame("Squares");
 	public static KeyInput k = new KeyInput();
-	public static DrawApplet da = new DrawApplet();
+	public static DrawApp da = new DrawApp();
 	
 	public static int dir1;
 	public static int dir2;
@@ -29,7 +29,7 @@ public class Main
         {
             public void windowDeiconified(WindowEvent e)
             {
-            	DrawApplet.refreshScreen = true;
+            	DrawApp.refreshScreen = true;
             }
         }
         );

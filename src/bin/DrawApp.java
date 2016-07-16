@@ -11,7 +11,7 @@ import java.util.LinkedHashSet;
 import javax.swing.JApplet;
 import javax.swing.Timer;
 
-public class DrawApplet extends JApplet implements ActionListener
+public class DrawApp extends JApplet implements ActionListener
 {
 	private static final long serialVersionUID = 1L;
 	
@@ -102,7 +102,7 @@ public class DrawApplet extends JApplet implements ActionListener
 
         //spawn();  
         
-        System.out.println(projectiles.size());
+        //System.out.println(projectiles.size());
 	}
 	
 	public void update()
