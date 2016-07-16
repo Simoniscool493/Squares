@@ -45,8 +45,9 @@ public class DrawApp extends JApplet implements ActionListener
 	public static Player p1 = new Player(m1,Grid.getPoint(p1startX,p1startY),U.p1,U.p1cap);
 	//public static Player p2 = new Player(m2,Grid.getPoint(20,3),U.p2,U.p2cap);
 
+	public static Menu m = new Menu(p1);
+
 	Timer t = new Timer(50,this);
-	Menu m = new Menu(p1);
 	
 	Font font = new Font("TimesRoman", Font.PLAIN, 25);
 	

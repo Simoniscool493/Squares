@@ -10,6 +10,10 @@ public class Turret extends ConstructedEntity
 	Turret(GridPoint g,Player p)
 	{
 		super(g,p);
+		hp = 5;
+		dislplayName = "Turret";
+		power = p.lv;
+		System.out.println("power");
 	}
 	
 	int getCost()
@@ -23,6 +27,8 @@ public class Turret extends ConstructedEntity
 		loc = source.front();
 		color = source.color;
 		lv = source.lv;
+		power = lv;
+		life = 10;
 	}
 	
 	void render(Graphics2D g2)
@@ -59,9 +65,9 @@ public class Turret extends ConstructedEntity
 	void update()
 	{
 		timer++;
-		if(timer == 10)
+		if(timer == rate)
 		{
-			new Projectile(this,loc,20);
+			new Projectile(this,loc,life,power);
 			timer = 0;
 		}
 	}

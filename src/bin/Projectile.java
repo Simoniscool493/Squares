@@ -21,7 +21,7 @@ public class Projectile extends Entity
 		DrawApp.projectiles.add(this);
 	}
 	
-	Projectile(ConstructedEntity e,GridPoint g,int li)
+	Projectile(ConstructedEntity e,GridPoint g,int li,int p)
 	{
 		loc = g;
 		loc.addProjectile(this);
@@ -30,7 +30,7 @@ public class Projectile extends Entity
 		color = source.color;
 		align = e.align;
 		life = li;
-		power = e.lv;
+		power = p;
 		DrawApp.projectiles.add(this);
 	}
 	

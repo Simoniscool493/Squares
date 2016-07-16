@@ -42,6 +42,11 @@ public class Entity
         g2.fillRect((int)(width*loc.x)+1,(int)(height*loc.y)+1,((int)width)-1,((int)height)-1);
 	}
 	
+	void update()
+	{
+		
+	}
+	
 	void move(int Xoffs,int Yoffs)
 	{
 		loc.refresh();

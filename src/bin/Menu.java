@@ -22,7 +22,7 @@ public class Menu
 	float modeTextY = menuHeight-menuHeight*0.3f;
 	
 	Player p;
-	UpgradeMenu u;
+	static UpgradeMenu u;
 	
 	static boolean pointsChanged = true;
 	static boolean levelChanged = true;

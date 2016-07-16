@@ -2,11 +2,12 @@ package bin;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
-public class UpgradeMenu 
-{
-	int numComponents = 3;
-	
+public class UpgradeMenu
+{	
+	int numComponents = 5;
 	int x;
 	int y;
 	int textAlign;
@@ -36,11 +37,16 @@ public class UpgradeMenu
 	
 	void render(Graphics2D g2)
 	{
-		if(p.buildMode)
+		if(p.buildMode&&p.front().hasConstruct())
 		{
-			drawSelectedText(g2);
-			drawMenuBox(g2,Color.black,"Health",1);
-			drawMenuBox(g2,Color.gray,"Rate",2);
+			ConstructedEntity c = p.front().construct;
+			
+			drawMenuBox(g2,Color.blue,c.dislplayName + " Lv " + c.lv,0);
+			drawMenuBox(g2,Color.black,"Health: " + c.hp,1);
+			drawMenuBox(g2,Color.gray,"Rate: 1/" + c.rate,2);
+			drawMenuBox(g2,Color.red,"Damage: " + c.power,3);
+			drawMenuBox(g2,Color.orange,"Life: " + c.life,4);
+
 		}
 		else
 		{
@@ -49,27 +55,20 @@ public class UpgradeMenu
 		}
 	}
 	
-	void drawSelectedText(Graphics2D g2)
-	{		
-		String sel;
-		
-		if(p.box==null)
-		{
-			sel = "null";
-		}
-		else
-		{
-			sel = p.box.loc.getContentsName();
-		}
-				
-		drawMenuBox(g2,Color.darkGray,sel,0);
-	}
-	
 	void drawMenuBox(Graphics2D g2,Color c,String s,int order)
 	{
 		g2.setColor(c);
 		g2.fillRect(x,y+(componentHeight*order),componentWidth,componentHeight);
 		g2.setColor(textColor);
 		g2.drawString(s,textAlign,(int)(y+textYOffset)+(componentHeight*order));
+	}
+	
+	void mouse(int x,int y)
+	{
+		if(x>this.x&&y>this.y)
+		{
+			int num = (y-this.y)/componentHeight;
+			System.out.println(num);
+		}
 	}
 }

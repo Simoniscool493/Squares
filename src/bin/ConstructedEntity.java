@@ -2,7 +2,11 @@ package bin;
 
 public abstract class ConstructedEntity extends Entity implements Cloneable
 {
+	String dislplayName = "What";
 	int timer = 0;
+	int rate = 10;
+	int power = 10;
+	int life = 10;
 	Player source;
 	
 	ConstructedEntity() {}
@@ -14,11 +18,6 @@ public abstract class ConstructedEntity extends Entity implements Cloneable
 		lv = source.lv;
 		align = source.align;
 		color = source.color;
-	}
-	
-	void update()
-	{
-		
 	}
 	
 	void die()

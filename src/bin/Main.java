@@ -1,7 +1,10 @@
 package bin;
 
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+
 import javax.swing.JFrame;
 
 public class Main 
@@ -30,6 +33,15 @@ public class Main
             public void windowDeiconified(WindowEvent e)
             {
             	DrawApp.refreshScreen = true;
+            }
+        }
+        );
+		
+		da.addMouseListener(new MouseAdapter() 
+        {
+            public void mouseReleased(MouseEvent e)
+            {
+            	Menu.u.mouse(e.getX(),e.getY());
             }
         }
         );
