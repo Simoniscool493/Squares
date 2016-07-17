@@ -2,8 +2,11 @@ package bin;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
+import java.awt.Image;
+import java.io.File;
+import java.io.IOException;
+
+import javax.imageio.ImageIO;
 
 public class UpgradeMenu
 {	
@@ -14,11 +17,15 @@ public class UpgradeMenu
 	int textYOffset;
 	int componentWidth;
 	int componentHeight;
+	int plusStartDistance;
 	Color textColor;
 	Color background;
 	
+	Image plus;
+	
 	Player p;
 	Menu m;
+	ConstructedEntity c;
 	
 	UpgradeMenu(Menu me)
 	{
@@ -33,13 +40,16 @@ public class UpgradeMenu
 		background = m.background;
 		componentWidth = m.menuWidth;
 		componentHeight = m.menuComponentHeight*2;
+		plusStartDistance = x+componentWidth-componentHeight;
+		
+		try { plus = ImageIO.read(new File("data/plus.bmp")); }catch(IOException e) { System.out.println("Plus Image not found");}
 	}
 	
 	void render(Graphics2D g2)
 	{
 		if(p.buildMode&&p.front().hasConstruct())
 		{
-			ConstructedEntity c = p.front().construct;
+			c = p.front().construct;
 			
 			drawMenuBox(g2,Color.blue,c.dislplayName + " Lv " + c.lv,0);
 			drawMenuBox(g2,Color.black,"Health: " + c.hp,1);
@@ -61,14 +71,40 @@ public class UpgradeMenu
 		g2.fillRect(x,y+(componentHeight*order),componentWidth,componentHeight);
 		g2.setColor(textColor);
 		g2.drawString(s,textAlign,(int)(y+textYOffset)+(componentHeight*order));
+		g2.drawImage(plus,plusStartDistance,y+(componentHeight*order),componentHeight,componentHeight,null);
 	}
 	
 	void mouse(int x,int y)
 	{
-		if(x>this.x&&y>this.y)
+		if(x>plusStartDistance&&y>this.y)
 		{
 			int num = (y-this.y)/componentHeight;
-			System.out.println(num);
+			if(c!=null)
+			{
+				upgrade(num);
+			}
 		}
+	}
+	
+	void upgrade(int n)
+	{
+		if(n==1)
+		{
+			c.hp++;
+		}
+		else if(n==2)
+		{
+			c.rate--;
+		}
+		else if(n==3)
+		{
+			c.power++;
+		}
+		else if(n==4)
+		{
+			c.life++;
+		}
+		
+		Menu.selectedChanged = true;
 	}
 }

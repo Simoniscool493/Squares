@@ -74,8 +74,6 @@ public class Player extends Entity
 	
 	void update()
 	{		
-		//System.out.println(DrawApplet.changed.size());
-
 		checkMoving();
 		
 		if(active)
@@ -302,6 +300,7 @@ public class Player extends Entity
 			t.setStats();
 			t.init();
 			front().startClaim(this,claimCap/3);
+			Menu.selectedChanged = true;
 		}
 	}
 	

@@ -61,7 +61,6 @@ public class ZoomGrid
 			for(int j = 0;j<gridSize;j++)
 			{
 				zoomGrid[j][i].renderPoint(g2,j,i);
-				//System.out.println(zoomGrid[j][i]);			
 			}
 		}
 	}
@@ -117,6 +116,5 @@ public class ZoomGrid
 				}
 			}
 		}
-		System.out.println(n);
 	}
 }

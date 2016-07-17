@@ -45,7 +45,10 @@ public class GridPoint
 		x = pointX;
 		y = pointY;
 		background = defaultBackground;
-		changed = true;
+		if(U.zoom)
+		{
+			changed = true;
+		}
 	}
 	
 	public void zoomRender(Graphics2D g2,int newX,int newY)

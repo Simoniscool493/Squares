@@ -4,10 +4,14 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
+import java.io.IOException;
 import java.util.LinkedHashSet;
 
+import javax.imageio.ImageIO;
 import javax.swing.JApplet;
 import javax.swing.Timer;
 
@@ -60,7 +64,7 @@ public class DrawApp extends JApplet implements ActionListener
 		this.setFont(font);
 		g2.setFont(font);	
 		
-		//Grid.wallRect(1,1,20,22,Color.green,100);
+		Grid.wallRect(1,1,20,22,Color.green,100);
 		
 		if(U.zoom)
 		{
@@ -135,12 +139,6 @@ public class DrawApp extends JApplet implements ActionListener
 		{
 			c.update();
 		}
-
-		if(p1.buildMode&&p1.front().changed)
-		{
-			Menu.selectedChanged = true;
-		}
-
 	}
 	
 	public void fullRender(Graphics2D g2)
@@ -206,8 +204,6 @@ public class DrawApp extends JApplet implements ActionListener
 		{
 			pause = !pause;
 		}
-
-		//System.out.println(n);
 	}
 	
 	public void getKeyReleased(int n)

@@ -13,7 +13,6 @@ public class Turret extends ConstructedEntity
 		hp = 5;
 		dislplayName = "Turret";
 		power = p.lv;
-		System.out.println("power");
 	}
 	
 	int getCost()
@@ -65,7 +64,7 @@ public class Turret extends ConstructedEntity
 	void update()
 	{
 		timer++;
-		if(timer == rate)
+		if(timer >= rate)
 		{
 			new Projectile(this,loc,life,power);
 			timer = 0;
