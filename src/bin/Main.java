@@ -18,7 +18,7 @@ public class Main
 	
 	public static void main(String[] args)
 	{		
-        System.out.println("Git version\n");
+        System.out.println("Git version");
           
         //String path = System.getProperty("java.library.path");
         //System.out.println(path);

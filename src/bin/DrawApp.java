@@ -64,7 +64,8 @@ public class DrawApp extends JApplet implements ActionListener
 		this.setFont(font);
 		g2.setFont(font);	
 		
-		Grid.wallRect(1,1,20,22,Color.green,100);
+		//Grid.wallRect(1,1,20,22,Color.green,100);
+		new Turret(p1.front(),p1);
 		
 		if(U.zoom)
 		{

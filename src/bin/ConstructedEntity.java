@@ -18,6 +18,11 @@ public abstract class ConstructedEntity extends Entity implements Cloneable
 		lv = source.lv;
 		align = source.align;
 		color = source.color;
+		
+		if(loc!=null)
+		{
+			loc.addConstruct(this);
+		}
 	}
 	
 	void die()

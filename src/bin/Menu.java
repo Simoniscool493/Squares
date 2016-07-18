@@ -41,7 +41,7 @@ public class Menu
 	void init(Graphics2D g2)
 	{
 		g2.setColor(background);
-		g2.fillRect(oWidth, menuHeight-menuHeight, menuWidth, menuHeight+1);	
+		g2.fillRect(oWidth, menuHeight-menuHeight, menuWidth, menuHeight+1);			
 	}
 	
 	void render(Graphics2D g2)

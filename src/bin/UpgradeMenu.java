@@ -22,6 +22,9 @@ public class UpgradeMenu
 	Color background;
 	
 	Image plus;
+	Image one;
+	Image two;
+	Image three;
 	
 	Player p;
 	Menu m;
@@ -42,7 +45,17 @@ public class UpgradeMenu
 		componentHeight = m.menuComponentHeight*2;
 		plusStartDistance = x+componentWidth-componentHeight;
 		
-		try { plus = ImageIO.read(new File("data/plus.bmp")); }catch(IOException e) { System.out.println("Plus Image not found");}
+		plus = loadImage("plus.bmp");
+		one = loadImage("1.bmp");
+		two = loadImage("2.bmp");
+		three = loadImage("3.bmp");
+	}
+	
+	Image loadImage(String s)
+	{
+		Image i = null;
+		try { i = ImageIO.read(new File("data/"+ s)); }catch(IOException e) { System.out.println(s + " not found");}
+		return i;
 	}
 	
 	void render(Graphics2D g2)
@@ -57,12 +70,21 @@ public class UpgradeMenu
 			drawMenuBox(g2,Color.red,"Damage: " + c.power,3);
 			drawMenuBox(g2,Color.orange,"Life: " + c.life,4);
 
+			drawUpgrades(g2);
 		}
 		else
 		{
 			g2.setColor(background);
-			g2.fillRect(x,y,componentWidth,componentHeight*numComponents);
+			g2.fillRect(x,y,componentWidth,componentHeight*(numComponents+1));
 		}
+	}
+	
+	void drawUpgrades(Graphics2D g2)
+	{
+		g2.setColor(Color.black);
+		g2.drawImage(one,x,y+(componentHeight*numComponents),componentHeight,componentHeight,null);
+		g2.drawImage(two,x+componentHeight,y+(componentHeight*numComponents),componentHeight,componentHeight,null);
+		g2.drawImage(three,x+(componentHeight*2),y+(componentHeight*numComponents),componentHeight,componentHeight,null);		
 	}
 	
 	void drawMenuBox(Graphics2D g2,Color c,String s,int order)
@@ -76,17 +98,26 @@ public class UpgradeMenu
 	
 	void mouse(int x,int y)
 	{
-		if(x>plusStartDistance&&y>this.y)
+		if(y>this.y)
 		{
 			int num = (y-this.y)/componentHeight;
-			if(c!=null)
+
+			if(num==numComponents)
 			{
-				upgrade(num);
+				int num2 = (x-this.x)/componentHeight;
+				if(c!=null)
+				{
+					c.type = num2;			
+				}
+			}
+			else if(c!=null&&x>plusStartDistance)
+			{
+				numericUpgrade(num);
 			}
 		}
 	}
-	
-	void upgrade(int n)
+
+	void numericUpgrade(int n)
 	{
 		if(n==1)
 		{

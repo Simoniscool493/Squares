@@ -68,6 +68,14 @@ public class Turret extends ConstructedEntity
 		{
 			new Projectile(this,loc,life,power);
 			timer = 0;
+			
+			if(type==0)
+			{
+				align = (align+1)%4;
+				loc.refresh();
+			}
 		}
+		
+		
 	}
 }
