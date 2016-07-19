@@ -30,7 +30,7 @@ public class DrawApp extends JApplet implements ActionListener
 	static boolean started = false;
 	static boolean refreshScreen = false;
 	
-	static int maxWalls = 100;
+	static int maxWalls = 500;
 	static int numWalls = 0;
 	
 	int gw = U.gridWidth;
@@ -106,7 +106,7 @@ public class DrawApp extends JApplet implements ActionListener
         
         m.render(g2);
 
-        //spawn();  
+        spawn();  
         
         //System.out.println(projectiles.size());
 	}
@@ -159,7 +159,8 @@ public class DrawApp extends JApplet implements ActionListener
 	
 	public void spawn()
 	{
-		if(U.r.nextInt()>200000000&&numWalls<maxWalls)
+		//if(U.r.nextInt()>200000000&&numWalls<maxWalls)
+		if(U.r.nextInt()>200000000)
 		//if(U.r.nextInt()>2100000000)
 		//if(false)
 		{

@@ -64,7 +64,7 @@ public class UpgradeMenu
 		{
 			c = p.front().construct;
 			
-			drawMenuBox(g2,Color.blue,c.dislplayName + " Lv " + c.lv,0);
+			drawMenuBox(g2,Color.blue,c.dislplayName + " Lv " + c.lv + "   Cost: " + c.buildCost,0);
 			drawMenuBox(g2,Color.black,"Health: " + c.hp,1);
 			drawMenuBox(g2,Color.gray,"Rate: 1/" + c.rate,2);
 			drawMenuBox(g2,Color.red,"Damage: " + c.power,3);
@@ -107,7 +107,7 @@ public class UpgradeMenu
 				int num2 = (x-this.x)/componentHeight;
 				if(c!=null)
 				{
-					c.type = num2;			
+					c.type = num2;	
 				}
 			}
 			else if(c!=null&&x>plusStartDistance)
@@ -119,21 +119,25 @@ public class UpgradeMenu
 
 	void numericUpgrade(int n)
 	{
-		if(n==1)
+		if(n==1&&p.takeBuild(10))
 		{
 			c.hp++;
+			c.buildCost+=10;
 		}
-		else if(n==2)
+		else if(n==2&&p.takeBuild(15))
 		{
 			c.rate--;
+			c.buildCost+=15;
 		}
-		else if(n==3)
+		else if(n==3&&p.takeBuild(13))
 		{
 			c.power++;
+			c.buildCost+=13;
 		}
-		else if(n==4)
+		else if(n==4&&p.takeBuild(12))
 		{
 			c.life++;
+			c.buildCost+=12;
 		}
 		
 		Menu.selectedChanged = true;

@@ -12,7 +12,8 @@ public class Turret extends ConstructedEntity
 		super(g,p);
 		hp = 5;
 		dislplayName = "Turret";
-		power = p.lv;
+		power = 1;
+		life = 10;
 	}
 	
 	int getCost()
@@ -26,8 +27,6 @@ public class Turret extends ConstructedEntity
 		loc = source.front();
 		color = source.color;
 		lv = source.lv;
-		power = lv;
-		life = 10;
 	}
 	
 	void render(Graphics2D g2)
