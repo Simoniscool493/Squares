@@ -3,6 +3,9 @@ package bin;
 public abstract class ConstructedEntity extends Entity implements Cloneable
 {
 	String dislplayName = "What";
+	
+	boolean upgrades[];
+		
 	int timer = 0;
 	int rate = 10;
 	int power = 10;
@@ -12,7 +15,7 @@ public abstract class ConstructedEntity extends Entity implements Cloneable
 	ConstructedEntity() {}
 	
 	ConstructedEntity(GridPoint g,Player p)
-	{
+	{	
 		loc = g;
 		source = p;
 		lv = source.lv;

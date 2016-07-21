@@ -21,14 +21,20 @@ public class UpgradeMenu
 	Color textColor;
 	Color background;
 	
+	int healthCost = 5;
+	int rateCost = 8;
+	int powerCost = 10;
+	int lifeCost = 3;
+	
 	Image plus;
+	Image plusten;
 	Image one;
 	Image two;
 	Image three;
 	
 	Player p;
 	Menu m;
-	ConstructedEntity c;
+	//ConstructedEntity c;
 	
 	UpgradeMenu(Menu me)
 	{
@@ -46,6 +52,7 @@ public class UpgradeMenu
 		plusStartDistance = x+componentWidth-componentHeight;
 		
 		plus = loadImage("plus.bmp");
+		plusten = loadImage("plusten.bmp");
 		one = loadImage("1.bmp");
 		two = loadImage("2.bmp");
 		three = loadImage("3.bmp");
@@ -62,9 +69,9 @@ public class UpgradeMenu
 	{
 		if(p.buildMode&&p.front().hasConstruct())
 		{
-			c = p.front().construct;
+			ConstructedEntity c = p.front().construct;
 			
-			drawMenuBox(g2,Color.blue,c.dislplayName + " Lv " + c.lv + "   Cost: " + c.buildCost,0);
+			drawTitleBox(g2,Color.blue,c.dislplayName + " Lv " + c.lv + "   Cost: " + c.buildCost,0);
 			drawMenuBox(g2,Color.black,"Health: " + c.hp,1);
 			drawMenuBox(g2,Color.gray,"Rate: 1/" + c.rate,2);
 			drawMenuBox(g2,Color.red,"Damage: " + c.power,3);
@@ -94,12 +101,24 @@ public class UpgradeMenu
 		g2.setColor(textColor);
 		g2.drawString(s,textAlign,(int)(y+textYOffset)+(componentHeight*order));
 		g2.drawImage(plus,plusStartDistance,y+(componentHeight*order),componentHeight,componentHeight,null);
+		g2.drawImage(plusten,plusStartDistance-componentHeight,y+(componentHeight*order),componentHeight,componentHeight,null);
+
+	}
+	
+	void drawTitleBox(Graphics2D g2,Color c,String s,int order)
+	{
+		g2.setColor(c);
+		g2.fillRect(x,y+(componentHeight*order),componentWidth,componentHeight);
+		g2.setColor(textColor);
+		g2.drawString(s,textAlign,(int)(y+textYOffset)+(componentHeight*order));
 	}
 	
 	void mouse(int x,int y)
 	{
 		if(y>this.y)
 		{
+			ConstructedEntity c = p.front().construct;
+
 			int num = (y-this.y)/componentHeight;
 
 			if(num==numComponents)
@@ -107,37 +126,51 @@ public class UpgradeMenu
 				int num2 = (x-this.x)/componentHeight;
 				if(c!=null)
 				{
-					c.type = num2;	
+					c.upgrades[num2] = true;	
 				}
 			}
-			else if(c!=null&&x>plusStartDistance)
+			else if(c!=null)
 			{
-				numericUpgrade(num);
+				if(x>plusStartDistance)
+				{
+					numericUpgrade(num,1,c);
+				}
+				else if(x>(plusStartDistance-componentWidth))
+				{
+					numericUpgrade(num,10,c);
+				}
 			}
 		}
 	}
 
-	void numericUpgrade(int n)
+	void numericUpgrade(int n,int count,ConstructedEntity c)
 	{
-		if(n==1&&p.takeBuild(10))
+		int z = count;
+		
+		while(z!=0)
 		{
-			c.hp++;
-			c.buildCost+=10;
-		}
-		else if(n==2&&p.takeBuild(15))
-		{
-			c.rate--;
-			c.buildCost+=15;
-		}
-		else if(n==3&&p.takeBuild(13))
-		{
-			c.power++;
-			c.buildCost+=13;
-		}
-		else if(n==4&&p.takeBuild(12))
-		{
-			c.life++;
-			c.buildCost+=12;
+			if(n==1&&p.takeBuild(healthCost))
+			{
+				c.hp++;
+				c.buildCost+=healthCost;
+			}
+			else if(n==2&&p.takeBuild(rateCost))
+			{
+				c.rate--;
+				c.buildCost+=rateCost;
+			}
+			else if(n==3&&p.takeBuild(powerCost))
+			{
+				c.power++;
+				c.buildCost+=powerCost;
+			}
+			else if(n==4&&p.takeBuild(lifeCost))
+			{
+				c.life++;
+				c.buildCost+=lifeCost;
+			}
+			
+			z--;
 		}
 		
 		Menu.selectedChanged = true;

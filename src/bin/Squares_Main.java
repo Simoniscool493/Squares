@@ -7,7 +7,7 @@ import java.awt.event.WindowEvent;
 
 import javax.swing.JFrame;
 
-public class Main 
+public class Squares_Main 
 {
 	public static JFrame df = new JFrame("Squares");
 	public static KeyInput k = new KeyInput();

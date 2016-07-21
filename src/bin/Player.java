@@ -5,7 +5,7 @@ import java.awt.Graphics2D;
 
 public class Player extends Entity
 {
-	boolean godmode = false;
+	boolean godmode = true;
 	
 	KeyMapping mapping;
 	
@@ -73,7 +73,7 @@ public class Player extends Entity
 	}
 	
 	void update()
-	{		
+	{	
 		checkMoving();
 		
 		if(active)
@@ -206,8 +206,9 @@ public class Player extends Entity
 		}
 		if(front().hasConstruct()&&front().construct.source==this)
 		{
-			addBuild(front().construct.getCost()/2);
+			addBuild(front().construct.buildCost/2);
 			front().construct.die();
+			Menu.selectedChanged = true;
 		}
 	}
 		

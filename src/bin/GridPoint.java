@@ -302,7 +302,7 @@ public class GridPoint
 
 	public String toString()
 	{
-		return Integer.toString(x) + " " + Integer.toString(y) + " ";
+		return Integer.toString(x) + " " + Integer.toString(y);
 	}
 	
 	public void init()

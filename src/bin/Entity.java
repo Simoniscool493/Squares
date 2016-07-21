@@ -18,7 +18,6 @@ public class Entity
 	int lv = 1;
 	int hp;
 	int buildCost = 1;
-	int type = -1;
 	boolean clipping = true;
 	Color color = Color.black;
 	

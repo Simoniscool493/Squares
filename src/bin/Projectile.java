@@ -6,6 +6,7 @@ public class Projectile extends Entity
 {
 	int life;
 	int power;
+	boolean twisting = false;
 	Player source;
 	
 	Projectile(Player p,GridPoint g,int li)
@@ -32,6 +33,11 @@ public class Projectile extends Entity
 		life = li;
 		power = p;
 		DrawApp.projectiles.add(this);
+		
+		if(e.upgrades[1])
+		{
+			twisting = true;
+		}
 	}
 	
 	void update()
@@ -51,6 +57,14 @@ public class Projectile extends Entity
 		else if(align==1) //right
 		{
 			move(1,0);
+		}
+		
+		if(twisting)
+		{
+			if((Math.random() * 3)>2)
+			{
+				align = (int)(Math.random() * 4);
+			}
 		}
 		
 		life--;
