@@ -12,7 +12,7 @@ public class Wall extends Entity
 	Player source;
 	int buildCost = 1;
 	int maxHp;
-	
+		
 	Wall () {}
 	
 	Wall(GridPoint g,Player p)
@@ -53,13 +53,14 @@ public class Wall extends Entity
 		loc.removeWall();
 	}
 	
-	void damage(Player p,int n)
+	boolean damage(Player p,int n)
 	{
 		hp-=n;
 		
 		if(hp<1)
 		{
 			p.kill(this);
+			return true;
 		}
 		else
 		{			
@@ -79,6 +80,8 @@ public class Wall extends Entity
 			
 			loc.refresh();
 		}
+		
+		return false;
 	}
 	
 	void render(Graphics2D g2)

@@ -7,7 +7,7 @@ import java.awt.event.WindowEvent;
 
 import javax.swing.JFrame;
 
-public class Squares_Main 
+public class Main 
 {
 	public static JFrame df = new JFrame("Squares");
 	public static KeyInput k = new KeyInput();
@@ -18,7 +18,7 @@ public class Squares_Main
 	
 	public static void main(String[] args)
 	{		
-        System.out.println("Git version (Squares_Main)");
+        System.out.println("Git version (Main)");
           
         //String path = System.getProperty("java.library.path");
         //System.out.println(path);

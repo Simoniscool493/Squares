@@ -5,7 +5,7 @@ import java.awt.Graphics2D;
 
 public class Player extends Entity
 {
-	boolean godmode = true;
+	boolean godmode = false;
 	
 	KeyMapping mapping;
 	
@@ -19,7 +19,7 @@ public class Player extends Entity
 	int maxEnergy = 150;
 	
 	int build = 50;
-	int maxBuild = 100;
+	int maxBuild = 200;
 
 	int laserCost = 10;
 	int energyRegen = 1;
@@ -240,7 +240,7 @@ public class Player extends Entity
 	}
 	
 	boolean takeBuild(int n)
-	{
+	{		
 		if(build-n<0)
 		{
 			return false;
@@ -257,6 +257,7 @@ public class Player extends Entity
 		if(lv%5==0)
 		{
 			energyRegen++;
+			maxBuild+=5;
 		}
 		toNextLvReq = (int)(toNextLvReq*1.2f);
 		toNextLv+=toNextLvReq;

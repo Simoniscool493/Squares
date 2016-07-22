@@ -42,6 +42,8 @@ public final class U
 
     public static Color menu = Color.darkGray;
     public static Color menuText = Color.white;
+    public static Color menuText2 = Color.gray;
+
 
 	public static Random r = new Random();
 	

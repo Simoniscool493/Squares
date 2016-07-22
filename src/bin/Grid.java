@@ -106,7 +106,7 @@ public class Grid
 		}
 	}
 	
-	static void coverGrid(int f)
+	static void coverGrid(int f,int level)
 	{
 		for(int i=0;i<U.gridWidth;i++)
 		{
@@ -114,7 +114,7 @@ public class Grid
 			{
 				if((int)(Math.random() * 100)<f)
 				{
-					new Wall(getPoint(i,j),1);
+					new Wall(getPoint(i,j),level);
 				}
 			}
 		}

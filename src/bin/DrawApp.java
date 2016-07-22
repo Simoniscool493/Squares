@@ -60,7 +60,7 @@ public class DrawApp extends JApplet implements ActionListener
 		g2.setFont(font);	
 		
 		//Grid.wallRect(1,1,20,22,Color.green,100);
-		new Turret(p1.front(),p1);
+		//new Turret(p1.front(),p1);
 		
 		if(U.zoom)
 		{
@@ -101,7 +101,7 @@ public class DrawApp extends JApplet implements ActionListener
         
         m.render(g2);
 
-        spawn();  
+        //spawn();  
         
         //System.out.println(projectiles.size());
 	}
@@ -181,7 +181,7 @@ public class DrawApp extends JApplet implements ActionListener
 		}
 	}
 	
-	public void getKeyInput(int n)
+	public static void getKeyInput(int n)
 	{	
 		p1.checkInput(n);
 		//p2.checkInput(n);
@@ -191,7 +191,7 @@ public class DrawApp extends JApplet implements ActionListener
 		}
 		else if(n=='2')
 		{
-			Grid.coverGrid(40);
+			Grid.coverGrid(40,50);
 		}
 		else if(n=='3')
 		{
@@ -215,7 +215,7 @@ public class DrawApp extends JApplet implements ActionListener
 		Grid.refresh(g2);
 	}
 	
-	public void reset()
+	public static void reset()
 	{
 		projectiles.clear();
 		constructs.clear();

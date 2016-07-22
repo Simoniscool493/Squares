@@ -8,7 +8,7 @@ public class KeyInput implements KeyListener
 	public void keyPressed(KeyEvent k)
 	{
 		int i = k.getKeyCode();
-		Squares_Main.da.getKeyInput(i);
+		DrawApp.getKeyInput(i);
 	}
 	
 	public void keyTyped(KeyEvent k)
@@ -19,6 +19,6 @@ public class KeyInput implements KeyListener
 	public void keyReleased(KeyEvent k)
 	{
 		int i = k.getKeyCode();
-		Squares_Main.da.getKeyReleased(i);
+		Main.da.getKeyReleased(i);
 	}
 }

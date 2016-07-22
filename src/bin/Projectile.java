@@ -100,8 +100,19 @@ public class Projectile extends Entity
 		
 		if(g.hasWall())
 		{
-			g.wall.damage(source,power);
-			((Player)source).addPoints(1);
+			int residualHp = g.wall.hp;
+			boolean killed = g.wall.damage(source,power);
+			
+			if(!killed)
+			{
+				((Player)source).addPoints(power);
+				System.out.println(power);
+			}
+			else
+			{
+				((Player)source).addPoints(residualHp);
+				System.out.println(residualHp);
+			}
 		}
 	}
 	

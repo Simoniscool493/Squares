@@ -31,6 +31,11 @@ public class Menu
 
 	Color background = U.menu;
 	Color textColor = U.menuText;
+	Color textColor2 = U.menuText2;
+
+	Color expColor = new Color(235,180,0);//orange
+	Color buildColor = new Color(0,200,0);//dark green
+	Color energyColor = Color.blue;
 	
 	Menu(Player player)
 	{
@@ -54,12 +59,12 @@ public class Menu
 		if(pointsChanged)
 		{
 			drawPointsText(g2);
-			drawBar(g2,Color.yellow,expBarY,mapExp());
+			drawBar(g2,expColor,expBarY,mapExp(),"Next: " + p.toNextLv);
 			pointsChanged = false;
 		}
 		if(buildChanged)
 		{
-			drawBar(g2,Color.green,buildBarY,mapBuild());
+			drawBar(g2,buildColor,buildBarY,mapBuild(),p.build + "/" + p.maxBuild);
 			buildChanged = false;
 		}
 		
@@ -69,16 +74,19 @@ public class Menu
 			selectedChanged = false;
 		}
 		
-		drawBar(g2,Color.blue,energyBarY,mapEnergy());
+		drawBar(g2,energyColor,energyBarY,mapEnergy(),p.energy + "/" + p.maxEnergy);
 	}	
 	
-	void drawBar(Graphics2D g2,Color c,int y,int map)
+	void drawBar(Graphics2D g2,Color c,int y,int map,String s)
 	{
 		g2.setColor(Color.black);
 		g2.fillRect(barX,y,barWidth, menuComponentHeight);
-
+		
 		g2.setColor(c);
 		g2.fillRect(barX,y,map, menuComponentHeight);
+		
+		g2.setColor(textColor);
+		g2.drawString(s,barX+menuComponentHeight/2, (int)(y+menuComponentHeight/1.5));
 	}
 		
 
