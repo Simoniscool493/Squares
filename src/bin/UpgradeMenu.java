@@ -72,10 +72,10 @@ public class UpgradeMenu
 			ConstructedEntity c = p.front().construct;
 			
 			drawTitleBox(g2,Color.blue,c.dislplayName + " Lv " + c.lv + "   Cost: " + c.buildCost,0);
-			drawMenuBox(g2,Color.black,"Health: " + c.hp,1);
-			drawMenuBox(g2,Color.gray,"Rate: 1/" + c.rate,2);
-			drawMenuBox(g2,Color.red,"Damage: " + c.power,3);
-			drawMenuBox(g2,Color.orange,"Life: " + c.life,4);
+			drawMenuBox(g2,Color.black,"Health: " + c.hp,1,Integer.toString(healthCost));
+			drawMenuBox(g2,Color.gray,"Rate: 1/" + c.rate,2,Integer.toString(rateCost));
+			drawMenuBox(g2,Color.red,"Damage: " + c.power,3,Integer.toString(powerCost));
+			drawMenuBox(g2,Color.orange,"Life: " + c.life,4,Integer.toString(lifeCost));
 
 			drawUpgrades(g2);
 		}
@@ -94,12 +94,13 @@ public class UpgradeMenu
 		g2.drawImage(three,x+(componentHeight*2),y+(componentHeight*numComponents),componentHeight,componentHeight,null);		
 	}
 	
-	void drawMenuBox(Graphics2D g2,Color c,String s,int order)
+	void drawMenuBox(Graphics2D g2,Color c,String s,int order,String cost)
 	{
 		g2.setColor(c);
 		g2.fillRect(x,y+(componentHeight*order),componentWidth,componentHeight);
 		g2.setColor(textColor);
 		g2.drawString(s,textAlign,(int)(y+textYOffset)+(componentHeight*order));
+		g2.drawString(cost,plusStartDistance-(int)(componentHeight*1.5),(int)(y+textYOffset)+(componentHeight*order));
 		g2.drawImage(plus,plusStartDistance,y+(componentHeight*order),componentHeight,componentHeight,null);
 		g2.drawImage(plusten,plusStartDistance-componentHeight,y+(componentHeight*order),componentHeight,componentHeight,null);
 

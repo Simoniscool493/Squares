@@ -5,7 +5,7 @@ import java.awt.Graphics2D;
 
 public class Player extends Entity
 {
-	boolean godmode = false;
+	boolean godmode = true;
 	
 	KeyMapping mapping;
 	

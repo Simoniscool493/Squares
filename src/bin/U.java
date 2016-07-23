@@ -12,8 +12,8 @@ public final class U
     public static boolean zoom = false;
 	public static boolean showGrid = false;
 
-	public static int gridWidth = 30;
-	public static int gridHeight = 30;
+	public static int gridWidth = 20;
+	public static int gridHeight = 20;
 	
     public static int zoomRad = 15;
     public static int zoomGridSize = (zoomRad*2) + 1;
@@ -21,7 +21,7 @@ public final class U
     public static float drawWidth = getDrawDist();
     public static float drawHeight = getDrawDist();
     
-    public static float menuWidth = (float)screenSize.getHeight()/5f;
+    public static float menuWidth = (float)screenSize.getHeight()/4f;
     
     public static float incWidth = (drawWidth/(float)gridWidth);
     public static float incHeight = (drawHeight/(float)gridHeight);
