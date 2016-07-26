@@ -45,6 +45,7 @@ public class DrawApp extends JApplet implements ActionListener
 	//public static Player p2 = new Player(m2,Grid.getPoint(20,3),U.p2,U.p2cap);
 
 	public static Menu m = new Menu(p1);
+	public static PauseMenu pm = new PauseMenu();
 
 	Timer t = new Timer(50,this);
 	
@@ -82,28 +83,38 @@ public class DrawApp extends JApplet implements ActionListener
             t.start();
             started = true;
         }
-        if(refreshScreen)
-        {
-        	refreshScreen(g2);
-        	refreshScreen = false;
-        }
         
-        update();
-        
-        if(U.zoom)
+        if(!pause)
         {
-        	zoomRender(g2);
+    		p1.regen();
+    		//p2.regen();
+    		
+            if(refreshScreen)
+            {
+            	refreshScreen(g2);
+            	refreshScreen = false;
+            }
+            
+            update();
+            
+            if(U.zoom)
+            {
+            	zoomRender(g2);
+            }
+            else
+            {
+            	fullRender(g2);
+            }
+            
+            m.render(g2);
+
+            //spawn();  
+            //System.out.println(projectiles.size());
         }
         else
         {
-        	fullRender(g2);
+        	pm.render(g2);
         }
-        
-        m.render(g2);
-
-        //spawn();  
-        
-        //System.out.println(projectiles.size());
 	}
 	
 	public void update()
@@ -172,13 +183,8 @@ public class DrawApp extends JApplet implements ActionListener
 	}
 		
 	public void actionPerformed(ActionEvent e)
-	{
-		if(!pause)
-		{
-			p1.regen();
-			//p2.regen();
-			repaint();
-		}
+	{		
+		repaint();
 	}
 	
 	public static void getKeyInput(int n)
@@ -191,7 +197,7 @@ public class DrawApp extends JApplet implements ActionListener
 		}
 		else if(n=='2')
 		{
-			Grid.coverGrid(40,50);
+			Grid.coverGrid(40,1);
 		}
 		else if(n=='3')
 		{
@@ -200,6 +206,11 @@ public class DrawApp extends JApplet implements ActionListener
 		else if(n==' ')
 		{
 			pause = !pause;
+			
+			if(!pause)
+			{
+				refreshScreen = true;
+			}
 		}
 	}
 	

@@ -9,32 +9,33 @@ public class Projectile extends Entity
 	boolean twisting = false;
 	Player source;
 	
-	Projectile(Player p,GridPoint g,int li)
+	Projectile(Player p)
 	{
-		loc = g;
-		loc.addProjectile(this);
 		source = p;
+		loc = p.loc;
+		loc.addProjectile(this);
+
 
 		color = source.color;
 		align = source.align;
-		life = li;
+		life = p.laserLife;
 		power = source.lv;
 		DrawApp.projectiles.add(this);
 	}
 	
-	Projectile(ConstructedEntity e,GridPoint g,int li,int p)
+	Projectile(ConstructedEntity e,int al)
 	{
-		loc = g;
-		loc.addProjectile(this);
 		source = e.source;
+		loc = e.loc;
+		loc.addProjectile(this);
 		
 		color = source.color;
-		align = e.align;
-		life = li;
-		power = p;
+		align = al;
+		life = e.life;
+		power = e.power;
 		DrawApp.projectiles.add(this);
 		
-		if(e.upgrades[1])
+		if(e.upgrades[1]>0)
 		{
 			twisting = true;
 		}
@@ -119,7 +120,7 @@ public class Projectile extends Entity
 	void die()
 	{
 		DrawApp.deadlist.add(this);
-		loc.removeProjectile();
+		loc.removeProjectile(this);
 	}
 }
 

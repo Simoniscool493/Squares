@@ -12,8 +12,8 @@ public class Player extends Entity
 	int points;
 	int spots = 0;
 	
-	int toNextLvReq = 10;
-	int toNextLv = 10;
+	int toNextLvReq = 100;
+	int toNextLv = toNextLvReq;
 	
 	int energy = 150;
 	int maxEnergy = 150;
@@ -21,6 +21,8 @@ public class Player extends Entity
 	int build = 50;
 	int maxBuild = 200;
 
+	int laserLife = 40;
+	
 	int laserCost = 10;
 	int energyRegen = 1;
 	
@@ -269,7 +271,7 @@ public class Player extends Entity
 	{
 		if(!loc.hasProjectile()&&energy>laserCost-1)
 		{
-			new Projectile(this,loc,40);
+			new Projectile(this);
 			energy-=laserCost;
 		}
 	}
@@ -288,9 +290,12 @@ public class Player extends Entity
 	
 	void placeWall()
 	{
-		if((front().isEmpty())&&!(front().isNullPoint())&&takeBuild(1))
+		GridPoint f = front();
+		
+		if((!f.hasWall()&&!f.hasConstruct())&&!(f.isNullPoint())&&takeBuild(1))
 		{
-			new Wall(front(),this);
+			f.clearProjectiles();
+			new Wall(f,this);
 		}
 	}
 	

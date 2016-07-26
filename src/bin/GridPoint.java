@@ -3,6 +3,7 @@ package bin;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.util.ArrayList;
+import java.util.LinkedHashSet;
 
 public class GridPoint 
 {
@@ -27,7 +28,7 @@ public class GridPoint
 	int claimCount = 0;
 	int claimCap = 100;
 	
-	Projectile projectile;
+	ArrayList<Projectile> projectiles;
 	Wall wall;
 	ConstructedEntity construct;
 	SelectionBox box;
@@ -49,6 +50,8 @@ public class GridPoint
 		{
 			changed = true;
 		}
+		
+		projectiles = new ArrayList<Projectile>();
 	}
 	
 	public void zoomRender(Graphics2D g2,int newX,int newY)
@@ -96,7 +99,10 @@ public class GridPoint
 		}
 		else if(hasProjectile())
 		{
-			projectile.render(g2);
+			for(Projectile p:projectiles)
+			{
+				p.render(g2);
+			}
 		}		
         
 		if(hasBox())
@@ -148,7 +154,7 @@ public class GridPoint
 		}
 		else if(e instanceof Projectile)
 		{
-			removeProjectile();
+			removeProjectile((Projectile)e);
 		}
 		else if(e instanceof SelectionBox)
 		{
@@ -215,26 +221,29 @@ public class GridPoint
 	
 	public void addProjectile(Projectile p)
 	{
-		projectile = p;
+		projectiles.add(p);
 		refresh();
 	}
 	
-	public void removeProjectile()
+	public void removeProjectile(Projectile p)
 	{
-		projectile = null;
+		projectiles.remove(p);
 		refresh();
 	}
 	
 	public boolean hasProjectile()
 	{
-		if(projectile == null)
+		return !(projectiles.isEmpty());	
+	}
+	
+	public void clearProjectiles()
+	{
+		for(int i=0;i<projectiles.size();i++)
 		{
-			return false;
+			projectiles.get(i).die();
 		}
-		else
-		{
-			return true;
-		}
+		
+		projectiles.clear();	
 	}
 	
 	public void addPlayer(Player p)

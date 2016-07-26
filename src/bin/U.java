@@ -10,7 +10,7 @@ public final class U
 	public static Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 	
     public static boolean zoom = false;
-	public static boolean showGrid = false;
+	public static boolean showGrid = true;
 
 	public static int gridWidth = 20;
 	public static int gridHeight = 20;
@@ -37,6 +37,8 @@ public final class U
     public static Color wallHalfColor = Color.gray;
     public static Color p1 = Color.blue;
     public static Color p1cap =  new Color(255, 213, 214);
+    //public static Color p1cap =  Color.blue;
+
     public static Color p2 = Color.blue;
     public static Color p2cap = new Color(204, 235, 255);
 

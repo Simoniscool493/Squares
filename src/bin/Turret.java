@@ -15,6 +15,7 @@ public class Turret extends ConstructedEntity
 		power = 1;
 		life = 10;
 		
+		
 	}
 	
 	int getCost()
@@ -29,13 +30,12 @@ public class Turret extends ConstructedEntity
 		color = source.color;
 		lv = source.lv;
 		
-		upgrades = new boolean[4];
+		upgrades = new int[4];
 		
 		for(int i = 0;i<upgrades.length;i++)
 		{
-			upgrades[i] = false;
+			upgrades[i] = 0;
 		}
-
 	}
 	
 	void render(Graphics2D g2)
@@ -74,13 +74,19 @@ public class Turret extends ConstructedEntity
 		timer++;
 		if(timer >= rate)
 		{
-			new Projectile(this,loc,life,power);
+			new Projectile(this,align);
 			timer = 0;
 			
-			if(upgrades[0])
+			if(upgrades[0]==1)
 			{
 				align = (align+1)%4;
 				loc.refresh();
+			}
+			else if(upgrades[0]>1)
+			{
+				new Projectile(this,(align+1)%4);
+				new Projectile(this,(align+2)%4);
+				new Projectile(this,(align+3)%4);
 			}
 		}
 		

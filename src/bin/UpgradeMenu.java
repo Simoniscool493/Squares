@@ -125,9 +125,10 @@ public class UpgradeMenu
 			if(num==numComponents)
 			{
 				int num2 = (x-this.x)/componentHeight;
-				if(c!=null&&p.takeBuild(((num2+1)*50)))
+				
+				if(c!=null&&p.takeBuild(((num2+1)*50)+(c.upgrades[num2]*100)))
 				{
-					c.upgrades[num2] = true;	
+					c.upgrades[num2]++;	
 				}
 			}
 			else if(c!=null)

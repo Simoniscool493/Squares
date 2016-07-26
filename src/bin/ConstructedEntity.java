@@ -4,7 +4,7 @@ public abstract class ConstructedEntity extends Entity implements Cloneable
 {
 	String dislplayName = "What";
 	
-	boolean upgrades[];
+	int upgrades[];
 		
 	int timer = 0;
 	int rate = 10;
