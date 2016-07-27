@@ -41,10 +41,12 @@ public class Main
         {
             public void mouseReleased(MouseEvent e)
             {
-            	Menu.u.mouse(e.getX(),e.getY());
+
+            	da.mouse(e.getX(),e.getY());
             }
         }
         );
+		System.out.println("yes");
 
 		df.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		df.addKeyListener(k);

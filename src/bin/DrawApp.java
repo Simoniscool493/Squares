@@ -211,6 +211,22 @@ public class DrawApp extends JApplet implements ActionListener
 			{
 				refreshScreen = true;
 			}
+			else
+			{
+				pm.changed = true;
+			}
+		}
+	}
+	
+	public void mouse(int x,int y)
+	{		
+		if(pause)
+		{
+			pm.mouse(x,y);
+		}
+		else
+		{
+			Menu.u.mouse(x,y);
 		}
 	}
 	

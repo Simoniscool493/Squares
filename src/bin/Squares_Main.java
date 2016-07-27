@@ -18,7 +18,7 @@ public class Squares_Main
 	
 	public static void main(String[] args)
 	{		
-        System.out.println("Git version (Squares_Main)");
+        System.out.println("Git version (Main)");
           
         //String path = System.getProperty("java.library.path");
         //System.out.println(path);
@@ -41,11 +41,11 @@ public class Squares_Main
         {
             public void mouseReleased(MouseEvent e)
             {
-            	Menu.u.mouse(e.getX(),e.getY());
+            	da.mouse(e.getX(),e.getY());
             }
         }
         );
-
+		
 		df.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		df.addKeyListener(k);
         df.getContentPane().add("Center",da);
