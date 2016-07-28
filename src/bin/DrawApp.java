@@ -44,10 +44,11 @@ public class DrawApp extends JApplet implements ActionListener
 	public static Player p1 = new Player(m1,Grid.getPoint(p1startX,p1startY),U.p1,U.p1cap);
 	//public static Player p2 = new Player(m2,Grid.getPoint(20,3),U.p2,U.p2cap);
 
+	Timer t = new Timer(50,this);
+
 	public static Menu m = new Menu(p1);
 	public static PauseMenu pm = new PauseMenu();
-
-	Timer t = new Timer(50,this);
+	InitMenu im = new InitMenu(this);
 	
 	Font font = new Font("TimesRoman", Font.PLAIN, 25);
 	
@@ -75,16 +76,13 @@ public class DrawApp extends JApplet implements ActionListener
 	public void paint(Graphics g)
 	{
         Graphics2D g2 = (Graphics2D)g;
-
+        
         if(!started)
         {
-        	init(g2);
-        	m.init(g2);
-            t.start();
-            started = true;
+        	im.render(g2);
+        	System.out.println(U.r.nextInt());
         }
-        
-        if(!pause)
+        else if(!pause)
         {
     		p1.regen();
     		//p2.regen();
@@ -219,7 +217,12 @@ public class DrawApp extends JApplet implements ActionListener
 	}
 	
 	public void mouse(int x,int y)
-	{		
+	{	
+		
+		if(!started)
+		{
+			im.mouse(x,y);
+		}
 		if(pause)
 		{
 			pm.mouse(x,y);
@@ -232,8 +235,10 @@ public class DrawApp extends JApplet implements ActionListener
 	
 	public void getKeyReleased(int n)
 	{
-		p1.checkReleased(n);
-		//p2.checkReleased(n);
+		if(started)
+		{
+			p1.checkReleased(n);
+		}
 	}
 	
 	public void refreshScreen(Graphics2D g2)

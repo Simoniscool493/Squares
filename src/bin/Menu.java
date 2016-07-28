@@ -46,7 +46,11 @@ public class Menu
 	void init(Graphics2D g2)
 	{
 		g2.setColor(background);
-		g2.fillRect(oWidth, menuHeight-menuHeight, menuWidth, menuHeight+1);			
+		g2.fillRect(oWidth, 0, menuWidth, menuHeight+1);	
+		pointsChanged = true;
+		levelChanged = true;
+		buildChanged = true;
+		selectedChanged = true;
 	}
 	
 	void render(Graphics2D g2)
@@ -124,9 +128,5 @@ public class Menu
 	void refresh(Graphics2D g2)
 	{
 		init(g2);
-		pointsChanged = true;
-		levelChanged = true;
-		buildChanged = true;
-		selectedChanged = true;
 	}
 }

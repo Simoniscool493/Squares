@@ -18,7 +18,7 @@ public class Squares_Main
 	
 	public static void main(String[] args)
 	{		
-        System.out.println("Git version (Main)");
+        System.out.println("Git version (Squares_Main)");
           
         //String path = System.getProperty("java.library.path");
         //System.out.println(path);
