@@ -10,10 +10,10 @@ public class Turret extends ConstructedEntity
 	Turret(GridPoint g,Player p)
 	{
 		super(g,p);
-		hp = 5;
+		setHp(5);
 		dislplayName = "Turret";
-		power = 1;
-		life = 10;
+		setPower(1);
+		setLife(10);
 		
 		
 	}
@@ -25,44 +25,44 @@ public class Turret extends ConstructedEntity
 
 	void setStats()
 	{
-		align = source.align;
-		loc = source.front();
-		color = source.color;
-		lv = source.lv;
+		setAlign(getSource().getAlign());
+		setLoc(getSource().front());
+		setColor(getSource().getColor());
+		setLv(getSource().getLv());
 		
-		upgrades = new int[4];
+		setUpgrades(new int[4]);
 		
-		for(int i = 0;i<upgrades.length;i++)
+		for(int i = 0;i<getUpgrades().length;i++)
 		{
-			upgrades[i] = 0;
+			getUpgrades()[i] = 0;
 		}
 	}
 	
 	void render(Graphics2D g2)
 	{
-		int curWidth = ((int)(width*loc.x));
-		int curHeight = ((int)(height*loc.y));
+		int curWidth = ((int)(width*getLoc().getX()));
+		int curHeight = ((int)(height*getLoc().getY()));
 
-		g2.setColor(color);
+		g2.setColor(getColor());
         //g2.drawRect((width*loc.x)+5,(height*loc.y)+5,width-10,height-10);
         g2.drawRect((curWidth)+5,(curHeight)+5,((int)(width))-10,((int)height)-10);
         
-        if(align == 0)//up
+        if(getAlign() == 0)//up
         {
         	//g2.fillRect((width*loc.x)+(width/2)-2,(height*loc.y)+1,5,5);
         	g2.fillRect((curWidth)+(int)(width/2)-2,(curHeight)+1,5,5);
         }
-        else if(align == 1)//right
+        else if(getAlign() == 1)//right
         {
         	//g2.fillRect((width*loc.x)+width-5,(height*loc.y)+height/2-2,5,5);
         	g2.fillRect((curWidth)+(int)width-5,(curHeight)+(int)height/2-2,5,5);
         }
-        else if(align == 2)//down
+        else if(getAlign() == 2)//down
         {
         	//g2.fillRect((width*loc.x)+(width/2)-2,(height*loc.y)+height-5,5,5);
         	g2.fillRect((curWidth)+(int)(width/2)-2,(curHeight)+(int)height-5,5,5);
         }
-        else if(align == 3)//left
+        else if(getAlign() == 3)//left
         {
         	//g2.fillRect((width*loc.x)+1,(height*loc.y)+height/2-2,5,5);
         	g2.fillRect((curWidth)+1,(curHeight)+(int)height/2-2,5,5);
@@ -71,22 +71,23 @@ public class Turret extends ConstructedEntity
 	
 	void update()
 	{
-		timer++;
-		if(timer >= rate)
+		setTimer(getTimer()+1);
+		
+		if(getTimer() >= getRate())
 		{
-			new Projectile(this,align);
-			timer = 0;
+			new Projectile(this,getAlign());
+			setTimer(0);
 			
-			if(upgrades[0]==1)
+			if(getUpgrades()[0]==1)
 			{
-				align = (align+1)%4;
-				loc.refresh();
+				setAlign((getAlign()+1)%4);
+				getLoc().refresh();
 			}
-			else if(upgrades[0]>1)
+			else if(getUpgrades()[0]>1)
 			{
-				new Projectile(this,(align+1)%4);
-				new Projectile(this,(align+2)%4);
-				new Projectile(this,(align+3)%4);
+				new Projectile(this,(getAlign()+1)%4);
+				new Projectile(this,(getAlign()+2)%4);
+				new Projectile(this,(getAlign()+3)%4);
 			}
 		}
 		

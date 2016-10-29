@@ -80,13 +80,13 @@ public class ZoomGrid
 
 				GridPoint newp = z.getPoint();
 				
-				if(newp.zoomMoved)
+				if(newp.isZoomMoved())
 				{
 					z.refresh();
 					n++;
-					newp.zoomMoved=false;
+					newp.setZoomMoved(false);
 				}
-				else if(z.prev==1&&newp.hasWall()&&newp.wall.color==z.prevColor)
+				else if(z.prev==1&&newp.hasWall()&&newp.getWall().getColor()==z.prevColor)
 				{
 					
 				}
@@ -103,7 +103,7 @@ public class ZoomGrid
 				if(newp.hasWall())
 				{
 					z.prev = 1;
-					z.prevColor = newp.wall.color;
+					z.prevColor = newp.getWall().getColor();
 				}
 				/*else if(newp.isEmpty())
 				{

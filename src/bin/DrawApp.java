@@ -168,6 +168,7 @@ public class DrawApp extends JApplet implements ActionListener
 		//if(U.r.nextInt()>2100000000)
 		//if(false)
 		{
+			System.out.println("yes");
 			int w = (int)(Math.random() * gw);
 			int h = (int)(Math.random() * gh);
 			int lv = (int)((Math.random()*3)+1);
@@ -199,7 +200,7 @@ public class DrawApp extends JApplet implements ActionListener
 		}
 		else if(n=='3')
 		{
-			p1.loc.startClaim(p1,1);
+			p1.getLoc().startClaim(p1,1);
 		}
 		else if(n==' ')
 		{
@@ -260,9 +261,9 @@ public class DrawApp extends JApplet implements ActionListener
 
 		Grid.init();
 
-		p1.loc = Grid.getPoint(p1.loc.x, p1.loc.y);
-		Grid.getPoint(p1.loc.x, p1.loc.y).addEntity(p1);
-		p1.spots = 0;
+		p1.setLoc(Grid.getPoint(p1.getLoc().getX(), p1.getLoc().getY()));
+		Grid.getPoint(p1.getLoc().getX(), p1.getLoc().getY()).addEntity(p1);
+		p1.setSpots(0);
 		//p2.spots = 0;
 
 		Grid.drawPoints();

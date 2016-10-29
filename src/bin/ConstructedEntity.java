@@ -4,34 +4,34 @@ public abstract class ConstructedEntity extends Entity implements Cloneable
 {
 	String dislplayName = "What";
 	
-	int upgrades[];
+	private int upgrades[];
 		
-	int timer = 0;
-	int rate = 10;
-	int power = 10;
-	int life = 10;
-	Player source;
+	private int timer = 0;
+	private int rate = 10;
+	private int power = 10;
+	private int life = 10;
+	private Player source;
 	
 	ConstructedEntity() {}
 	
 	ConstructedEntity(GridPoint g,Player p)
 	{	
-		loc = g;
-		source = p;
-		lv = source.lv;
-		align = source.align;
-		color = source.color;
+		setLoc(g);
+		setSource(p);
+		setLv(source.getLv());
+		setAlign(source.getAlign());
+		setColor(source.getColor());
 		
-		if(loc!=null)
+		if(this.getLoc()!=null)
 		{
-			loc.addConstruct(this);
+			this.getLoc().addConstruct(this);
 		}
 	}
 	
 	void die()
 	{
 		DrawApp.deadlist.add(this);
-		loc.removeConstruct();
+		getLoc().removeConstruct();
 	}
 	
 	int getCost()
@@ -41,7 +41,7 @@ public abstract class ConstructedEntity extends Entity implements Cloneable
 	
 	void init()
 	{
-		loc.addConstruct(this);
+		getLoc().addConstruct(this);
 		DrawApp.constructs.add(this);
 	}
 	
@@ -57,4 +57,51 @@ public abstract class ConstructedEntity extends Entity implements Cloneable
 	    }
 	}
 	
+	public int[] getUpgrades() {
+		return upgrades;
+	}
+
+	public void setUpgrades(int[] upgrades) {
+		this.upgrades = upgrades;
+	}
+
+	public int getTimer() {
+		return timer;
+	}
+
+	public void setTimer(int timer) {
+		this.timer = timer;
+	}
+
+	public int getRate() {
+		return rate;
+	}
+
+	public void setRate(int rate) {
+		this.rate = rate;
+	}
+
+	public int getPower() {
+		return power;
+	}
+
+	public void setPower(int power) {
+		this.power = power;
+	}
+
+	public int getLife() {
+		return life;
+	}
+
+	public void setLife(int life) {
+		this.life = life;
+	}
+
+	public Player getSource() {
+		return source;
+	}
+
+	public void setSource(Player source) {
+		this.source = source;
+	}
 }

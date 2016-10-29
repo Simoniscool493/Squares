@@ -5,55 +5,55 @@ import java.awt.Graphics2D;
 
 public class Player extends Entity
 {
-	boolean godmode = true;
+	private boolean godmode = true;
 	
 	KeyMapping mapping;
 	
-	int points;
-	int spots = 0;
+	private int points;
+	private int spots = 0;
 	
-	int toNextLvReq = 100;
-	int toNextLv = toNextLvReq;
+	private int toNextLvReq = 100;
+	private int toNextLv = toNextLvReq;
 	
-	int energy = 150;
-	int maxEnergy = 150;
+	private int energy = 150;
+	private int maxEnergy = 150;
 	
-	int build = 50;
-	int maxBuild = 200;
+	private int build = 50;
+	private int maxBuild = 200;
 
-	int laserLife = 40;
+	private int laserLife = 40;
 	
-	int laserCost = 10;
-	int energyRegen = 1;
+	private int laserCost = 10;
+	private int energyRegen = 1;
 	
-	int claimCap = 300;
+	private int claimCap = 300;
 	
-	Color claimColor = U.p1cap;
+	private Color claimColor = U.p1cap;
 	
-	ConstructedEntity selected = new Turret(null,this);
+	private ConstructedEntity selected = new Turret(null,this);
 	
-	boolean buildMode = false;
-	boolean turning = false;
-	boolean active = false;
-	boolean deleting = false;
+	private boolean buildMode = false;
+	private boolean turning = false;
+	private boolean active = false;
+	private boolean deleting = false;
 
-	boolean movingUp;
-	boolean movingDown;
-	boolean movingLeft;
-	boolean movingRight;
-	boolean justPressed = false;
+	private boolean movingUp;
+	private boolean movingDown;
+	private boolean movingLeft;
+	private boolean movingRight;
+	private boolean justPressed = false;
 	
-	SelectionBox box;
+	private SelectionBox box;
 	
 	Player(KeyMapping m,GridPoint g,Color c,Color ccap)
 	{
 		super(g);
 		mapping = m;
 		m.p = this;
-		align = 3;
-		clipping = true;
+		this.setAlign(3);
+		this.setClipping(true);
 		points = 0;
-		color = c;
+		this.setColor(c);
 		claimColor = ccap; 
 		
 		if(godmode)
@@ -120,14 +120,14 @@ public class Player extends Entity
 	
 	void move(int Xoffs,int Yoffs)
 	{
-		int x = loc.x;
-		int y = loc.y;
+		int x = getLoc().getX();
+		int y = getLoc().getY();
 		
 		if(!turning)
 		{
 			super.move(Xoffs, Yoffs);
 			
-			if(U.zoom&&((x!=loc.x)||(y!=loc.y)))
+			if(U.zoom&&((x!=getLoc().getX())||(y!=getLoc().getY())))
 			{
 				ZoomGrid.move(Xoffs,Yoffs);
 			}
@@ -138,22 +138,22 @@ public class Player extends Entity
 
 			if(movingUp)
 			{
-				align = 0;
+				setAlign(0);
 			}
 			if(movingRight)
 			{
-				align = 1;
+				setAlign(1);
 			}
 			if(movingDown)
 			{
-				align = 2;
+				setAlign(2);
 			}
 			if(movingLeft)
 			{
-				align = 3;
+				setAlign(3);
 			}
 			
-			loc.refresh();
+			getLoc().refresh();
 			justPressed = false;
 		}
 		
@@ -169,31 +169,31 @@ public class Player extends Entity
 	
 	void render(Graphics2D g2)
 	{
-		int curWidth = ((int)(width*loc.x));
-		int curHeight = ((int)(height*loc.y));
+		int curWidth = ((int)(width*getLoc().getX()));
+		int curHeight = ((int)(height*getLoc().getY()));
 
-		g2.setColor(color);
+		g2.setColor(getColor());
 		
         //g2.fillRect((width*loc.x)+5,(height*loc.y)+5,width-10,height-10);
         g2.fillRect((curWidth)+5,(curHeight)+5,((int)(width))-10,((int)height)-10);
 
         
-        if(align == 0)//up
+        if(getAlign() == 0)//up
         {
         	//g2.fillRect((width*loc.x)+(width/2)-2,(height*loc.y)+1,5,5);
         	g2.fillRect((curWidth)+(int)(width/2)-2,(curHeight)+1,5,5);
         }
-        else if(align == 1)//right
+        else if(getAlign() == 1)//right
         {
         	//g2.fillRect((width*loc.x)+width-5,(height*loc.y)+height/2-2,5,5);
         	g2.fillRect((curWidth)+(int)width-5,(curHeight)+(int)height/2-2,5,5);
         }
-        else if(align == 2)//down
+        else if(getAlign() == 2)//down
         {
         	//g2.fillRect((width*loc.x)+(width/2)-2,(height*loc.y)+height-5,5,5);
         	g2.fillRect((curWidth)+(int)(width/2)-2,(curHeight)+(int)height-5,5,5);
         }
-        else if(align == 3)//left
+        else if(getAlign() == 3)//left
         {
         	//g2.fillRect((width*loc.x)+1,(height*loc.y)+height/2-2,5,5);
         	g2.fillRect((curWidth)+1,(curHeight)+(int)height/2-2,5,5);
@@ -202,14 +202,14 @@ public class Player extends Entity
 	
 	void delete()
 	{
-		if(front().hasWall()&&front().wall.source==this)
+		if(front().hasWall()&&front().getWall().getSource()==this)
 		{
-			front().wall.die();
+			front().getWall().die();
 		}
-		if(front().hasConstruct()&&front().construct.source==this)
+		if(front().hasConstruct()&&front().getConstruct().getSource()==this)
 		{
-			addBuild(front().construct.buildCost/2);
-			front().construct.die();
+			addBuild(front().getConstruct().getBuildCost()/2);
+			front().getConstruct().die();
 			Menu.selectedChanged = true;
 		}
 	}
@@ -255,8 +255,9 @@ public class Player extends Entity
 	
 	void levelUp()
 	{
-		lv++;
-		if(lv%5==0)
+		setLv(getLv()+1);
+		
+		if(getLv()%5==0)
 		{
 			energyRegen++;
 			maxBuild+=5;
@@ -269,7 +270,7 @@ public class Player extends Entity
 	
 	void laser()
 	{
-		if(!loc.hasProjectile()&&energy>laserCost-1)
+		if(!getLoc().hasProjectile()&&energy>laserCost-1)
 		{
 			new Projectile(this);
 			energy-=laserCost;
@@ -313,7 +314,7 @@ public class Player extends Entity
 	
 	void kill(Entity e)
 	{
-		addBuild(e.buildCost);
+		addBuild(e.getBuildCost());
 		e.die();
 	}
 
@@ -321,12 +322,12 @@ public class Player extends Entity
 	{
 		if(!buildMode)
 		{
-			loc.refresh();
+			getLoc().refresh();
 			box = new SelectionBox(this,front(),Color.red);
 		}
 		else
 		{
-			loc.refresh();
+			getLoc().refresh();
 			box.die();
 			if(turning)
 			{
@@ -341,7 +342,7 @@ public class Player extends Entity
 	void startTurning()
 	{
 		turning = true;
-		loc.refresh();
+		getLoc().refresh();
 		if(buildMode)
 		{
 			box.die();
@@ -364,4 +365,214 @@ public class Player extends Entity
 			front().refresh();
 		}
 	}
+
+	public boolean isGodmode() {
+		return godmode;
+	}
+
+	public void setGodmode(boolean godmode) {
+		this.godmode = godmode;
+	}
+
+	public KeyMapping getMapping() {
+		return mapping;
+	}
+
+	public void setMapping(KeyMapping mapping) {
+		this.mapping = mapping;
+	}
+
+	public int getPoints() {
+		return points;
+	}
+
+	public void setPoints(int points) {
+		this.points = points;
+	}
+
+	public int getSpots() {
+		return spots;
+	}
+
+	public void setSpots(int spots) {
+		this.spots = spots;
+	}
+
+	public int getToNextLvReq() {
+		return toNextLvReq;
+	}
+
+	public void setToNextLvReq(int toNextLvReq) {
+		this.toNextLvReq = toNextLvReq;
+	}
+
+	public int getToNextLv() {
+		return toNextLv;
+	}
+
+	public void setToNextLv(int toNextLv) {
+		this.toNextLv = toNextLv;
+	}
+
+	public int getEnergy() {
+		return energy;
+	}
+
+	public void setEnergy(int energy) {
+		this.energy = energy;
+	}
+
+	public int getMaxEnergy() {
+		return maxEnergy;
+	}
+
+	public void setMaxEnergy(int maxEnergy) {
+		this.maxEnergy = maxEnergy;
+	}
+
+	public int getBuild() {
+		return build;
+	}
+
+	public void setBuild(int build) {
+		this.build = build;
+	}
+
+	public int getMaxBuild() {
+		return maxBuild;
+	}
+
+	public void setMaxBuild(int maxBuild) {
+		this.maxBuild = maxBuild;
+	}
+
+	public int getLaserLife() {
+		return laserLife;
+	}
+
+	public void setLaserLife(int laserLife) {
+		this.laserLife = laserLife;
+	}
+
+	public int getLaserCost() {
+		return laserCost;
+	}
+
+	public void setLaserCost(int laserCost) {
+		this.laserCost = laserCost;
+	}
+
+	public int getEnergyRegen() {
+		return energyRegen;
+	}
+
+	public void setEnergyRegen(int energyRegen) {
+		this.energyRegen = energyRegen;
+	}
+
+	public int getClaimCap() {
+		return claimCap;
+	}
+
+	public void setClaimCap(int claimCap) {
+		this.claimCap = claimCap;
+	}
+
+	public Color getClaimColor() {
+		return claimColor;
+	}
+
+	public void setClaimColor(Color claimColor) {
+		this.claimColor = claimColor;
+	}
+
+	public ConstructedEntity getSelected() {
+		return selected;
+	}
+
+	public void setSelected(ConstructedEntity selected) {
+		this.selected = selected;
+	}
+
+	public boolean isBuildMode() {
+		return buildMode;
+	}
+
+	public void setBuildMode(boolean buildMode) {
+		this.buildMode = buildMode;
+	}
+
+	public boolean isTurning() {
+		return turning;
+	}
+
+	public void setTurning(boolean turning) {
+		this.turning = turning;
+	}
+
+	public boolean isActive() {
+		return active;
+	}
+
+	public void setActive(boolean active) {
+		this.active = active;
+	}
+
+	public boolean isDeleting() {
+		return deleting;
+	}
+
+	public void setDeleting(boolean deleting) {
+		this.deleting = deleting;
+	}
+
+	public boolean isMovingUp() {
+		return movingUp;
+	}
+
+	public void setMovingUp(boolean movingUp) {
+		this.movingUp = movingUp;
+	}
+
+	public boolean isMovingDown() {
+		return movingDown;
+	}
+
+	public void setMovingDown(boolean movingDown) {
+		this.movingDown = movingDown;
+	}
+
+	public boolean isMovingLeft() {
+		return movingLeft;
+	}
+
+	public void setMovingLeft(boolean movingLeft) {
+		this.movingLeft = movingLeft;
+	}
+
+	public boolean isMovingRight() {
+		return movingRight;
+	}
+
+	public void setMovingRight(boolean movingRight) {
+		this.movingRight = movingRight;
+	}
+
+	public boolean isJustPressed() {
+		return justPressed;
+	}
+
+	public void setJustPressed(boolean justPressed) {
+		this.justPressed = justPressed;
+	}
+
+	public SelectionBox getBox() {
+		return box;
+	}
+
+	public void setBox(SelectionBox box) {
+		this.box = box;
+	}
+	
+	
 }

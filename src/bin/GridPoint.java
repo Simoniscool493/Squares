@@ -15,24 +15,24 @@ public class GridPoint
 	static float zoomHeight = (U.zoomIncHeight);
 	static int zoomRad = U.zoomRad;
 	
-	boolean changed;
-	boolean zoomMoved = false;
+	private boolean changed;
+	private boolean zoomMoved = false;
 	
-	Color background;
+	private Color background;
 
-	int x;
-	int y;
+	private int x;
+	private int y;
 	
-	boolean claimed = false;
-	Player claimer;
-	int claimCount = 0;
-	int claimCap = 100;
+	private boolean claimed = false;
+	private Player claimer;
+	private int claimCount = 0;
+	private int claimCap = 100;
 	
-	ArrayList<Projectile> projectiles;
-	Wall wall;
-	ConstructedEntity construct;
-	SelectionBox box;
-	Player player;
+	private ArrayList<Projectile> projectiles;
+	private Wall wall;
+	private ConstructedEntity construct;
+	private SelectionBox box;
+	private Player player;
 		
 	public GridPoint() 
 	{
@@ -354,7 +354,7 @@ public class GridPoint
 		if(claimer==null)
 		{
 			claimer=p;
-			claimCap = p.claimCap;
+			claimCap = p.getClaimCap();
 		}
 		else if(claimer!=p)
 		{
@@ -362,7 +362,7 @@ public class GridPoint
 			if(claimCount==0)
 			{
 				claimer = p;
-				claimCap = p.claimCap;
+				claimCap = p.getClaimCap();
 				background = defaultBackground;
 				claimed = false;
 				DrawApp.activeDeadList.add(this);
@@ -371,17 +371,17 @@ public class GridPoint
 		else if(!claimed)
 		{
 			claimCount++;
-			if(p.claimCap<claimCap)
+			if(p.getClaimCap()<claimCap)
 			{
-				claimCap=p.claimCap;
+				claimCap=p.getClaimCap();
 			}
 			
 			if(claimCount>=claimCap)
 			{
 				claimed = true;
-				background = claimer.claimColor;
+				background = claimer.getClaimColor();
 				refresh();
-				spreadClaim((int)(p.claimCap*1.2));
+				spreadClaim((int)(p.getClaimCap()*1.2));
 
 				DrawApp.activeDeadList.add(this);
 			}
@@ -414,8 +414,8 @@ public class GridPoint
 		if(claimCount>=claimCap)
 		{
 			claimed = true;
-			claimer.spots++;
-			background = claimer.claimColor;
+			claimer.setSpots(claimer.getSpots()+1);;
+			background = claimer.getClaimColor();
 			DrawApp.activeDeadList.add(this);
 			refresh();
 			spreadClaim((int)(claimCap*1.2));
@@ -465,9 +465,123 @@ public class GridPoint
 		else if(hasConstruct())
 		{
 			//return construct.getClass().toString();
-			return String.valueOf(construct.lv);
+			return String.valueOf(construct.getLv());
 		}
 		
 		return "Empty";
 	}
+
+	public boolean isChanged() {
+		return changed;
+	}
+
+	public void setChanged(boolean changed) {
+		this.changed = changed;
+	}
+
+	public boolean isZoomMoved() {
+		return zoomMoved;
+	}
+
+	public void setZoomMoved(boolean zoomMoved) {
+		this.zoomMoved = zoomMoved;
+	}
+
+	public Color getBackground() {
+		return background;
+	}
+
+	public void setBackground(Color background) {
+		this.background = background;
+	}
+
+	public int getX() {
+		return x;
+	}
+
+	public void setX(int x) {
+		this.x = x;
+	}
+
+	public int getY() {
+		return y;
+	}
+
+	public void setY(int y) {
+		this.y = y;
+	}
+
+	public boolean isClaimed() {
+		return claimed;
+	}
+
+	public void setClaimed(boolean claimed) {
+		this.claimed = claimed;
+	}
+
+	public Player getClaimer() {
+		return claimer;
+	}
+
+	public void setClaimer(Player claimer) {
+		this.claimer = claimer;
+	}
+
+	public int getClaimCount() {
+		return claimCount;
+	}
+
+	public void setClaimCount(int claimCount) {
+		this.claimCount = claimCount;
+	}
+
+	public int getClaimCap() {
+		return claimCap;
+	}
+
+	public void setClaimCap(int claimCap) {
+		this.claimCap = claimCap;
+	}
+
+	public ArrayList<Projectile> getProjectiles() {
+		return projectiles;
+	}
+
+	public void setProjectiles(ArrayList<Projectile> projectiles) {
+		this.projectiles = projectiles;
+	}
+
+	public Wall getWall() {
+		return wall;
+	}
+
+	public void setWall(Wall wall) {
+		this.wall = wall;
+	}
+
+	public ConstructedEntity getConstruct() {
+		return construct;
+	}
+
+	public void setConstruct(ConstructedEntity construct) {
+		this.construct = construct;
+	}
+
+	public SelectionBox getBox() {
+		return box;
+	}
+
+	public void setBox(SelectionBox box) {
+		this.box = box;
+	}
+
+	public Player getPlayer() {
+		return player;
+	}
+
+	public void setPlayer(Player player) {
+		this.player = player;
+	}
+	
+	
 }

@@ -5,26 +5,36 @@ import java.awt.Graphics2D;
 
 public class SelectionBox extends Entity
 {
-	Player source;
+	private Player source;
 	
 	SelectionBox(Player p,GridPoint l,Color c)
 	{
-		color = c;
-		source = p;
-		loc = l;
-		loc.addBox(this);
+		setColor(c);
+		setSource(p);
+		setLoc(l);
+		getLoc().addBox(this);
 	}
 	
 	public void render(Graphics2D g2)
 	{
-		g2.setColor(color);
-	    g2.drawRect(((int)(width*loc.x))+1,((int)(height*loc.y))+1,((int)width)-2,((int)height)-2);
+		g2.setColor(getColor());
+	    g2.drawRect(((int)(width*getLoc().getX()))+1,((int)(height*getLoc().getY()))+1,((int)width)-2,((int)height)-2);
 	}
 	
 	public void die()
 	{
-		loc.removeBox();
-		source.box = null;
+		getLoc().removeBox();
+		getSource().setBox(null);
 	}
+
+	public Player getSource() {
+		return source;
+	}
+
+	public void setSource(Player source) {
+		this.source = source;
+	}
+	
+	
 	
 }

@@ -30,27 +30,27 @@ public class KeyMapping
 	{
 		if(n==up) //up
 		{
-			p.movingUp = true;
-			p.justPressed = true;	
+			p.setMovingUp(true);
+			p.setJustPressed(true);
 		}
 		else if(n==down) //down
 		{
-			p.movingDown = true;
-			p.justPressed = true;
+			p.setMovingDown(true);
+			p.setJustPressed(true);
 		}
 		else if(n==left) //left
 		{
-			p.movingLeft = true;
-			p.justPressed = true;
+			p.setMovingLeft(true);
+			p.setJustPressed(true);
 		}
 		else if(n==right) //right
 		{
-			p.movingRight = true;
-			p.justPressed = true;
+			p.setMovingRight(true);
+			p.setJustPressed(true);
 		}
 		else if(n==fire)
 		{
-			p.active = true;
+			p.setActive(true);
 		}
 		else if(n==build)
 		{
@@ -64,13 +64,13 @@ public class KeyMapping
 		{
 			p.startTurning();
 		}
-		else if(n==delete&&!p.active&&p.buildMode)
+		else if(n==delete&&!p.isActive()&&p.isBuildMode())
 		{
-			p.deleting = true;
+			p.setDeleting(true);
 		}
 		else if(n=='X')
 		{
-			p.loc.takeControl(p);
+			p.getLoc().takeControl(p);
 		}
 	}
 	
@@ -82,27 +82,27 @@ public class KeyMapping
 		}
 		if(n==fire)
 		{
-			p.active = false;
+			p.setActive(false);
 		}
 		if(n==delete)
 		{
-			p.deleting = false;
+			p.setDeleting(false);
 		}
 		if(n==up)
 		{
-			p.movingUp = false;
+			p.setMovingUp(false);
 		}
 		if(n==down)
 		{
-			p.movingDown = false;
+			p.setMovingDown(false);
 		}
 		if(n==left)
 		{
-			p.movingLeft = false;
+			p.setMovingLeft(false);
 		}
 		if(n==right)
 		{
-			p.movingRight = false;
+			p.setMovingRight(false);
 		}
 	}
 }

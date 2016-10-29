@@ -67,15 +67,15 @@ public class UpgradeMenu
 	
 	void render(Graphics2D g2)
 	{
-		if(p.buildMode&&p.front().hasConstruct())
+		if(p.isBuildMode()&&p.front().hasConstruct())
 		{
-			ConstructedEntity c = p.front().construct;
+			ConstructedEntity c = p.front().getConstruct();
 			
-			drawTitleBox(g2,Color.blue,c.dislplayName + " Lv " + c.lv + "   Cost: " + c.buildCost,0);
-			drawMenuBox(g2,Color.black,"Health: " + c.hp,1,Integer.toString(healthCost));
-			drawMenuBox(g2,Color.gray,"Rate: 1/" + c.rate,2,Integer.toString(rateCost));
-			drawMenuBox(g2,Color.red,"Damage: " + c.power,3,Integer.toString(powerCost));
-			drawMenuBox(g2,Color.orange,"Life: " + c.life,4,Integer.toString(lifeCost));
+			drawTitleBox(g2,Color.blue,c.dislplayName + " Lv " + c.getLv() + "   Cost: " + c.getBuildCost(),0);
+			drawMenuBox(g2,Color.black,"Health: " + c.getHp(),1,Integer.toString(healthCost));
+			drawMenuBox(g2,Color.gray,"Rate: 1/" + c.getRate(),2,Integer.toString(rateCost));
+			drawMenuBox(g2,Color.red,"Damage: " + c.getPower(),3,Integer.toString(powerCost));
+			drawMenuBox(g2,Color.orange,"Life: " + c.getLife(),4,Integer.toString(lifeCost));
 
 			drawUpgrades(g2);
 		}
@@ -118,7 +118,7 @@ public class UpgradeMenu
 	{
 		if(y>this.y)
 		{
-			ConstructedEntity c = p.front().construct;
+			ConstructedEntity c = p.front().getConstruct();
 
 			int num = (y-this.y)/componentHeight;
 
@@ -126,9 +126,11 @@ public class UpgradeMenu
 			{
 				int num2 = (x-this.x)/componentHeight;
 				
-				if(c!=null&&p.takeBuild(((num2+1)*50)+(c.upgrades[num2]*100)))
+				if(c!=null&&p.takeBuild(((num2+1)*50)+(c.getUpgrades()[num2]*100)))
 				{
-					c.upgrades[num2]++;	
+					c.getUpgrades()[num2]++;	
+					//problems??
+					//c.upgrades[num2]++;	
 				}
 			}
 			else if(c!=null)
@@ -153,23 +155,23 @@ public class UpgradeMenu
 		{
 			if(n==1&&p.takeBuild(healthCost))
 			{
-				c.hp++;
-				c.buildCost+=healthCost;
+				c.setHp(c.getHp()+1);
+				c.setBuildCost(c.getBuildCost()+healthCost);
 			}
 			else if(n==2&&p.takeBuild(rateCost))
 			{
-				c.rate--;
-				c.buildCost+=rateCost;
+				c.setRate(c.getRate()-1);
+				c.setBuildCost(c.getBuildCost()+rateCost);
 			}
 			else if(n==3&&p.takeBuild(powerCost))
 			{
-				c.power++;
-				c.buildCost+=powerCost;
+				c.setPower(c.getPower()+1);
+				c.setBuildCost(c.getBuildCost()+powerCost);
 			}
 			else if(n==4&&p.takeBuild(lifeCost))
 			{
-				c.life++;
-				c.buildCost+=lifeCost;
+				c.setLife(c.getLife()+1);
+				c.setBuildCost(c.getBuildCost()+lifeCost);
 			}
 			
 			z--;

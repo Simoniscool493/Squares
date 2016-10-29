@@ -4,38 +4,38 @@ import java.awt.Graphics2D;
 
 public class Projectile extends Entity
 {
-	int life;
-	int power;
-	boolean twisting = false;
-	Player source;
+	private int life;
+	private int power;
+	private boolean twisting = false;
+	private Player source;
 	
 	Projectile(Player p)
 	{
-		source = p;
-		loc = p.loc;
-		loc.addProjectile(this);
+		setSource(p);
+		setLoc(p.getLoc());
+		getLoc().addProjectile(this);
 
-
-		color = source.color;
-		align = source.align;
-		life = p.laserLife;
-		power = source.lv;
+		setColor(source.getColor());
+		setAlign(source.getAlign());
+		setLife(source.getLaserLife());
+		setPower(source.getLv());
+		
 		DrawApp.projectiles.add(this);
 	}
 	
 	Projectile(ConstructedEntity e,int al)
 	{
-		source = e.source;
-		loc = e.loc;
-		loc.addProjectile(this);
+		setSource(e.getSource());
+		setLoc(e.getLoc());
+		getLoc().addProjectile(this);
 		
-		color = source.color;
-		align = al;
-		life = e.life;
-		power = e.power;
+		setColor(source.getColor());
+		setAlign(al);
+		setLife(e.getLife());
+		setPower(e.getPower());
 		DrawApp.projectiles.add(this);
 		
-		if(e.upgrades[1]>0)
+		if(e.getUpgrades()[1]>0)
 		{
 			twisting = true;
 		}
@@ -43,19 +43,19 @@ public class Projectile extends Entity
 	
 	void update()
 	{
-		if(align==0) //up
+		if(getAlign()==0) //up
 		{
 			move(0,-1);
 		}
-		else if(align==2) //down
+		else if(getAlign()==2) //down
 		{
 			move(0,1);
 		}
-		else if(align==3) //left
+		else if(getAlign()==3) //left
 		{
 			move(-1,0);
 		}
-		else if(align==1) //right
+		else if(getAlign()==1) //right
 		{
 			move(1,0);
 		}
@@ -64,7 +64,7 @@ public class Projectile extends Entity
 		{
 			if((Math.random() * 3)>2)
 			{
-				align = (int)(Math.random() * 4);
+				setAlign((int)(Math.random() * 4));
 			}
 		}
 		
@@ -78,15 +78,15 @@ public class Projectile extends Entity
 	
 	void render(Graphics2D g2)
 	{
-		g2.setColor(color);
+		g2.setColor(getColor());
 		
-		if(align == 1||align == 3)//horizontal
+		if(getAlign() == 1||getAlign() == 3)//horizontal
 		{
-			g2.fillRect((int)(width*loc.x)+2,(int)(height*loc.y)+(int)height/2-1,(int)width-2,3);
+			g2.fillRect((int)(width*getLoc().getX())+2,(int)(height*getLoc().getY())+(int)height/2-1,(int)width-2,3);
 		}
 		else//vertical
 		{
-			g2.fillRect((int)(width*loc.x)+(int)width/2-1,(int)(height*loc.y)+2,3,(int)height-2);
+			g2.fillRect((int)(width*getLoc().getX())+(int)width/2-1,(int)(height*getLoc().getY())+2,3,(int)height-2);
 		}
 	}
 	
@@ -101,8 +101,8 @@ public class Projectile extends Entity
 		
 		if(g.hasWall())
 		{
-			int residualHp = g.wall.hp;
-			boolean killed = g.wall.damage(source,power);
+			int residualHp = g.getWall().getHp();
+			boolean killed = g.getWall().damage(source,power);
 			
 			if(!killed)
 			{
@@ -120,7 +120,40 @@ public class Projectile extends Entity
 	void die()
 	{
 		DrawApp.deadlist.add(this);
-		loc.removeProjectile(this);
+		getLoc().removeProjectile(this);
 	}
+
+	public int getLife() {
+		return life;
+	}
+
+	public void setLife(int life) {
+		this.life = life;
+	}
+
+	public int getPower() {
+		return power;
+	}
+
+	public void setPower(int power) {
+		this.power = power;
+	}
+
+	public boolean isTwisting() {
+		return twisting;
+	}
+
+	public void setTwisting(boolean twisting) {
+		this.twisting = twisting;
+	}
+
+	public Player getSource() {
+		return source;
+	}
+
+	public void setSource(Player source) {
+		this.source = source;
+	}
+	
 }
 

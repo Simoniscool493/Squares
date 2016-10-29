@@ -13,13 +13,13 @@ public class Entity
 	static float gridWidth = U.gridWidth;
 	static float gridHeight = U.gridHeight;
 	
-	GridPoint loc;
-	int align;
-	int lv = 1;
-	int hp;
-	int buildCost = 1;
-	boolean clipping = true;
-	Color color = Color.black;
+	private GridPoint loc;
+	private int align;
+	private int lv = 1;
+	private int hp;
+	private int buildCost = 1;
+	private boolean clipping = true;
+	private Color color = Color.black;
 	
 	Entity(){}
 	
@@ -38,7 +38,7 @@ public class Entity
 	void render(Graphics2D g2)
 	{		
 		g2.setColor(color);
-        g2.fillRect((int)(width*loc.x)+1,(int)(height*loc.y)+1,((int)width)-1,((int)height)-1);
+        g2.fillRect((int)(width*getLoc().getX())+1,(int)(height*getLoc().getY())+1,((int)width)-1,((int)height)-1);
 	}
 	
 	void update()
@@ -50,8 +50,8 @@ public class Entity
 	{
 		loc.refresh();
 
-		int newX = loc.x+Xoffs;
-		int newY = loc.y+Yoffs;
+		int newX = getLoc().getX()+Xoffs;
+		int newY = getLoc().getY()+Yoffs;
 		
 		GridPoint newG = Grid.getPoint(newX,newY);
 
@@ -64,8 +64,8 @@ public class Entity
 		{			
 			if(U.zoom)
 			{
-				loc.zoomMoved = true;
-				newG.zoomMoved = true;
+				loc.setZoomMoved(true);
+				newG.setZoomMoved(true);;
 			}
 						
 			if((newG.hasWall()||newG.hasConstruct())&&clipping)
@@ -129,4 +129,60 @@ public class Entity
 		return loc.getFront(align);
 	}
 
+	public GridPoint getLoc() {
+		return loc;
+	}
+
+	public void setLoc(GridPoint loc) {
+		this.loc = loc;
+	}
+
+	public int getAlign() {
+		return align;
+	}
+
+	public void setAlign(int align) {
+		this.align = align;
+	}
+
+	public int getLv() {
+		return lv;
+	}
+
+	public void setLv(int lv) {
+		this.lv = lv;
+	}
+
+	public int getHp() {
+		return hp;
+	}
+
+	public void setHp(int hp) {
+		this.hp = hp;
+	}
+
+	public int getBuildCost() {
+		return buildCost;
+	}
+
+	public void setBuildCost(int buildCost) {
+		this.buildCost = buildCost;
+	}
+
+	public boolean isClipping() {
+		return clipping;
+	}
+
+	public void setClipping(boolean clipping) {
+		this.clipping = clipping;
+	}
+
+	public Color getColor() {
+		return color;
+	}
+
+	public void setColor(Color color) {
+		this.color = color;
+	}
+	
 }

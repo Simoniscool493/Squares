@@ -12,8 +12,8 @@ public final class U
     public static boolean zoom = false;
 	public static boolean showGrid = true;
 
-	public static int gridWidth = 20;
-	public static int gridHeight = 20;
+	public static int gridWidth = 50;
+	public static int gridHeight = 50;
 	
     public static int zoomRad = 15;
     public static int zoomGridSize = (zoomRad*2) + 1;

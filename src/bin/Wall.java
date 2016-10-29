@@ -8,65 +8,68 @@ public class Wall extends Entity
 	static Color defaultColor = U.wallColor;
 	static Color halfColor = U.wallHalfColor;
 	
-	Player attacker;
-	Player source;
-	int buildCost = 1;
-	int maxHp;
+	private Player attacker;
+	private Player source;
+	private int buildCost = 1;
+	private int maxHp;
 		
 	Wall () {}
 	
 	Wall(GridPoint g,Player p)
 	{
 		DrawApp.numWalls++;
-		loc = g;
-		loc.addWall(this);
+		setLoc(g);
+		getLoc().addWall(this);
 
-		source = p;
-		color = source.color;
-		lv = source.lv;
-		maxHp = hp = lv*2;
-		loc.wallOn();
+		setSource(p);
+		setColor(source.getColor());
+		setLv(getSource().getLv());
+		setMaxHp(getLv()*2);
+		setHp(getLv()*2);
+		
+		getLoc().wallOn();
 	}
 	
 	Wall(GridPoint g,int level)
 	{
 		DrawApp.numWalls++;
-		loc = g;
-		loc.addWall(this);
+		setLoc(g);
+		getLoc().addWall(this);
 
-		color = defaultColor;
-		lv = level;
-		maxHp = hp = lv*2;
+		setColor(defaultColor);
+		setLv(level);
+		setMaxHp(getLv()*2);
+		setHp(getLv()*2);
 		
-		loc.wallOn();
+		getLoc().wallOn();
 	}
 	
 	Wall(GridPoint g,Color c,int level)
 	{
 		this(g,level);
-		color = c;	
+		setColor(c);	
 	}
 	
 	void die()
 	{
 		DrawApp.numWalls--;
-		loc.removeWall();
+		getLoc().removeWall();
 	}
 	
 	boolean damage(Player p,int n)
 	{
-		hp-=n;
+		setHp(getHp()-n);
 		
-		if(hp<1)
+		if(getHp()<1)
 		{
 			p.kill(this);
 			return true;
 		}
 		else
 		{			
-			int r = color.getRed();
-			int g = color.getGreen();
-			int b = color.getBlue();
+			int r = getColor().getRed();
+			int g = getColor().getGreen();
+			int b = getColor().getBlue();
 			
 			r+=n*(200/maxHp);
 			g+=n*(200/maxHp);
@@ -76,9 +79,9 @@ public class Wall extends Entity
 			if(g>255) { g = 255; }
 			if(b>255) { b = 255; }
 			
-			color = new Color(r,g,b);
+			setColor(new Color(r,g,b));
 			
-			loc.refresh();
+			getLoc().refresh();
 		}
 		
 		return false;
@@ -86,14 +89,48 @@ public class Wall extends Entity
 	
 	void render(Graphics2D g2)
 	{
-		g2.setColor(color);
+		g2.setColor(getColor());
 		if(U.showGrid)
 		{
-			g2.fillRect((int)(width*loc.x)+1,(int)(height*loc.y)+1,(int)width-1,(int)height-1);
+			g2.fillRect((int)(width*getLoc().getX())+1,(int)(height*getLoc().getY())+1,(int)width-1,(int)height-1);
         }
 		else
 		{
-			g2.fillRect((int)(width*loc.x),(int)(height*loc.y),(int)width,(int)height);
+			g2.fillRect((int)(width*getLoc().getX()),(int)(height*getLoc().getY()),(int)width,(int)height);
 		}
 	}
+
+	public Player getAttacker() {
+		return attacker;
+	}
+
+	public void setAttacker(Player attacker) {
+		this.attacker = attacker;
+	}
+
+	public Player getSource() {
+		return source;
+	}
+
+	public void setSource(Player source) {
+		this.source = source;
+	}
+
+	public int getBuildCost() {
+		return buildCost;
+	}
+
+	public void setBuildCost(int buildCost) {
+		this.buildCost = buildCost;
+	}
+
+	public int getMaxHp() {
+		return maxHp;
+	}
+
+	public void setMaxHp(int maxHp) {
+		this.maxHp = maxHp;
+	}
+	
+	
 }

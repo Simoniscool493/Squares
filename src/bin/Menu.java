@@ -63,12 +63,12 @@ public class Menu
 		if(pointsChanged)
 		{
 			drawPointsText(g2);
-			drawBar(g2,expColor,expBarY,mapExp(),"Next: " + p.toNextLv);
+			drawBar(g2,expColor,expBarY,mapExp(),"Next: " + p.getToNextLv());
 			pointsChanged = false;
 		}
 		if(buildChanged)
 		{
-			drawBar(g2,buildColor,buildBarY,mapBuild(),p.build + "/" + p.maxBuild);
+			drawBar(g2,buildColor,buildBarY,mapBuild(),p.getBuild() + "/" + p.getMaxBuild());
 			buildChanged = false;
 		}
 		
@@ -78,7 +78,7 @@ public class Menu
 			selectedChanged = false;
 		}
 		
-		drawBar(g2,energyColor,energyBarY,mapEnergy(),p.energy + "/" + p.maxEnergy);
+		drawBar(g2,energyColor,energyBarY,mapEnergy(),p.getEnergy() + "/" + p.getMaxEnergy());
 	}	
 	
 	void drawBar(Graphics2D g2,Color c,int y,int map,String s)
@@ -96,17 +96,17 @@ public class Menu
 
 	int mapExp()
 	{
-		return (int)((1-(p.toNextLv/(float)(p.toNextLvReq)))*barWidth);
+		return (int)((1-(p.getToNextLv()/(float)(p.getToNextLvReq())))*barWidth);
 	}
 	
 	int mapEnergy()
 	{
-		return (int)(((float)p.energy/((float)p.maxEnergy))*barWidth);
+		return (int)(((float)p.getEnergy()/((float)p.getMaxEnergy()))*barWidth);
 	}
 	
 	int mapBuild()
 	{
-		return (int)(((float)p.build/((float)p.maxBuild))*barWidth);
+		return (int)(((float)p.getBuild()/((float)p.getMaxBuild()))*barWidth);
 	}
 	
 	void drawLevelText(Graphics2D g2)
@@ -114,7 +114,7 @@ public class Menu
 		g2.setColor(background);
 		g2.fillRect(textAlign,(int)levelTextY-menuComponentHeight, menuWidth/2, menuComponentHeight);
 		g2.setColor(textColor);
-		g2.drawString("Level:    " + String.valueOf(p.lv),textAlign,levelTextY);
+		g2.drawString("Level:    " + String.valueOf(p.getLv()),textAlign,levelTextY);
 	}
 	
 	void drawPointsText(Graphics2D g2)
@@ -122,7 +122,7 @@ public class Menu
 		g2.setColor(background);
 		g2.fillRect(textAlign,(int)pointsTextY-menuComponentHeight, (int)(menuWidth/1.5), menuComponentHeight);
 		g2.setColor(textColor);
-		g2.drawString("Points:    " + String.valueOf(p.points),textAlign,pointsTextY);
+		g2.drawString("Points:    " + String.valueOf(p.getPoints()),textAlign,pointsTextY);
 	}
 	
 	void refresh(Graphics2D g2)
