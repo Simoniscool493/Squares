@@ -1,15 +1,13 @@
 package bin;
 
-import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.util.LinkedHashSet;
 import javax.swing.JApplet;
-import javax.swing.Timer;
 
+//the drawApplet that contains the game. menus and games are run from here,
+//but the applet only handles the graphics and i/o for the game - all the
+//actual game programming goes in the Game class.
 public class DrawApp extends JApplet
 {
 	MainMenu mainMenu = new MainMenu(this);
