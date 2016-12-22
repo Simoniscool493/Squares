@@ -43,6 +43,11 @@ public class Menu
 		u  = new UpgradeMenu(this);
 	}
 	
+	void mouseInput(int x,int y)
+	{
+		u.mouseInput(x, y);
+	}
+	
 	void init(Graphics2D g2)
 	{
 		g2.setColor(background);

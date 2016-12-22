@@ -21,7 +21,7 @@ public class PauseMenu
 		
 	}
 	
-	void mouse(int x,int y)
+	void mouseInput(int x,int y)
 	{
 		System.out.println((int)(y/itemHeight));
 	}

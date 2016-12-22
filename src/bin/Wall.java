@@ -17,7 +17,7 @@ public class Wall extends Entity
 	
 	Wall(GridPoint g,Player p)
 	{
-		DrawApp.numWalls++;
+		DrawApp.currentGame.numWalls++;
 		setLoc(g);
 		getLoc().addWall(this);
 
@@ -32,7 +32,7 @@ public class Wall extends Entity
 	
 	Wall(GridPoint g,int level)
 	{
-		DrawApp.numWalls++;
+		DrawApp.currentGame.numWalls++;
 		setLoc(g);
 		getLoc().addWall(this);
 
@@ -52,7 +52,7 @@ public class Wall extends Entity
 	
 	void die()
 	{
-		DrawApp.numWalls--;
+		DrawApp.currentGame.numWalls--;
 		getLoc().removeWall();
 	}
 	

@@ -8,7 +8,7 @@ public class KeyInput implements KeyListener
 	public void keyPressed(KeyEvent k)
 	{
 		int i = k.getKeyCode();
-		DrawApp.getKeyInput(i);
+		DrawApp.keyInput(i);
 	}
 	
 	public void keyTyped(KeyEvent k)

@@ -305,7 +305,7 @@ public class GridPoint
 		}
 		else
 		{
-			DrawApp.changed.add(this);
+			DrawApp.currentGame.changed.add(this);
 		}
 	}
 
@@ -365,7 +365,7 @@ public class GridPoint
 				claimCap = p.getClaimCap();
 				background = defaultBackground;
 				claimed = false;
-				DrawApp.activeDeadList.add(this);
+				DrawApp.currentGame.activeDeadList.add(this);
 			}
 		}
 		else if(!claimed)
@@ -383,7 +383,7 @@ public class GridPoint
 				refresh();
 				spreadClaim((int)(p.getClaimCap()*1.2));
 
-				DrawApp.activeDeadList.add(this);
+				DrawApp.currentGame.activeDeadList.add(this);
 			}
 		}
 		
@@ -395,7 +395,7 @@ public class GridPoint
 		{
 			claimer = p;
 			claimCap = c;
-			DrawApp.activeBirthList.add(this);
+			DrawApp.currentGame.activeBirthList.add(this);
 		}
 		else if(p==claimer&&!claimed&!hasWall())
 		{
@@ -403,7 +403,7 @@ public class GridPoint
 			{
 				claimCap=c;
 			}
-			DrawApp.activeBirthList.add(this);
+			DrawApp.currentGame.activeBirthList.add(this);
 		}
 	}
 	
@@ -416,7 +416,7 @@ public class GridPoint
 			claimed = true;
 			claimer.setSpots(claimer.getSpots()+1);;
 			background = claimer.getClaimColor();
-			DrawApp.activeDeadList.add(this);
+			DrawApp.currentGame.activeDeadList.add(this);
 			refresh();
 			spreadClaim((int)(claimCap*1.2));
 		}
@@ -432,9 +432,9 @@ public class GridPoint
 	
 	public void wallOn()
 	{
-		if(DrawApp.activeSpots.contains(this))
+		if(DrawApp.currentGame.activeSpots.contains(this))
 		{
-			DrawApp.activeDeadList.add(this);
+			DrawApp.currentGame.activeDeadList.add(this);
 		}
 	}
 	

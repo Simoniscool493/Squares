@@ -20,7 +20,7 @@ public class Projectile extends Entity
 		setLife(source.getLaserLife());
 		setPower(source.getLv());
 		
-		DrawApp.projectiles.add(this);
+		DrawApp.currentGame.projectiles.add(this);
 	}
 	
 	Projectile(ConstructedEntity e,int al)
@@ -33,7 +33,7 @@ public class Projectile extends Entity
 		setAlign(al);
 		setLife(e.getLife());
 		setPower(e.getPower());
-		DrawApp.projectiles.add(this);
+		DrawApp.currentGame.projectiles.add(this);
 		
 		if(e.getUpgrades()[1]>0)
 		{
@@ -117,7 +117,7 @@ public class Projectile extends Entity
 	
 	void die()
 	{
-		DrawApp.deadlist.add(this);
+		DrawApp.currentGame.deadlist.add(this);
 		getLoc().removeProjectile(this);
 	}
 

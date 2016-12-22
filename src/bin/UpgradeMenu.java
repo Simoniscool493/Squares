@@ -114,7 +114,7 @@ public class UpgradeMenu
 		g2.drawString(s,textAlign,(int)(y+textYOffset)+(componentHeight*order));
 	}
 	
-	void mouse(int x,int y)
+	void mouseInput(int x,int y)
 	{
 		if(y>this.y)
 		{

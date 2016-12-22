@@ -2,6 +2,7 @@ package bin;
 
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.Toolkit;
 import java.util.Random;
 
@@ -9,6 +10,9 @@ public final class U
 {
 	public static Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 	
+	public static int p1startX = 1;
+	public static int p1startY = 1;
+
     public static boolean zoom = false;
 	public static boolean showGrid = true;
 

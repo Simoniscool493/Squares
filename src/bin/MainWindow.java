@@ -23,6 +23,9 @@ public class MainWindow extends JFrame
 	{
 		da = new DrawApp();
 		
+		//I'm not sure this does anything lol so let's check that later
+		//Because the init inside DrawApp takes graphics2D and this is blank
+		//also i can't get this to print anything out
 		da.init();
 		
 		addWindowListener(new WindowAdapter() 
@@ -34,14 +37,11 @@ public class MainWindow extends JFrame
         }
         );
 		
-    	System.out.println("Mouse adapter added");
-
 		da.addMouseListener(new MouseAdapter() 
         {
             public void mouseReleased(MouseEvent e)
             {
-            	System.out.println("Mouse released");
-            	da.mouse(e.getX(),e.getY());
+            	da.mouseInput(e.getX(),e.getY());
             }
         }
         );
@@ -54,5 +54,6 @@ public class MainWindow extends JFrame
 		setSize((int)U.drawWidth+(int)U.menuWidth+6,(int)U.drawHeight+63);
 		setVisible(true);
 		setResizable(false);
+		
 	}
 }
