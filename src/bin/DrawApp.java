@@ -23,31 +23,29 @@ public class DrawApp extends JApplet implements ActionListener
 	public static LinkedHashSet<GridPoint> activeDeadList = new LinkedHashSet<GridPoint>();
 	
 	static boolean started = false;
-	static boolean refreshScreen = false;
+	static boolean refreshScreenFlag = false;
 	
 	static int maxWalls = 500;
 	static int numWalls = 0;
-	
-	int gw = U.gridWidth;
-	int gh = U.gridHeight;
-	
+		
 	public static int p1startX = 1;
 	public static int p1startY = 1;
 
-	public static Grid g = new Grid();
-	public static ZoomGrid zg = new ZoomGrid(p1startX,p1startY);
+	public static Grid grid = new Grid();
+	public static ZoomGrid zoomGrid = new ZoomGrid(p1startX,p1startY);
 	
 	//up down left right turn fire build place delete
-	public static KeyMapping m1 = new KeyMapping('W','S','A','D','U','H','K','I','J');
-	public static KeyMapping m2 = new KeyMapping(624,622,623,621,604,603,602,619,601);
+	public static KeyMapping p1KeyMapping = new KeyMapping('W','S','A','D','U','H','K','I','J');
+	public static KeyMapping p2KeyMapping = new KeyMapping(624,622,623,621,604,603,602,619,601);
 
-	public static Player p1 = new Player(m1,Grid.getPoint(p1startX,p1startY),U.p1,U.p1cap);
-	//public static Player p2 = new Player(m2,Grid.getPoint(20,3),U.p2,U.p2cap);
+	public static Player p1 = new Player(p1KeyMapping,Grid.getPoint(p1startX,p1startY),U.p1,U.p1cap);
+	//public static Player p2 = new Player(p2KeyMapping,Grid.getPoint(20,3),U.p2,U.p2cap);
 
-	Timer t = new Timer(50,this);
+	Timer gameTimer = new Timer(50,this);
 
-	public static Menu m = new Menu(p1);
+	public static Menu sideMenu = new Menu(p1);
 	public static PauseMenu pm = new PauseMenu();
+	
 	InitMenu im = new InitMenu(this);
 	
 	Font font = new Font("TimesRoman", Font.PLAIN, 25);
@@ -80,17 +78,16 @@ public class DrawApp extends JApplet implements ActionListener
         if(!started)
         {
         	im.render(g2);
-        	System.out.println(U.r.nextInt());
         }
         else if(!pause)
         {
     		p1.regen();
     		//p2.regen();
     		
-            if(refreshScreen)
+            if(refreshScreenFlag)
             {
             	refreshScreen(g2);
-            	refreshScreen = false;
+            	refreshScreenFlag = false;
             }
             
             update();
@@ -104,10 +101,9 @@ public class DrawApp extends JApplet implements ActionListener
             	fullRender(g2);
             }
             
-            m.render(g2);
+            sideMenu.render(g2);
 
-            //spawn();  
-            //System.out.println(projectiles.size());
+            spawn();  
         }
         else
         {
@@ -165,12 +161,9 @@ public class DrawApp extends JApplet implements ActionListener
 	{
 		//if(U.r.nextInt()>200000000&&numWalls<maxWalls)
 		if(U.r.nextInt()>200000000)
-		//if(U.r.nextInt()>2100000000)
-		//if(false)
 		{
-			System.out.println("yes");
-			int w = (int)(Math.random() * gw);
-			int h = (int)(Math.random() * gh);
+			int w = (int)(Math.random() * U.gridWidth);
+			int h = (int)(Math.random() * U.gridHeight);
 			int lv = (int)((Math.random()*3)+1);
 						
 			GridPoint point = Grid.getPoint(w,h);
@@ -208,7 +201,7 @@ public class DrawApp extends JApplet implements ActionListener
 			
 			if(!pause)
 			{
-				refreshScreen = true;
+				refreshScreenFlag = true;
 			}
 			else
 			{
@@ -244,7 +237,7 @@ public class DrawApp extends JApplet implements ActionListener
 	
 	public void refreshScreen(Graphics2D g2)
 	{
-		m.refresh(g2);
+		sideMenu.refresh(g2);
 		Grid.refresh(g2);
 	}
 	

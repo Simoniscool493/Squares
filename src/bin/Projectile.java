@@ -107,12 +107,10 @@ public class Projectile extends Entity
 			if(!killed)
 			{
 				((Player)source).addPoints(power);
-				System.out.println(power);
 			}
 			else
 			{
 				((Player)source).addPoints(residualHp);
-				System.out.println(residualHp);
 			}
 		}
 	}

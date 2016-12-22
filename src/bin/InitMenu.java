@@ -18,7 +18,7 @@ public class InitMenu
 	InitMenu(DrawApp p)
 	{
 		parent = p;
-        parent.t.start();
+        parent.gameTimer.start();
 	}
 	
 	void render(Graphics2D g2)
@@ -42,7 +42,7 @@ public class InitMenu
 		g2.fillRect(0,0,width,height);
 
     	parent.init(g2);
-    	DrawApp.m.init(g2);
+    	DrawApp.sideMenu.init(g2);
         DrawApp.started = true;
 	}
 	

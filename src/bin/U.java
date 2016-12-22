@@ -49,10 +49,7 @@ public final class U
 
 	public static Random r = new Random();
 	
-	private U()
-	{
-		
-	}
+	private U() {}
 	
 	private static float getDrawDist()
 	{
