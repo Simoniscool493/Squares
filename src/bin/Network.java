@@ -10,7 +10,7 @@ public class Network
 {
 	static boolean listening = false;
 	
-	static int port;
+	static int port = 81;
 	static String ip = "192.168.0.10";
 
 	static void listenForPlayers(Game g)
@@ -19,9 +19,11 @@ public class Network
 		
         try (ServerSocket serverSocket = new ServerSocket(port))
         { 
+        	System.out.println("Started listening for players.");
             while (listening) 
             {
 	            new GameServerToClientThread(serverSocket.accept()).start();
+	            System.out.println("Player connected, thread made");
 	        }
 	    } 
         catch(Exception e)

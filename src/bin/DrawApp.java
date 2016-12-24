@@ -54,12 +54,12 @@ public class DrawApp extends JApplet
 	
 	public void hostGame()
 	{
-		currentGame = new Game(this);
-		currentGame.initialize();
-		refreshScreenFlag = true;
-		inGame = true;
+		//currentGame = new Game(this);
+		//currentGame.initialize();
+		//refreshScreenFlag = true;
+		//inGame = true;
 		
-		new Thread(){
+		Thread t = new Thread(){
 			
 			@Override
 			public void run()
@@ -67,6 +67,10 @@ public class DrawApp extends JApplet
 				Network.listenForPlayers(currentGame);
 			}
 		};
+		
+		t.start();
+		
+		System.out.println("Game hosted");
 	}
 	
 	public void connectToGame()
