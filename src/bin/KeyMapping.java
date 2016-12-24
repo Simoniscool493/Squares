@@ -26,24 +26,24 @@ public class KeyMapping
 		delete = de;
 	}
 	
-	void input(int n)
+	void pressed(int n)
 	{
-		if(n==up) //up
+		if(n==up)
 		{
 			p.setMovingUp(true);
 			p.setJustPressed(true);
 		}
-		else if(n==down) //down
+		else if(n==down)
 		{
 			p.setMovingDown(true);
 			p.setJustPressed(true);
 		}
-		else if(n==left) //left
+		else if(n==left)
 		{
 			p.setMovingLeft(true);
 			p.setJustPressed(true);
 		}
-		else if(n==right) //right
+		else if(n==right)
 		{
 			p.setMovingRight(true);
 			p.setJustPressed(true);

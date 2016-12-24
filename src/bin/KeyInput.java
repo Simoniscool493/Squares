@@ -19,6 +19,6 @@ public class KeyInput implements KeyListener
 	public void keyReleased(KeyEvent k)
 	{
 		int i = k.getKeyCode();
-		MainWindow.da.getKeyReleased(i);
+		DrawApp.keyInput(-i);
 	}
 }

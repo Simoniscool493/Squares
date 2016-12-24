@@ -20,23 +20,19 @@ public class Game implements ActionListener
 	public Grid grid;
 	public ZoomGrid zoomGrid;
 
-	//up down left right turn fire build place delete
 	public static KeyMapping p1KeyMapping;
-	//public static KeyMapping p2KeyMapping = new KeyMapping(624,622,623,621,604,603,602,619,601);
-
 	public static Player p1;
-	//public static Player p2 = new Player(p2KeyMapping,Grid.getPoint(20,3),U.p2,U.p2cap);
 
 	public Menu sideMenu;
 	public PauseMenu pauseMenu;
 
-	public static LinkedHashSet<Projectile> projectiles = new LinkedHashSet<Projectile>();
-	public static LinkedHashSet<ConstructedEntity> constructs = new LinkedHashSet<ConstructedEntity>();
-	public static LinkedHashSet<Entity> deadlist = new LinkedHashSet<Entity>();
-	public static LinkedHashSet<GridPoint> changed = new LinkedHashSet<GridPoint>();
-	public static LinkedHashSet<GridPoint> activeBirthList = new LinkedHashSet<GridPoint>();
-	public static LinkedHashSet<GridPoint> activeSpots = new LinkedHashSet<GridPoint>();
-	public static LinkedHashSet<GridPoint> activeDeadList = new LinkedHashSet<GridPoint>();
+	public LinkedHashSet<Projectile> projectiles = new LinkedHashSet<Projectile>();
+	public LinkedHashSet<ConstructedEntity> constructs = new LinkedHashSet<ConstructedEntity>();
+	public LinkedHashSet<Entity> deadlist = new LinkedHashSet<Entity>();
+	public LinkedHashSet<GridPoint> changed = new LinkedHashSet<GridPoint>();
+	public LinkedHashSet<GridPoint> activeBirthList = new LinkedHashSet<GridPoint>();
+	public LinkedHashSet<GridPoint> activeSpots = new LinkedHashSet<GridPoint>();
+	public LinkedHashSet<GridPoint> activeDeadList = new LinkedHashSet<GridPoint>();
 
 	static boolean started = false;
 
@@ -45,16 +41,12 @@ public class Game implements ActionListener
 		parent = p;
 	}
 	
-	public void actionPerformed(ActionEvent e)
-	{		
-		parent.repaint();
-	}
-	
 	public void initialize()
 	{
 		grid = new Grid();
 		zoomGrid = new ZoomGrid(U.p1startX,U.p1startY);
 		
+		//up down left right turn fire build place delete
 		p1KeyMapping = new KeyMapping('W','S','A','D','U','H','K','I','J');
 		p1 = new Player(p1KeyMapping,Grid.getPoint(U.p1startX,U.p1startY),U.p1,U.p1cap);
 
@@ -63,12 +55,16 @@ public class Game implements ActionListener
         gameTimer.start();
 	}
 	
+	public void actionPerformed(ActionEvent e)
+	{		
+        update();
+		parent.repaint();
+	}
+	
 	public void update()
 	{
 		p1.regen();
-
         p1.update();
-        //p2.update();
 
 		projectiles.removeAll(deadlist);
 		constructs.removeAll(deadlist);
@@ -117,8 +113,8 @@ public class Game implements ActionListener
 
 	public void keyInput(int n)
 	{
-		p1.checkInput(n);
-		//p2.checkInput(n);
+		p1.keyInput(n);
+
 		if(n=='1')
 		{
 			reset();
@@ -175,7 +171,6 @@ public class Game implements ActionListener
 		p1.setLoc(Grid.getPoint(p1.getLoc().getX(), p1.getLoc().getY()));
 		Grid.getPoint(p1.getLoc().getX(), p1.getLoc().getY()).addEntity(p1);
 		p1.setSpots(0);
-		//p2.spots = 0;
 
 		Grid.drawPoints();
 	}

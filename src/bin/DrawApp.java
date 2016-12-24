@@ -3,6 +3,9 @@ package bin;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+
 import javax.swing.JApplet;
 
 //the drawApplet that contains the game. menus and games are run from here,
@@ -12,19 +15,26 @@ public class DrawApp extends JApplet
 {
 	MainMenu mainMenu = new MainMenu(this);
 	
-	public static Font font = new Font("TimesRoman", Font.PLAIN, 25);
-
-	public static Game currentGame;
-
-	private static final long serialVersionUID = 1L;
-	
-	static boolean refreshScreenFlag = false;
 	static boolean inGame = false;
+	static Game currentGame;
+
+	static Font font = new Font("TimesRoman", Font.PLAIN, 25);
+
+	static boolean refreshScreenFlag = false;
 	
 	public void init()
 	{		
 		this.setFont(font);
 		
+		addMouseListener(new MouseAdapter() 
+        {
+            public void mouseReleased(MouseEvent e)
+            {
+            	mouseInput(e.getX(),e.getY());
+            }
+        }
+        );
+
 		if(U.zoom)
 		{
 			GridPoint.width = (U.zoomIncWidth);
@@ -50,22 +60,19 @@ public class DrawApp extends JApplet
 		{
 	        if(!currentGame.isPaused)
 	        {
-	    		
 	            if(refreshScreenFlag)
 	            {
 	            	refreshScreen(g2);
 	            	refreshScreenFlag = false;
 	            }
-	            
-	            currentGame.update();
-	            
+	            	            
 	            if(U.zoom)
 	            {
-	            	zoomRender(g2);
+	            	ZoomGrid.render(g2);
 	            }
 	            else
 	            {
-	            	refreshAllChangedTiles(g2);
+	            	renderAllChangedTiles(g2);
 	            }
 	            
 	            currentGame.sideMenu.render(g2);
@@ -78,7 +85,7 @@ public class DrawApp extends JApplet
 		}
 	}
 	
-	public void refreshAllChangedTiles(Graphics2D g2)
+	public void renderAllChangedTiles(Graphics2D g2)
 	{			
 		for(GridPoint g: currentGame.changed)
 		{
@@ -87,12 +94,6 @@ public class DrawApp extends JApplet
 				
 		currentGame.changed.clear();
 	}
-	
-	public void zoomRender(Graphics2D g2)
-	{			
-		ZoomGrid.render(g2);
-	}
-
 	
 	public static void keyInput(int n)
 	{	
@@ -115,14 +116,6 @@ public class DrawApp extends JApplet
 		}
 	}
 	
-	public void getKeyReleased(int n)
-	{
-		if(inGame)
-		{
-			currentGame.p1.checkReleased(n);
-		}
-	}
-	
 	public void refreshScreen(Graphics2D g2)
 	{
 		if(inGame)
@@ -131,7 +124,4 @@ public class DrawApp extends JApplet
 			Grid.refresh(g2);
 		}
 	}
-	
-	
-	
 }

@@ -4,8 +4,8 @@ import java.awt.Graphics2D;
 
 public class Turret extends ConstructedEntity 
 {
-	static int defaultCost = 20;
-	int buildCost = 20;
+	private static int defaultCost = 20;
+	private int buildCost = 20;
 
 	Turret(GridPoint g,Player p)
 	{
@@ -14,8 +14,6 @@ public class Turret extends ConstructedEntity
 		dislplayName = "Turret";
 		setPower(1);
 		setLife(10);
-		
-		
 	}
 	
 	int getCost()
@@ -90,7 +88,21 @@ public class Turret extends ConstructedEntity
 				new Projectile(this,(getAlign()+3)%4);
 			}
 		}
-		
-		
+	}
+	
+	public static int getDefaultCost() {
+		return defaultCost;
+	}
+
+	public static void setDefaultCost(int defaultCost) {
+		Turret.defaultCost = defaultCost;
+	}
+
+	public int getBuildCost() {
+		return buildCost;
+	}
+
+	public void setBuildCost(int buildCost) {
+		this.buildCost = buildCost;
 	}
 }

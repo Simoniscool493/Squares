@@ -64,14 +64,16 @@ public class Player extends Entity
 		}
 	}
 	
-	void checkInput(int n)
+	void keyInput(int n)
 	{
-		mapping.input(n);
-	}
-	
-	void checkReleased(int n)
-	{
-		mapping.released(n);
+		if(n<0)
+		{
+			mapping.released(-n);
+		}
+		else
+		{
+			mapping.pressed(n);
+		}	
 	}
 	
 	void update()
@@ -93,7 +95,6 @@ public class Player extends Entity
 		{
 			delete();
 		}
-				
 	
 		//loc.takeControl(this);
 	}

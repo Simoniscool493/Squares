@@ -3,6 +3,9 @@ package bin;
 //import ch.aplu.xboxcontroller.XboxController;
 //import ch.aplu.xboxcontroller.XboxControllerAdapter;
 
+//public static KeyMapping p2KeyMapping = new KeyMapping(624,622,623,621,604,603,602,619,601);
+//public static Player p2 = new Player(p2KeyMapping,Grid.getPoint(20,3),U.p2,U.p2cap);
+
 public class ControllerMapping 
 {
 	int dir1;

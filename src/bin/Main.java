@@ -19,8 +19,8 @@ public class Main
 	{		
         System.out.println("Squares: Git version");
         
-        //mw = new MainWindow("Squares");
-        //mw.initialize();
+        mw = new MainWindow("Squares");
+        mw.initialize();
         
 	}
 }
