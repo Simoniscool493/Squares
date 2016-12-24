@@ -10,6 +10,8 @@ public final class U
 {
 	public static Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 	
+	static Font defaultFont = new Font("TimesRoman", Font.PLAIN, 25);
+	
 	public static int p1startX = 1;
 	public static int p1startY = 1;
 

@@ -51,6 +51,28 @@ public class DrawApp extends JApplet
 		refreshScreenFlag = true;
 		inGame = true;
 	}
+	
+	public void hostGame()
+	{
+		currentGame = new Game(this);
+		currentGame.initialize();
+		refreshScreenFlag = true;
+		inGame = true;
+		
+		new Thread(){
+			
+			@Override
+			public void run()
+			{
+				Network.listenForPlayers(currentGame);
+			}
+		};
+	}
+	
+	public void connectToGame()
+	{
+		System.out.println(Network.getTestMessage());
+	}
 
 	public void paint(Graphics g)
 	{
@@ -83,6 +105,10 @@ public class DrawApp extends JApplet
 	        	currentGame.pauseMenu.render(g2);
 	        }
 		}
+		else
+		{
+			mainMenu.render(g2);
+		}
 	}
 	
 	public void renderAllChangedTiles(Graphics2D g2)
@@ -105,7 +131,6 @@ public class DrawApp extends JApplet
 	
 	public void mouseInput(int x,int y)
 	{	
-		System.out.println("DrawApp mouseInput called");
 		if(!inGame)
 		{
 			mainMenu.mouseInput(x,y);
