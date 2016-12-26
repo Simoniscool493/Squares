@@ -2,8 +2,9 @@ package bin;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
+import java.io.Serializable;
 
-public class PauseMenu 
+public class PauseMenu implements Serializable
 {
 	int width =(int)(U.drawWidth+U.menuWidth);
 	int height = (int)(U.drawHeight);

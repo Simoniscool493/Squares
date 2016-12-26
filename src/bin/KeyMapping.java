@@ -1,6 +1,8 @@
 package bin;
 
-public class KeyMapping
+import java.io.Serializable;
+
+public class KeyMapping implements Serializable
 {
 	Player p;
 	int up;

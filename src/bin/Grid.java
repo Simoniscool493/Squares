@@ -2,8 +2,9 @@ package bin;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
+import java.io.Serializable;
 
-public class Grid 
+public class Grid implements Serializable
 {
 	public static GridPoint[][] grid = new GridPoint[U.gridWidth][U.gridHeight];
 	public static GridPoint nullPoint = new GridPoint()

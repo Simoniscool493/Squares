@@ -25,7 +25,6 @@ public class MainMenu
 	Color background = Color.gray;
 	Color lines = Color.black;
 
-	
 	MainMenu(DrawApp p)
 	{
 		parent = p;

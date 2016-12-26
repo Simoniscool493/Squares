@@ -2,8 +2,9 @@ package bin;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
+import java.io.Serializable;
 
-public class ZoomGrid 
+public class ZoomGrid implements Serializable
 {
 	public class ZoomGridPoint
 	{

@@ -2,8 +2,9 @@ package bin;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
+import java.io.Serializable;
 
-public class Entity 
+public class Entity implements Serializable
 {
 	static float width = (U.incWidth);
 	static float height = (U.incHeight);

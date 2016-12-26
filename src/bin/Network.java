@@ -1,8 +1,7 @@
 package bin;
 
-import java.io.BufferedReader;
 import java.io.InputStreamReader;
-import java.io.PrintStream;
+import java.io.ObjectInputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
 
@@ -32,21 +31,22 @@ public class Network
         }
 	}
 	
-	static String getTestMessage()
+	static Game getGame()
 	{
-		String s = "No message recieved";
+		Game g = null;
 		
         try
         {
         	Socket socket = new Socket(ip, port);
-            BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-            s = in.readLine();
+            ObjectInputStream in = new ObjectInputStream(socket.getInputStream());
+            g = (Game)in.readObject();
         }
         catch(Exception e)
         {
         	e.printStackTrace();
+        	System.out.println("Failed to connect to host");
         }
         
-        return s;
+        return g;
 	}
 }

@@ -2,8 +2,9 @@ package bin;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
+import java.io.Serializable;
 
-public class Menu 
+public class Menu implements Serializable
 {
 	int menuHeight = (int)U.drawHeight;
 	int menuWidth = (int)U.menuWidth;

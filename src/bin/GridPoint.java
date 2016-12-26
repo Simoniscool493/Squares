@@ -2,10 +2,11 @@ package bin;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.LinkedHashSet;
 
-public class GridPoint 
+public class GridPoint implements Serializable
 {
 	static Color defaultBackground = U.background;
 

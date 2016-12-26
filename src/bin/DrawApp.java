@@ -13,6 +13,8 @@ import javax.swing.JApplet;
 //actual game programming goes in the Game class.
 public class DrawApp extends JApplet
 {
+	static DrawApp rp;
+	
 	MainMenu mainMenu = new MainMenu(this);
 	
 	static boolean inGame = false;
@@ -24,6 +26,8 @@ public class DrawApp extends JApplet
 	
 	public void init()
 	{		
+		rp = this;
+		
 		this.setFont(font);
 		
 		addMouseListener(new MouseAdapter() 
@@ -46,7 +50,7 @@ public class DrawApp extends JApplet
 	
 	public void startGame()
 	{
-		currentGame = new Game(this);
+		currentGame = new Game(this,Game.IS_LOCAL);
 		currentGame.initialize();
 		refreshScreenFlag = true;
 		inGame = true;
@@ -54,8 +58,8 @@ public class DrawApp extends JApplet
 	
 	public void hostGame()
 	{
-		//currentGame = new Game(this);
-		//currentGame.initialize();
+		currentGame = new Game(this,Game.IS_HOSTED);
+		currentGame.initialize();
 		//refreshScreenFlag = true;
 		//inGame = true;
 		
@@ -75,7 +79,13 @@ public class DrawApp extends JApplet
 	
 	public void connectToGame()
 	{
-		System.out.println(Network.getTestMessage());
+		currentGame = Network.getGame();
+		currentGame.gameTimer.start();
+		refreshScreenFlag = true;
+		inGame = true;
+
+		System.out.println("Downloaded Game " + currentGame + " from server");
+		//System.out.println(Network.getGame().numWalls);
 	}
 
 	public void paint(Graphics g)
@@ -88,6 +98,7 @@ public class DrawApp extends JApplet
 	        {
 	            if(refreshScreenFlag)
 	            {
+	            	System.out.println("Calling refreshScreen");
 	            	refreshScreen(g2);
 	            	refreshScreenFlag = false;
 	            }
@@ -149,7 +160,9 @@ public class DrawApp extends JApplet
 	{
 		if(inGame)
 		{
+			System.out.println("Refreshing side menu");
 			currentGame.sideMenu.refresh(g2);
+			System.out.println("Refreshing grid");
 			Grid.refresh(g2);
 		}
 	}
