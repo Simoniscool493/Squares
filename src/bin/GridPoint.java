@@ -324,19 +324,19 @@ public class GridPoint implements Serializable
 	{
 		if(n==0)
 		{
-			return Grid.getPoint(x,y-1);
+			return DrawApp.currentGame.grid.getPoint(x,y-1);
 		}
 		else if(n==1)
 		{
-			return Grid.getPoint(x+1,y);
+			return DrawApp.currentGame.grid.getPoint(x+1,y);
 		}
 		else if(n==2)
 		{
-			return Grid.getPoint(x,y+1);
+			return DrawApp.currentGame.grid.getPoint(x,y+1);
 		}
 		else
 		{
-			return Grid.getPoint(x-1,y);
+			return DrawApp.currentGame.grid.getPoint(x-1,y);
 		}	
 	}
 	

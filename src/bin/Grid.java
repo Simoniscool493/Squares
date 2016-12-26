@@ -6,8 +6,8 @@ import java.io.Serializable;
 
 public class Grid implements Serializable
 {
-	public static GridPoint[][] grid = new GridPoint[U.gridWidth][U.gridHeight];
-	public static GridPoint nullPoint = new GridPoint()
+	public GridPoint[][] grid = new GridPoint[U.gridWidth][U.gridHeight];
+	public GridPoint nullPoint = new GridPoint()
 	{
 		public void refresh() {};
 		public void startClaim(Player p,int c) {};
@@ -23,7 +23,7 @@ public class Grid implements Serializable
 		init();
 	}
 	
-	static void init()
+	void init()
 	{
 		for(int i=0;i<U.gridWidth;i++)
 		{
@@ -34,7 +34,7 @@ public class Grid implements Serializable
 		}		
 	}
 		
-	static GridPoint getPoint(int x,int y)
+	GridPoint getPoint(int x,int y)
 	{
 		try
 		{
@@ -46,7 +46,7 @@ public class Grid implements Serializable
 		}
 	}
 	
-	static void refresh(Graphics2D g2)
+	void refresh(Graphics2D g2)
 	{
 		drawPoints();
 		if(U.showGrid)	
@@ -55,7 +55,7 @@ public class Grid implements Serializable
 		}
 	}
 	
-	static void drawPoints()
+	void drawPoints()
 	{
 		for(int i=0;i<U.gridWidth;i++)
 		{
@@ -66,7 +66,7 @@ public class Grid implements Serializable
 		}
 	}
 	
-	static void drawGrid(Graphics2D g2)
+	void drawGrid(Graphics2D g2)
 	{
 
 		float dw = U.drawWidth;
@@ -107,7 +107,7 @@ public class Grid implements Serializable
 		}
 	}
 	
-	static void coverGrid(int f,int level)
+	void coverGrid(int f,int level)
 	{
 		for(int i=0;i<U.gridWidth;i++)
 		{
@@ -121,7 +121,7 @@ public class Grid implements Serializable
 		}
 	}
 	
-	static void wallRect(int x,int y,int w,int h,Color c,int lv)
+	void wallRect(int x,int y,int w,int h,Color c,int lv)
 	{
 		for(int i=y;i<h;i++)
 		{

@@ -51,16 +51,13 @@ public final class U
     public static Color menu = Color.darkGray;
     public static Color menuText = Color.white;
     public static Color menuText2 = Color.gray;
-
-
-	public static Random r = new Random();
 	
 	private U() {}
 	
 	private static float getDrawDist()
 	{
-		double main = (screenSize.getHeight()/1.25f);
-		//double main = (screenSize.getHeight()/2f);
+		//double main = (screenSize.getHeight()/1.25f);
+		double main = (screenSize.getHeight()/2f);
 		
 		if(!zoom)
 		{

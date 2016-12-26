@@ -23,7 +23,7 @@ public class Menu implements Serializable
 	float modeTextY = menuHeight-menuHeight*0.3f;
 	
 	Player p;
-	static UpgradeMenu u;
+	UpgradeMenu u;
 	
 	static boolean pointsChanged = true;
 	static boolean levelChanged = true;

@@ -60,8 +60,8 @@ public class DrawApp extends JApplet
 	{
 		currentGame = new Game(this,Game.IS_HOSTED);
 		currentGame.initialize();
-		//refreshScreenFlag = true;
-		//inGame = true;
+		refreshScreenFlag = true;
+		inGame = true;
 		
 		Thread t = new Thread(){
 			
@@ -81,6 +81,8 @@ public class DrawApp extends JApplet
 	{
 		currentGame = Network.getGame();
 		currentGame.gameTimer.start();
+		currentGame.isHosted = false;
+		currentGame.isClient = true;
 		refreshScreenFlag = true;
 		inGame = true;
 
@@ -163,7 +165,7 @@ public class DrawApp extends JApplet
 			System.out.println("Refreshing side menu");
 			currentGame.sideMenu.refresh(g2);
 			System.out.println("Refreshing grid");
-			Grid.refresh(g2);
+			currentGame.grid.refresh(g2);
 		}
 	}
 }

@@ -1,6 +1,7 @@
 package bin;
 
-import java.io.InputStreamReader;
+import java.io.DataOutputStream;
+import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -11,7 +12,21 @@ public class Network
 	
 	static int port = 81;
 	static String ip = "192.168.0.10";
+	
+	static Socket clientSocket;
 
+	static void sendInput(int n)
+	{
+		DataOutputStream out;
+		try 
+		{
+		    out = new DataOutputStream(clientSocket.getOutputStream());
+			out.writeInt(n);
+		} 
+		catch (IOException e) {}
+
+	}
+	
 	static void listenForPlayers(Game g)
 	{
 		listening = true;
@@ -37,8 +52,8 @@ public class Network
 		
         try
         {
-        	Socket socket = new Socket(ip, port);
-            ObjectInputStream in = new ObjectInputStream(socket.getInputStream());
+        	clientSocket = new Socket(ip, port);
+            ObjectInputStream in = new ObjectInputStream(clientSocket.getInputStream());
             g = (Game)in.readObject();
         }
         catch(Exception e)

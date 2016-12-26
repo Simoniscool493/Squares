@@ -5,10 +5,11 @@ import java.awt.Graphics2D;
 import java.awt.Image;
 import java.io.File;
 import java.io.IOException;
+import java.io.Serializable;
 
 import javax.imageio.ImageIO;
 
-public class UpgradeMenu
+public class UpgradeMenu implements Serializable
 {	
 	int numComponents = 5;
 	int x;
@@ -26,11 +27,11 @@ public class UpgradeMenu
 	int powerCost = 10;
 	int lifeCost = 3;
 	
-	Image plus;
-	Image plusten;
-	Image one;
-	Image two;
-	Image three;
+	static Image plus;
+	static Image plusten;
+	static Image one;
+	static Image two;
+	static Image three;
 	
 	Player p;
 	Menu m;

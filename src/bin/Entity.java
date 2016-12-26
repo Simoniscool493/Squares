@@ -54,7 +54,7 @@ public class Entity implements Serializable
 		int newX = getLoc().getX()+Xoffs;
 		int newY = getLoc().getY()+Yoffs;
 		
-		GridPoint newG = Grid.getPoint(newX,newY);
+		GridPoint newG = DrawApp.currentGame.grid.getPoint(newX,newY);
 
 		if(newG.isNullPoint())
 		//goes out of bounds

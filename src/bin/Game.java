@@ -5,6 +5,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.Serializable;
 import java.util.LinkedHashSet;
+import java.util.Random;
 
 import javax.swing.Timer;
 
@@ -16,7 +17,10 @@ public class Game implements ActionListener, Serializable
 	public static KeyMapping p1KeyMapping;
 	public static Player p1;
 
-	boolean isHosted;
+	public Random r;
+	
+	boolean isHosted = false;
+	boolean isClient = false;
 	
 	Timer gameTimer = new Timer(50,this);	
 	
@@ -55,9 +59,11 @@ public class Game implements ActionListener, Serializable
 		
 		//up down left right turn fire build place delete
 		p1KeyMapping = new KeyMapping('W','S','A','D','U','H','K','I','J');
-		p1 = new Player(p1KeyMapping,Grid.getPoint(U.p1startX,U.p1startY),U.p1,U.p1cap);
+		p1 = new Player(p1KeyMapping,grid.getPoint(U.p1startX,U.p1startY),U.p1,U.p1cap);
 		players.add(p1);
 
+		r = new Random();
+		
 		sideMenu = new Menu(p1);
 		pauseMenu = new PauseMenu();
         gameTimer.start();
@@ -67,11 +73,14 @@ public class Game implements ActionListener, Serializable
 	{		
         update();
         
-        if(!isHosted)
+        /*if(!isHosted)
         {
     		DrawApp.rp.repaint();
-        }
-	}
+        }*/
+		
+        DrawApp.rp.repaint();
+
+  	}
 	
 	public void update()
 	{
@@ -111,12 +120,12 @@ public class Game implements ActionListener, Serializable
 	
 	public void spawn()
 	{
-		//if(U.r.nextInt()>200000000&&numWalls<maxWalls)
-		if(U.r.nextInt()>200000000)
+		//if(r.nextInt()>200000000&&numWalls<maxWalls)
+		if(r.nextInt()>200000000)
 		{
-			int w = (int)(Math.random() * U.gridWidth);
-			int h = (int)(Math.random() * U.gridHeight);
-			int lv = (int)((Math.random()*3)+1);
+			int w = (int)(r.nextInt(U.gridWidth));
+			int h = (int)(r.nextInt(U.gridHeight));
+			int lv = (int)(r.nextInt(5));
 						
 			GridPoint point = grid.getPoint(w,h);
 			
@@ -133,6 +142,11 @@ public class Game implements ActionListener, Serializable
 		{
 			p.keyInput(n);
 		}
+		
+		if(this.isClient)
+		{
+			Network.sendInput(n);
+		}
 
 		if(n=='1')
 		{
@@ -140,7 +154,7 @@ public class Game implements ActionListener, Serializable
 		}
 		else if(n=='2')
 		{
-			Grid.coverGrid(40,1);
+			grid.coverGrid(40,1);
 		}
 		else if(n=='3')
 		{
@@ -169,8 +183,6 @@ public class Game implements ActionListener, Serializable
 		}
 	}
 	
-	
-	
 	public void mouseInput(int x, int y)
 	{
 		if(isPaused)
@@ -194,12 +206,12 @@ public class Game implements ActionListener, Serializable
 		activeDeadList.clear();
 		numWalls = 0;
 
-		Grid.init();
+		grid.init();
 
 		//p1.setLoc(Grid.getPoint(p1.getLoc().getX(), p1.getLoc().getY()));
 		//Grid.getPoint(p1.getLoc().getX(), p1.getLoc().getY()).addEntity(p1);
 		//p1.setSpots(0);
 
-		Grid.drawPoints();
+		grid.drawPoints();
 	}
 }
