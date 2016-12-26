@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.LinkedHashSet;
 import java.util.Random;
 
@@ -14,11 +15,12 @@ public class Game implements ActionListener, Serializable
 	public static final boolean IS_HOSTED = true;
 	public static final boolean IS_LOCAL = false;
 
-	public static KeyMapping p1KeyMapping;
-	public static Player p1;
+	public KeyMapping clientPlayerKeyMapping;
+	public Player clientPlayer;
 
 	public Random r;
 	
+	int playerId;
 	boolean isHosted = false;
 	boolean isClient = false;
 	
@@ -35,7 +37,7 @@ public class Game implements ActionListener, Serializable
 	public Menu sideMenu;
 	public PauseMenu pauseMenu;
 	
-	public LinkedHashSet<Player> players = new LinkedHashSet<Player>();
+	public ArrayList<Player> players = new ArrayList<Player>();
 
 	public LinkedHashSet<Projectile> projectiles = new LinkedHashSet<Projectile>();
 	public LinkedHashSet<ConstructedEntity> constructs = new LinkedHashSet<ConstructedEntity>();
@@ -58,13 +60,16 @@ public class Game implements ActionListener, Serializable
 		zoomGrid = new ZoomGrid(U.p1startX,U.p1startY);
 		
 		//up down left right turn fire build place delete
-		p1KeyMapping = new KeyMapping('W','S','A','D','U','H','K','I','J');
-		p1 = new Player(p1KeyMapping,grid.getPoint(U.p1startX,U.p1startY),U.p1,U.p1cap);
-		players.add(p1);
+		if(!isHosted)
+		{
+			clientPlayerKeyMapping = new KeyMapping('W','S','A','D','U','H','K','I','J');
+			clientPlayer = new Player(clientPlayerKeyMapping,grid.getPoint(U.p1startX,U.p1startY),U.p1,U.p1cap);
+			players.add(clientPlayer);
+		}
 
 		r = new Random();
 		
-		sideMenu = new Menu(p1);
+		sideMenu = new Menu(clientPlayer);
 		pauseMenu = new PauseMenu();
         gameTimer.start();
 	}
@@ -79,7 +84,6 @@ public class Game implements ActionListener, Serializable
         }*/
 		
         DrawApp.rp.repaint();
-
   	}
 	
 	public void update()
@@ -136,35 +140,44 @@ public class Game implements ActionListener, Serializable
 		}
 	}
 
-	public void keyInput(int n)
+	public void foreignKeyInput(int key,int playerNumber)
 	{
-		for(Player p:players)
-		{
-			p.keyInput(n);
-		}
+		players.get(playerNumber).keyInput(key);
+	}
+	
+	public void keyInput(int key)
+	{
+		clientPlayer.keyInput(key);
 		
-		if(this.isClient)
+		if(isClient)
 		{
-			Network.sendInput(n);
+			Network.sendInput(key,playerId);
 		}
 
-		if(n=='1')
+		if(key=='1')
 		{
 			reset();
 		}
-		else if(n=='2')
+		else if(key=='2')
 		{
 			grid.coverGrid(40,1);
 		}
-		else if(n=='3')
+		else if(key=='3')
 		{
 			//p1.getLoc().startClaim(p1,1);
 		}
-		else if(n==' ')
+		else if(key==' ')
 		{
 			togglePause();
 		}
-
+	}
+	
+	public void addPlayer()
+	{
+		clientPlayerKeyMapping = new KeyMapping('W','S','A','D','U','H','K','I','J');
+		clientPlayer = new Player(clientPlayerKeyMapping,grid.getPoint(U.p1startX,U.p1startY),U.p1,U.p1cap);
+		players.add(clientPlayer);
+		sideMenu = new Menu(clientPlayer);
 	}
 	
 	public void togglePause()

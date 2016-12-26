@@ -1,19 +1,20 @@
 package bin;
 
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
+import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 
 public class GameServerToClientThread extends Thread
 {
+	int id;
     private Socket socket = null;
     boolean listening = true;
     
-    GameServerToClientThread(Socket s)
+    GameServerToClientThread(Socket s,int id)
     {
         super("GameServerToClientThread");
         this.socket = s;
+        this.id = id;
     }
     
 	public void run()
@@ -23,7 +24,10 @@ public class GameServerToClientThread extends Thread
 			ObjectOutputStream in = new ObjectOutputStream(socket.getOutputStream());
 			
 			DrawApp.currentGame.togglePause();
+			DrawApp.currentGame.playerId = id;
+			DrawApp.currentGame.addPlayer();
 			in.writeObject(DrawApp.currentGame);
+			DrawApp.currentGame.playerId = -1;
 			DrawApp.currentGame.togglePause();
 		}
 		catch(Exception e)
@@ -31,10 +35,11 @@ public class GameServerToClientThread extends Thread
 			e.printStackTrace();
 		}
 		
-		DataInputStream d = null;
+		ObjectInputStream d = null;
+		
 		try
 		{
-			d = new DataInputStream(socket.getInputStream());
+			d = new ObjectInputStream(socket.getInputStream());
 		}
 		catch(Exception e)
 		{
@@ -43,25 +48,25 @@ public class GameServerToClientThread extends Thread
 		
 		while(listening)
 		{
-			System.out.println("Listening");
 			try
 			{
-				int n = d.readInt();
-				System.out.println(n);
-				DrawApp.currentGame.keyInput(n);
+				int[] output = (int[])d.readObject();
+				DrawApp.currentGame.foreignKeyInput(output[0],output[1]);
 				
-				/*for(Socket s:Network.clients)
+				for(Socket s:Network.clients)
 				{
 					if(!(s==socket))
 					{
-					    DataOutputStream out = new DataOutputStream(s.getOutputStream());
-						out.writeInt(n);
+					    ObjectOutputStream out = new ObjectOutputStream(s.getOutputStream());
+						out.writeObject(output);
+						System.out.println("data written out");
 					}
-				}*/
+				}
 			}
 			catch(Exception e)
 			{
 				e.printStackTrace();
+				break;
 			}
 		}
 	}

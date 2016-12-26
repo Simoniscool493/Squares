@@ -83,6 +83,8 @@ public class DrawApp extends JApplet
 		currentGame.gameTimer.start();
 		currentGame.isHosted = false;
 		currentGame.isClient = true;
+		currentGame.isPaused = false;
+
 		refreshScreenFlag = true;
 		inGame = true;
 
@@ -114,7 +116,10 @@ public class DrawApp extends JApplet
 	            	renderAllChangedTiles(g2);
 	            }
 	            
-	            currentGame.sideMenu.render(g2);
+	            if(!currentGame.isHosted)
+	            {
+	            	currentGame.sideMenu.render(g2);
+	            }
 	
 	        }
 	        else

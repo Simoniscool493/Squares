@@ -1,7 +1,7 @@
 package bin;
 
 import java.io.DataInputStream;
-import java.io.ObjectOutputStream;
+import java.io.ObjectInputStream;
 import java.net.Socket;
 
 public class ClientToServerThread extends Thread
@@ -17,11 +17,11 @@ public class ClientToServerThread extends Thread
     
 	public void run()
 	{
-		DataInputStream d = null;
+		ObjectInputStream o = null;
 		
 		try
 		{
-			d = new DataInputStream(socket.getInputStream());
+			o = new ObjectInputStream(socket.getInputStream());
 		}
 		catch(Exception e)
 		{
@@ -32,13 +32,13 @@ public class ClientToServerThread extends Thread
 		{
 			try
 			{
-				int n = d.readInt();
-				System.out.println(n);
-				DrawApp.currentGame.keyInput(n);
+				int[] n = (int[])o.readObject();
+				DrawApp.currentGame.foreignKeyInput(n[0],n[1]);
 			}
 			catch(Exception e)
 			{
 				e.printStackTrace();
+				break;
 			}
 		}
 	}

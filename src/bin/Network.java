@@ -1,27 +1,31 @@
 package bin;
 
-import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.ArrayList;
 
 public class Network 
 {
+	static ArrayList<Socket> clients = new ArrayList<Socket>();
+
 	static boolean listening = false;
 	
 	static int port = 81;
 	static String ip = "192.168.0.10";
 	
 	static Socket clientSocket;
+	static ObjectOutputStream out;
 
-	static void sendInput(int n)
+	static void sendInput(int key,int id)
 	{
-		DataOutputStream out;
 		try 
 		{
-		    out = new DataOutputStream(clientSocket.getOutputStream());
-			out.writeInt(n);
+		    int[] output = new int[] {key,id};
+			out.writeObject(output);
+			out.reset();
 		} 
 		catch (IOException e) {}
 
@@ -36,7 +40,9 @@ public class Network
         	System.out.println("Started listening for players.");
             while (listening) 
             {
-	            new GameServerToClientThread(serverSocket.accept()).start();
+            	Socket s = serverSocket.accept();
+            	clients.add(s);
+	            new GameServerToClientThread(s,clients.size()-1).start();
 	            System.out.println("Player connected, thread made");
 	        }
 	    } 
@@ -55,6 +61,10 @@ public class Network
         	clientSocket = new Socket(ip, port);
             ObjectInputStream in = new ObjectInputStream(clientSocket.getInputStream());
             g = (Game)in.readObject();
+            
+		    out = new ObjectOutputStream(clientSocket.getOutputStream());
+           
+            new ClientToServerThread(clientSocket).start();
         }
         catch(Exception e)
         {
