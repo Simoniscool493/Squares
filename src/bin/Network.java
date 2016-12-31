@@ -14,7 +14,7 @@ public class Network
 	static boolean listening = false;
 	
 	static int port = 81;
-	static String ip = "192.168.0.10";
+	static String ip = "localhost";
 	
 	static Socket clientSocket;
 	static ObjectOutputStream out;
@@ -24,6 +24,8 @@ public class Network
 		try 
 		{
 		    int[] output = new int[] {key,id};
+			System.out.println("Sent output " + output[0]);
+
 			out.writeObject(output);
 			out.reset();
 		} 
@@ -41,9 +43,11 @@ public class Network
             while (listening) 
             {
             	Socket s = serverSocket.accept();
+            	System.out.println("Player connected");
+
             	clients.add(s);
 	            new GameServerToClientThread(s,clients.size()-1).start();
-	            System.out.println("Player connected, thread made");
+	            System.out.println("Thread made");
 	        }
 	    } 
         catch(Exception e)

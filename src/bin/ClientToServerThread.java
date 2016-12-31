@@ -1,6 +1,7 @@
 package bin;
 
 import java.io.DataInputStream;
+import java.io.DataOutputStream;
 import java.io.ObjectInputStream;
 import java.net.Socket;
 
@@ -17,6 +18,19 @@ public class ClientToServerThread extends Thread
     
 	public void run()
 	{
+		try
+		{
+	    	DataOutputStream dout = new DataOutputStream(socket.getOutputStream());
+	    	DataInputStream din = new DataInputStream(socket.getInputStream());
+	    	
+	    	din.readLong();
+	    	dout.writeLong(1);
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+		}
+		
 		ObjectInputStream o = null;
 		
 		try

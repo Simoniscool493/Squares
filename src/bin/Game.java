@@ -12,6 +12,8 @@ import javax.swing.Timer;
 
 public class Game implements ActionListener, Serializable
 {
+	public int timerCounter = 0;
+	
 	public static final boolean IS_HOSTED = true;
 	public static final boolean IS_LOCAL = false;
 
@@ -84,6 +86,9 @@ public class Game implements ActionListener, Serializable
         }*/
 		
         DrawApp.rp.repaint();
+        
+        //System.out.println(timerCounter);
+		timerCounter++;
   	}
 	
 	public void update()
@@ -119,7 +124,7 @@ public class Game implements ActionListener, Serializable
 			c.update();
 		}		
 		
-        spawn();  
+        //spawn();  
 	}
 	
 	public void spawn()
@@ -202,7 +207,7 @@ public class Game implements ActionListener, Serializable
 		{
 			pauseMenu.mouseInput(x,y);
 		}
-		else
+		else if(!isHosted)
 		{
 			sideMenu.mouseInput(x,y);
 		}
