@@ -10,13 +10,11 @@ public class ServerThread extends Thread
 	boolean listening = true;
 	
 	ObjectInputStream in;
-	ObjectOutputStream out;
 	
-    ServerThread(Socket s,ObjectInputStream in,ObjectOutputStream out)
+    ServerThread(Socket s,ObjectInputStream in)
     {
         super("ServerThread");
         this.in = in;
-        this.out = out;
         this.socket = s;
     }
 

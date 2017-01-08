@@ -36,8 +36,12 @@ public class Server
 		        	System.out.println("Started listening for players.");
 		            while (listening) 
 		            {
+		            	System.out.println("Waiting for player");
+
 		            	Socket s = serverSocket.accept();
+		            	System.out.println("Adding player " + clients.size());
 		            	addPlayer(s);
+		            	System.out.println("Player added");
 			        }
 			    } 
 		        catch(Exception e)
@@ -73,7 +77,7 @@ public class Server
 			Game.currentGame.clientId = -1;
 			Game.currentGame.togglePause();
 			
-        	listenForPlayer(s,in,out);
+        	listenForPlayer(s,in);
 		}
 		catch(Exception e)
 		{
@@ -119,9 +123,11 @@ public class Server
 		}
 	}
 	
-	public static void listenForPlayer(Socket s,ObjectInputStream in,ObjectOutputStream out)
+	public static void listenForPlayer(Socket s,ObjectInputStream in)
 	{
-		new ServerThread(s,in,out).run();
+		System.out.println("About to run thread to listen for player's input");
+		new ServerThread(s,in).start();
+		System.out.println("Thread made to listen for added player's input");
 	}
 
 }

@@ -21,10 +21,17 @@ public class Client
 	{
 		try
 		{
+			System.out.println("Creating new socket");
 	    	clientSocket = new Socket(ip, port);
+	    	System.out.println("Socket created");
 	
+	    	System.out.println("Creating objectinputstream");
+
 	        in = new ObjectInputStream(clientSocket.getInputStream());
+	    	System.out.println("Creating objectoutputstream");
+
 		    out = new ObjectOutputStream(clientSocket.getOutputStream());
+		    System.out.println("Streams created");
 		}
 		catch(Exception e)
 		{
