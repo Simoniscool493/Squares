@@ -9,13 +9,14 @@ public class Client
 {
 	static Socket clientSocket;
 	
+	static long latency;
+	
 	static int port = 81;
 	static String ip = "localhost";
 
 	static ObjectOutputStream out;
 	static ObjectInputStream in;
 
-	
 	static void connect()
 	{
 		try
@@ -46,9 +47,26 @@ public class Client
         }        
 	}
 	
+	static void getLatency()
+	{
+		try
+		{
+			Long sentTime = System.currentTimeMillis();
+			out.writeObject(new Long(1));
+			in.readObject();
+			latency = System.currentTimeMillis()-sentTime;
+			out.writeObject(new Long(latency));
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+		}
+
+	}
+	
 	static void listenForInput()
 	{
-        new ClientToServerThread(clientSocket).start();
+        new ClientThread(in).start();
 	}
 	
 	static void sendKeyInput(int key,int id)

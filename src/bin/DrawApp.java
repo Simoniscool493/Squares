@@ -63,6 +63,7 @@ public class DrawApp extends JApplet
 	public void startClientGame()
 	{
 		Client.connect();
+		Client.getLatency();
 		Game.currentGame = Client.getGame();
 		Game.currentGame.initializeClient();
 		enterGame();

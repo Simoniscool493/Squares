@@ -1,5 +1,6 @@
 package bin;
 
+import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -8,14 +9,14 @@ import java.util.ArrayList;
 public class Server
 {
 	static ArrayList<Socket> clients = new ArrayList<Socket>();
+	static ArrayList<ObjectInputStream> inputStreams = new ArrayList<ObjectInputStream>();
+	static ArrayList<ObjectOutputStream> outputStreams = new ArrayList<ObjectOutputStream>();
 
 	static boolean listening = false;
 	
 	static int port = 81;
 	static String ip = "localhost";
 	
-	static ObjectOutputStream out;
-
 	static void hostGame()
 	{
 		listenForPlayers();
@@ -36,8 +37,7 @@ public class Server
 		            while (listening) 
 		            {
 		            	Socket s = serverSocket.accept();
-		            	clients.add(s);
-			            new GameServerToClientThread(s,clients.size()-1).start();
+		            	addPlayer(s);
 			        }
 			    } 
 		        catch(Exception e)
@@ -51,7 +51,77 @@ public class Server
 		t.start();
 	}
 	
+	public static void addPlayer(Socket s)
+	{
+		try
+		{
+			ObjectOutputStream out = new ObjectOutputStream(s.getOutputStream());
+			ObjectInputStream in = new ObjectInputStream(s.getInputStream());
 
+			getLatency(in,out);
 
+			outputStreams.add(out);
+			inputStreams.add(in);
+        	clients.add(s);
+        	
+			Game.currentGame.togglePause();
+			Game.currentGame.addPlayer(clients.size()-1);
+			Game.currentGame.clientId = clients.size()-1;
+			out.writeObject(Game.currentGame);
+			System.out.println("Wrote Game");
+
+			Game.currentGame.clientId = -1;
+			Game.currentGame.togglePause();
+			
+        	listenForPlayer(s,in,out);
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+		}
+	}
+	
+	public static void getLatency(ObjectInputStream in,ObjectOutputStream out)
+	{
+		try
+    	{
+			in.readObject();
+			out.writeObject(new Long(1));
+			System.out.println("Wrote Long");
+
+			System.out.println(((Long)in.readObject()).longValue());
+    	}
+    	catch(Exception e)
+    	{
+    		e.printStackTrace();
+    	}
+	}
+	
+	public static void sendPosition(int id,int x,int y)
+	{
+		int[] pos = {1,id,x,y};
+
+		int i = 0;
+		
+		for(Socket s:clients)
+		{
+			try
+			{
+				ObjectOutputStream out = outputStreams.get(i);
+				out.writeObject(pos);
+				System.out.println("Wrote int[] for new player position");
+			}
+			catch(Exception e)
+			{
+				e.printStackTrace();
+			}
+			i++;
+		}
+	}
+	
+	public static void listenForPlayer(Socket s,ObjectInputStream in,ObjectOutputStream out)
+	{
+		new ServerThread(s,in,out).run();
+	}
 
 }

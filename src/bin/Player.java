@@ -5,6 +5,7 @@ import java.awt.Graphics2D;
 
 public class Player extends Entity
 {
+	public int playerId;
 	private boolean godmode = false;
 		
 	KeyMapping mapping;
@@ -64,6 +65,12 @@ public class Player extends Entity
 		}
 	}
 	
+	Player(int id,KeyMapping m,GridPoint g,Color c,Color ccap)
+	{
+		this(m,g,c,ccap);
+		this.playerId = id;
+	}
+	
 	void keyInput(int n)
 	{
 		if(n<0)
@@ -74,6 +81,11 @@ public class Player extends Entity
 		{
 			mapping.pressed(n);
 		}	
+	}
+	
+	void sendPosition()
+	{
+		Server.sendPosition(playerId,this.getLoc().getX(),this.getLoc().getY());
 	}
 	
 	void update()

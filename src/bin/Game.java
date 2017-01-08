@@ -24,7 +24,7 @@ public class Game implements ActionListener, Serializable
 
 	public Random r;
 	
-	int playerId;
+	int clientId;
 	boolean isHosted = false;
 	boolean isClient = false;
 	
@@ -166,7 +166,7 @@ public class Game implements ActionListener, Serializable
 		
 		if(isClient)
 		{
-			Client.sendKeyInput(key,playerId);
+			Client.sendKeyInput(key,clientId);
 		}
 
 		if(key=='1')
@@ -187,12 +187,17 @@ public class Game implements ActionListener, Serializable
 		}
 	}
 	
-	public void addPlayer()
+	public void addPlayer(int id)
 	{
 		clientPlayerKeyMapping = new KeyMapping('W','S','A','D','U','H','K','I','J');
-		clientPlayer = new Player(clientPlayerKeyMapping,grid.getPoint(U.p1startX,U.p1startY),U.p1,U.p1cap);
+		clientPlayer = new Player(id,clientPlayerKeyMapping,grid.getPoint(U.p1startX,U.p1startY),U.p1,U.p1cap);
 		players.add(clientPlayer);
 		sideMenu = new Menu(clientPlayer);
+	}
+	
+	public void positionUpdate(int id,int x,int y)
+	{
+		players.get(id).place(grid.getPoint(x, y));
 	}
 	
 	public void togglePause()

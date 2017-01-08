@@ -90,21 +90,29 @@ public class KeyMapping implements Serializable
 		{
 			p.setDeleting(false);
 		}
-		if(n==up)
+		if(n==up||n==down||n==left||n==right)
 		{
-			p.setMovingUp(false);
-		}
-		if(n==down)
-		{
-			p.setMovingDown(false);
-		}
-		if(n==left)
-		{
-			p.setMovingLeft(false);
-		}
-		if(n==right)
-		{
-			p.setMovingRight(false);
+			if(Game.IS_HOSTED)
+			{
+				p.sendPosition();
+			}
+			
+			if(n==up)
+			{
+				p.setMovingUp(false);
+			}
+			if(n==down)
+			{
+				p.setMovingDown(false);
+			}
+			if(n==left)
+			{
+				p.setMovingLeft(false);
+			}
+			if(n==right)
+			{
+				p.setMovingRight(false);
+			}
 		}
 	}
 }
