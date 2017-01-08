@@ -306,7 +306,7 @@ public class GridPoint implements Serializable
 		}
 		else
 		{
-			DrawApp.currentGame.changed.add(this);
+			Game.currentGame.changed.add(this);
 		}
 	}
 
@@ -324,19 +324,19 @@ public class GridPoint implements Serializable
 	{
 		if(n==0)
 		{
-			return DrawApp.currentGame.grid.getPoint(x,y-1);
+			return Game.currentGame.grid.getPoint(x,y-1);
 		}
 		else if(n==1)
 		{
-			return DrawApp.currentGame.grid.getPoint(x+1,y);
+			return Game.currentGame.grid.getPoint(x+1,y);
 		}
 		else if(n==2)
 		{
-			return DrawApp.currentGame.grid.getPoint(x,y+1);
+			return Game.currentGame.grid.getPoint(x,y+1);
 		}
 		else
 		{
-			return DrawApp.currentGame.grid.getPoint(x-1,y);
+			return Game.currentGame.grid.getPoint(x-1,y);
 		}	
 	}
 	
@@ -366,7 +366,7 @@ public class GridPoint implements Serializable
 				claimCap = p.getClaimCap();
 				background = defaultBackground;
 				claimed = false;
-				DrawApp.currentGame.activeDeadList.add(this);
+				Game.currentGame.activeDeadList.add(this);
 			}
 		}
 		else if(!claimed)
@@ -384,7 +384,7 @@ public class GridPoint implements Serializable
 				refresh();
 				spreadClaim((int)(p.getClaimCap()*1.2));
 
-				DrawApp.currentGame.activeDeadList.add(this);
+				Game.currentGame.activeDeadList.add(this);
 			}
 		}
 		
@@ -396,7 +396,7 @@ public class GridPoint implements Serializable
 		{
 			claimer = p;
 			claimCap = c;
-			DrawApp.currentGame.activeBirthList.add(this);
+			Game.currentGame.activeBirthList.add(this);
 		}
 		else if(p==claimer&&!claimed&!hasWall())
 		{
@@ -404,7 +404,7 @@ public class GridPoint implements Serializable
 			{
 				claimCap=c;
 			}
-			DrawApp.currentGame.activeBirthList.add(this);
+			Game.currentGame.activeBirthList.add(this);
 		}
 	}
 	
@@ -417,7 +417,7 @@ public class GridPoint implements Serializable
 			claimed = true;
 			claimer.setSpots(claimer.getSpots()+1);;
 			background = claimer.getClaimColor();
-			DrawApp.currentGame.activeDeadList.add(this);
+			Game.currentGame.activeDeadList.add(this);
 			refresh();
 			spreadClaim((int)(claimCap*1.2));
 		}
@@ -433,9 +433,9 @@ public class GridPoint implements Serializable
 	
 	public void wallOn()
 	{
-		if(DrawApp.currentGame.activeSpots.contains(this))
+		if(Game.currentGame.activeSpots.contains(this))
 		{
-			DrawApp.currentGame.activeDeadList.add(this);
+			Game.currentGame.activeDeadList.add(this);
 		}
 	}
 	

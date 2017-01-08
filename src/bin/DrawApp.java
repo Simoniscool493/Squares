@@ -13,12 +13,11 @@ import javax.swing.JApplet;
 //actual game programming goes in the Game class.
 public class DrawApp extends JApplet
 {
-	static DrawApp rp;
+	static DrawApp thisApp;
 	
 	MainMenu mainMenu = new MainMenu(this);
 	
 	static boolean inGame = false;
-	static Game currentGame;
 
 	static Font font = new Font("TimesRoman", Font.PLAIN, 25);
 
@@ -26,7 +25,7 @@ public class DrawApp extends JApplet
 	
 	public void init()
 	{		
-		rp = this;
+		thisApp = this;
 		
 		this.setFont(font);
 		
@@ -48,48 +47,39 @@ public class DrawApp extends JApplet
 		}
 	}
 	
-	public void startGame()
+	public void enterGame()
 	{
-		currentGame = new Game(this,Game.IS_LOCAL);
-		currentGame.initialize();
 		refreshScreenFlag = true;
 		inGame = true;
 	}
 	
-	public void hostGame()
+	public void startLocalGame()
 	{
-		currentGame = new Game(this,Game.IS_HOSTED);
-		currentGame.initialize();
-		refreshScreenFlag = true;
-		inGame = true;
+		Game.currentGame = new Game(this,Game.IS_LOCAL);
+		Game.currentGame.initialize();
+		enterGame();
+	}
+	
+	public void startClientGame()
+	{
+		Client.connect();
+		Game.currentGame = Client.getGame();
+		Game.currentGame.initializeClient();
+		enterGame();
+		Client.listenForInput();
 		
-		Thread t = new Thread(){
-			
-			@Override
-			public void run()
-			{
-				Network.listenForPlayers(currentGame);
-			}
-		};
+		System.out.println("Downloaded Game " + Game.currentGame + " from server");
+	}
+	
+	public void startServerGame()
+	{
+		Game.currentGame = new Game(this,Game.IS_HOSTED);
+		Game.currentGame.initialize();
 		
-		t.start();
+		Server.hostGame();		
+		enterGame();
 		
 		System.out.println("Game hosted");
-	}
-	
-	public void connectToGame()
-	{
-		currentGame = Network.getGame();
-		currentGame.gameTimer.start();
-		currentGame.isHosted = false;
-		currentGame.isClient = true;
-		currentGame.isPaused = false;
-
-		refreshScreenFlag = true;
-		inGame = true;
-
-		System.out.println("Downloaded Game " + currentGame + " from server");
-		//System.out.println(Network.getGame().numWalls);
 	}
 
 	public void paint(Graphics g)
@@ -98,7 +88,7 @@ public class DrawApp extends JApplet
         
 		if(inGame)
 		{
-	        if(!currentGame.isPaused)
+	        if(!Game.currentGame.isPaused)
 	        {
 	            if(refreshScreenFlag)
 	            {
@@ -116,15 +106,15 @@ public class DrawApp extends JApplet
 	            	renderAllChangedTiles(g2);
 	            }
 	            
-	            if(!currentGame.isHosted)
+	            if(!Game.currentGame.isHosted)
 	            {
-	            	currentGame.sideMenu.render(g2);
+	            	Game.currentGame.sideMenu.render(g2);
 	            }
 	
 	        }
 	        else
 	        {
-	        	currentGame.pauseMenu.render(g2);
+	        	Game.currentGame.pauseMenu.render(g2);
 	        }
 		}
 		else
@@ -135,19 +125,19 @@ public class DrawApp extends JApplet
 	
 	public void renderAllChangedTiles(Graphics2D g2)
 	{			
-		for(GridPoint g: currentGame.changed)
+		for(GridPoint g: Game.currentGame.changed)
 		{
 			g.render(g2);
 		}
 				
-		currentGame.changed.clear();
+		Game.currentGame.changed.clear();
 	}
 	
 	public static void keyInput(int n)
 	{	
 		if(inGame)
 		{
-			currentGame.keyInput(n);
+			Game.currentGame.keyInput(n);
 		}
 	}
 	
@@ -159,7 +149,7 @@ public class DrawApp extends JApplet
 		}
 		else
 		{
-			currentGame.mouseInput(x,y);
+			Game.currentGame.mouseInput(x,y);
 		}
 	}
 	
@@ -167,10 +157,8 @@ public class DrawApp extends JApplet
 	{
 		if(inGame)
 		{
-			System.out.println("Refreshing side menu");
-			currentGame.sideMenu.refresh(g2);
-			System.out.println("Refreshing grid");
-			currentGame.grid.refresh(g2);
+			Game.currentGame.sideMenu.refresh(g2);
+			Game.currentGame.grid.refresh(g2);
 		}
 	}
 }

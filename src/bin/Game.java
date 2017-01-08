@@ -12,6 +12,8 @@ import javax.swing.Timer;
 
 public class Game implements ActionListener, Serializable
 {
+	static Game currentGame;
+
 	public int timerCounter = 0;
 	
 	public static final boolean IS_HOSTED = true;
@@ -76,6 +78,14 @@ public class Game implements ActionListener, Serializable
         gameTimer.start();
 	}
 	
+	public void initializeClient()
+	{
+		gameTimer.start();
+		isHosted = false;
+		isClient = true;
+		isPaused = false;
+	}
+	
 	public void actionPerformed(ActionEvent e)
 	{		
         update();
@@ -85,7 +95,7 @@ public class Game implements ActionListener, Serializable
     		DrawApp.rp.repaint();
         }*/
 		
-        DrawApp.rp.repaint();
+        DrawApp.thisApp.repaint();
         
         //System.out.println(timerCounter);
 		timerCounter++;
@@ -156,7 +166,7 @@ public class Game implements ActionListener, Serializable
 		
 		if(isClient)
 		{
-			Network.sendInput(key,playerId);
+			Client.sendKeyInput(key,playerId);
 		}
 
 		if(key=='1')

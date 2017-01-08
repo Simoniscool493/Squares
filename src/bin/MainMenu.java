@@ -56,15 +56,15 @@ public class MainMenu
 		
 		if(selection==0)
 		{
-			parent.startGame();
+			parent.startLocalGame();
 		}
 		else if(selection==1)
 		{
-			parent.hostGame();
+			parent.startServerGame();
 		}
 		else if(selection==2)
 		{
-			parent.connectToGame();
+			parent.startClientGame();;
 		}
 	}
 }

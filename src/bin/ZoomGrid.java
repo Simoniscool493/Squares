@@ -26,12 +26,12 @@ public class ZoomGrid implements Serializable
 		
 		public GridPoint getPoint()
 		{
-			return DrawApp.currentGame.grid.getPoint(x, y);
+			return Game.currentGame.grid.getPoint(x, y);
 		}
 		
 		public void refresh()
 		{
-			DrawApp.currentGame.grid.getPoint(x,y).refresh();
+			Game.currentGame.grid.getPoint(x,y).refresh();
 		}
 		
 		public String toString()

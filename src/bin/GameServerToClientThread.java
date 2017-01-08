@@ -20,7 +20,8 @@ public class GameServerToClientThread extends Thread
         this.socket = s;
         this.id = id;
         
-        latency = getLatency();
+        //latency = getLatency();
+        //System.out.println("Latency recieved");
     }
     
     public int getLatency()
@@ -33,9 +34,11 @@ public class GameServerToClientThread extends Thread
 	    	Timestamp t1 = new Timestamp(System.currentTimeMillis());
 	    	long time1 = t1.getTime();
 
+	    	System.out.println("Writing long from server to client");
 	    	dout.writeLong(time1);
+	    	System.out.println("Reading long from client to server");
 	    	long lin = din.readLong();
-	    	
+	    	System.out.println("Long read.");
 	    	Timestamp t2 = new Timestamp(System.currentTimeMillis());
 	    	long time2 = t2.getTime();
 	    	
@@ -57,12 +60,13 @@ public class GameServerToClientThread extends Thread
 		{
 			ObjectOutputStream in = new ObjectOutputStream(socket.getOutputStream());
 			
-			DrawApp.currentGame.togglePause();
-			DrawApp.currentGame.playerId = id;
-			DrawApp.currentGame.addPlayer();
-			in.writeObject(DrawApp.currentGame);
-			DrawApp.currentGame.playerId = -1;
-			DrawApp.currentGame.togglePause();
+			Game.currentGame.togglePause();
+			Game.currentGame.playerId = id;
+			Game.currentGame.addPlayer();
+			System.out.println("Writing game from server to client");
+			in.writeObject(Game.currentGame);
+			Game.currentGame.playerId = -1;
+			Game.currentGame.togglePause();
 		}
 		catch(Exception e)
 		{
@@ -84,17 +88,18 @@ public class GameServerToClientThread extends Thread
 		{
 			try
 			{
+				System.out.println("Reading key input from client to server");
 				int[] output = (int[])d.readObject();
-				DrawApp.currentGame.foreignKeyInput(output[0],output[1]);
-				System.out.println("Recieved output " + output[0]);
+				Game.currentGame.foreignKeyInput(output[0],output[1]);
+				//System.out.println("Recieved input " + output[0]);
 				
-				for(Socket s:Network.clients)
+				for(Socket s:Server.clients)
 				{
 					if(!(s==socket))
 					{
 					    ObjectOutputStream out = new ObjectOutputStream(s.getOutputStream());
+					    System.out.println("Writing key input from server to client");
 						out.writeObject(output);
-						System.out.println("data written out");
 					}
 				}
 			}

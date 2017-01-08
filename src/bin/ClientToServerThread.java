@@ -23,7 +23,9 @@ public class ClientToServerThread extends Thread
 	    	DataOutputStream dout = new DataOutputStream(socket.getOutputStream());
 	    	DataInputStream din = new DataInputStream(socket.getInputStream());
 	    	
+	    	System.out.println("Reading long from server to client");
 	    	din.readLong();
+	    	System.out.println("Writing long from client to server");
 	    	dout.writeLong(1);
 		}
 		catch(Exception e)
@@ -46,8 +48,9 @@ public class ClientToServerThread extends Thread
 		{
 			try
 			{
+				System.out.println("Reading key input from server to client");
 				int[] n = (int[])o.readObject();
-				DrawApp.currentGame.foreignKeyInput(n[0],n[1]);
+				Game.currentGame.foreignKeyInput(n[0],n[1]);
 			}
 			catch(Exception e)
 			{
