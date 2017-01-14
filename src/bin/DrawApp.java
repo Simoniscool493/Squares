@@ -64,13 +64,12 @@ public class DrawApp extends JApplet
 	{
 		System.out.println("Attempting to establish connection to " + Client.ip);
 		Client.connect();
-		Client.getLatency();
 		Game.currentGame = Client.getGame();
 		Game.currentGame.initializeClient();
 		enterGame();
 		Client.listenForInput();
 		
-		System.out.println("Downloaded Game " + Game.currentGame + " from server");
+		System.out.println("Started game with client id " + Game.currentGame.clientId);
 	}
 	
 	public void startServerGame()

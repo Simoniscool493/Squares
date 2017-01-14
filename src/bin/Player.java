@@ -189,6 +189,9 @@ public class Player extends Entity
 		
         //g2.fillRect((width*loc.x)+5,(height*loc.y)+5,width-10,height-10);
         g2.fillRect((curWidth)+5,(curHeight)+5,((int)(width))-10,((int)height)-10);
+        
+        g2.setColor(Color.black);
+        g2.drawString(String.valueOf(playerId),curWidth,curHeight+U.incHeight);
 
         
         if(getAlign() == 0)//up

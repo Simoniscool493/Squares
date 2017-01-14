@@ -23,6 +23,7 @@ public class ClientThread extends Thread
 			try
 			{
 				int[] n = (int[])in.readObject();
+				//in.reset();
 				
 				if(n[0]==0)
 				{
@@ -32,6 +33,11 @@ public class ClientThread extends Thread
 				{
 					System.out.println("Sendposition recieved");
 					Game.currentGame.positionUpdate(n[1],n[2],n[3]);
+				}
+				else if(n[0]==2)
+				{
+					System.out.println("New player with id + " + n[1] + " recieved");
+					Game.currentGame.addPlayer(n[1]);
 				}
 			}
 			catch(Exception e)

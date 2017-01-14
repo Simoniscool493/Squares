@@ -21,6 +21,8 @@ public class Menu implements Serializable
 	float levelTextY = menuHeight-menuHeight*0.1f;
 	float pointsTextY = menuHeight-menuHeight*0.2f;
 	float modeTextY = menuHeight-menuHeight*0.3f;
+	float idTextY = menuHeight-menuHeight*0.4f;
+
 	
 	Player p;
 	UpgradeMenu u;
@@ -85,6 +87,8 @@ public class Menu implements Serializable
 		}
 		
 		drawBar(g2,energyColor,energyBarY,mapEnergy(),p.getEnergy() + "/" + p.getMaxEnergy());
+		
+		drawId(g2);
 	}	
 	
 	void drawBar(Graphics2D g2,Color c,int y,int map,String s)
@@ -131,6 +135,13 @@ public class Menu implements Serializable
 		g2.drawString("Points:    " + String.valueOf(p.getPoints()),textAlign,pointsTextY);
 	}
 	
+	void drawId(Graphics2D g2)
+	{
+		g2.setColor(background);
+		g2.fillRect(textAlign,(int)idTextY-menuComponentHeight, (int)(menuWidth/1.5), menuComponentHeight);
+		g2.setColor(textColor);
+		g2.drawString("Id:    " + String.valueOf(Game.currentGame.clientId),textAlign,idTextY);
+	}
 	void refresh(Graphics2D g2)
 	{
 		init(g2);

@@ -39,6 +39,7 @@ public class MainWindow extends JFrame
 		
         pack();
 		setSize((int)U.drawWidth+(int)U.menuWidth+6,(int)U.drawHeight+63);
+		this.setLocation(500, 0);
 		setVisible(true);
 		setResizable(false);
 	}

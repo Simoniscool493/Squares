@@ -26,17 +26,10 @@ public class ServerThread extends Thread
 			{
 				int[] output = (int[])in.readObject();
 				Game.currentGame.foreignKeyInput(output[0],output[1]);
-				int[] serverOutput = {0,output[0],output[1],0};
-						
-				for(Socket s:Server.clients)
-				{
-					if(!(s==socket))
-					{
-					    ObjectOutputStream out = new ObjectOutputStream(s.getOutputStream());
-						out.writeObject(serverOutput);
-						System.out.println("Wrote int[] for key input");
-					}
-				}
+				
+				int[] serverOutput = {0,output[0],output[1],0};		
+				Server.sendToOtherPlayers(socket,serverOutput);
+				
 			}
 			catch(Exception e)
 			{

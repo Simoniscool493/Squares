@@ -1,5 +1,7 @@
 package bin;
 
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.ServerSocket;
@@ -36,12 +38,9 @@ public class Server
 		        	System.out.println("Started listening for players.");
 		            while (listening) 
 		            {
-		            	System.out.println("Waiting for player");
-
 		            	Socket s = serverSocket.accept();
 		            	System.out.println("Adding player " + clients.size());
 		            	addPlayer(s);
-		            	System.out.println("Player added");
 			        }
 			    } 
 		        catch(Exception e)
@@ -62,26 +61,57 @@ public class Server
 			ObjectOutputStream out = new ObjectOutputStream(s.getOutputStream());
 			ObjectInputStream in = new ObjectInputStream(s.getInputStream());
 
+			//ObjectInputStream in = new ObjectInputStream(new BufferedInputStream(s.getInputStream()));
+			//ObjectOutputStream out = new ObjectOutputStream(new BufferedOutputStream(s.getOutputStream()));
+
 			getLatency(in,out);
 
 			outputStreams.add(out);
 			inputStreams.add(in);
         	clients.add(s);
         	
-			Game.currentGame.togglePause();
-			Game.currentGame.addPlayer(clients.size()-1);
-			Game.currentGame.clientId = clients.size()-1;
-			out.writeObject(Game.currentGame);
-			System.out.println("Wrote Game");
+        	int newPlayerId = clients.size()-1;
+			System.out.println(out.equals(outputStreams.get(0)));
 
+			Game.currentGame.togglePause();
+			Game.currentGame.addPlayer(newPlayerId);
+			Game.currentGame.clientId = newPlayerId;
+			out.writeObject(Game.currentGame);
+
+			int[] newPlayerOutput = {2,newPlayerId,U.p1startX,U.p1startY};
+			sendToOtherPlayers(s,newPlayerOutput);
+			
 			Game.currentGame.clientId = -1;
 			Game.currentGame.togglePause();
 			
-        	listenForPlayer(s,in);
+        	listenForPlayerInput(s,in);
 		}
 		catch(Exception e)
 		{
 			e.printStackTrace();
+		}
+	}
+	
+	public static void sendToOtherPlayers(Socket originPlayer,int[] output)
+	{
+		int i = 0;
+
+		for(Socket s:Server.clients)
+		{
+			if(!(s==originPlayer))
+			{
+			    ObjectOutputStream out = Server.outputStreams.get(i);
+			    try
+			    {
+			    	out.writeObject(output);
+				}
+			    catch(Exception e)
+			    {
+			    	e.printStackTrace();
+			    }
+			}
+			
+			i++;
 		}
 	}
 	
@@ -91,9 +121,7 @@ public class Server
     	{
 			in.readObject();
 			out.writeObject(new Long(1));
-			System.out.println("Wrote Long");
-
-			System.out.println(((Long)in.readObject()).longValue());
+			Long latency = ((Long)in.readObject()).longValue();
     	}
     	catch(Exception e)
     	{
@@ -113,17 +141,18 @@ public class Server
 			{
 				ObjectOutputStream out = outputStreams.get(i);
 				out.writeObject(pos);
-				System.out.println("Wrote int[] for new player position");
+				System.out.println("repositioned player " + id + " on player " + i +"'s screen with stream " + out);
 			}
 			catch(Exception e)
 			{
 				e.printStackTrace();
 			}
+			
 			i++;
 		}
 	}
 	
-	public static void listenForPlayer(Socket s,ObjectInputStream in)
+	public static void listenForPlayerInput(Socket s,ObjectInputStream in)
 	{
 		System.out.println("About to run thread to listen for player's input");
 		new ServerThread(s,in).start();
