@@ -24,7 +24,6 @@ public class Game implements ActionListener, Serializable
 
 	public Random r;
 	
-	int clientId;
 	boolean isHosted = false;
 	boolean isClient = false;
 	
@@ -63,9 +62,9 @@ public class Game implements ActionListener, Serializable
 		grid = new Grid();
 		zoomGrid = new ZoomGrid(U.p1startX,U.p1startY);
 		
-		//up down left right turn fire build place delete
 		if(!isHosted)
 		{
+			//up down left right turn fire build place delete
 			clientPlayerKeyMapping = new KeyMapping('W','S','A','D','U','H','K','I','J');
 			clientPlayer = new Player(clientPlayerKeyMapping,grid.getPoint(U.p1startX,U.p1startY),U.p1,U.p1cap);
 			players.add(clientPlayer);
@@ -162,11 +161,12 @@ public class Game implements ActionListener, Serializable
 	
 	public void keyInput(int key)
 	{
+		System.out.println(clientPlayer.playerId);
 		clientPlayer.keyInput(key);
 		
 		if(isClient)
 		{
-			Client.sendKeyInput(key,clientId);
+			Client.sendKeyInput(key);
 		}
 
 		if(key=='1')

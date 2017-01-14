@@ -1,23 +1,20 @@
 package bin;
 
-import java.io.BufferedInputStream;
-import java.io.BufferedOutputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.net.SocketException;
 import java.util.ArrayList;
 
 public class Server
 {
-	static ArrayList<Socket> clients = new ArrayList<Socket>();
-	static ArrayList<ObjectInputStream> inputStreams = new ArrayList<ObjectInputStream>();
-	static ArrayList<ObjectOutputStream> outputStreams = new ArrayList<ObjectOutputStream>();
+	private static int hostingPort = 81;
 
-	static boolean listening = false;
-	
-	static int port = 81;
-	static String ip = "localhost";
+	private static ArrayList<Socket> clients = new ArrayList<Socket>();
+	private static ArrayList<ObjectOutputStream> outputStreams = new ArrayList<ObjectOutputStream>();
+
+	private static boolean listening = false;
 	
 	static void hostGame()
 	{
@@ -26,27 +23,27 @@ public class Server
 	
 	static void listenForPlayers()
 	{
+		listening = true;
+
 		Thread t = new Thread()
 		{
 			@Override
 			public void run()
 			{
-				listening = true;
-				
-		        try (ServerSocket serverSocket = new ServerSocket(port))
+		        try (ServerSocket serverSocket = new ServerSocket(hostingPort))
 		        { 
 		        	System.out.println("Started listening for players.");
 		            while (listening) 
 		            {
 		            	Socket s = serverSocket.accept();
-		            	System.out.println("Adding player " + clients.size());
 		            	addPlayer(s);
+		            	System.out.println("Added player " + (clients.size()-1));
 			        }
 			    } 
-		        catch(Exception e)
-		        {
+		        catch(Exception e) 
+		        { 
 		        	System.out.println("Server listen error");
-		        	e.printStackTrace();
+		        	listening = false;
 		        }
 			}
 		};
@@ -58,33 +55,22 @@ public class Server
 	{
 		try
 		{
+        	int newPlayerId = clients.size();
+
 			ObjectOutputStream out = new ObjectOutputStream(s.getOutputStream());
 			ObjectInputStream in = new ObjectInputStream(s.getInputStream());
-
-			//ObjectInputStream in = new ObjectInputStream(new BufferedInputStream(s.getInputStream()));
-			//ObjectOutputStream out = new ObjectOutputStream(new BufferedOutputStream(s.getOutputStream()));
-
+			
 			getLatency(in,out);
 
 			outputStreams.add(out);
-			inputStreams.add(in);
         	clients.add(s);
-        	
-        	int newPlayerId = clients.size()-1;
-			System.out.println(out.equals(outputStreams.get(0)));
 
-			Game.currentGame.togglePause();
-			Game.currentGame.addPlayer(newPlayerId);
-			Game.currentGame.clientId = newPlayerId;
-			out.writeObject(Game.currentGame);
+        	sendGame(newPlayerId,out);
 
-			int[] newPlayerOutput = {2,newPlayerId,U.p1startX,U.p1startY};
-			sendToOtherPlayers(s,newPlayerOutput);
+			int[] newPlayerData = {2,newPlayerId,U.p1startX,U.p1startY};
+			sendToClients(newPlayerId,newPlayerData);
 			
-			Game.currentGame.clientId = -1;
-			Game.currentGame.togglePause();
-			
-        	listenForPlayerInput(s,in);
+        	listenForPlayerInput(newPlayerId,in,out);
 		}
 		catch(Exception e)
 		{
@@ -92,26 +78,47 @@ public class Server
 		}
 	}
 	
-	public static void sendToOtherPlayers(Socket originPlayer,int[] output)
+	public static void sendGame(int id,ObjectOutputStream out)
 	{
-		int i = 0;
-
-		for(Socket s:Server.clients)
+		try
 		{
-			if(!(s==originPlayer))
+			Game.currentGame.togglePause();
+			Game.currentGame.addPlayer(id);
+			
+			out.writeObject(Game.currentGame);
+			out.writeObject(new int[]{-1,id});
+
+			Game.currentGame.togglePause();
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+		}
+	}
+	
+	public static void sendToClients(int originPlayer,int[] output)
+	{
+		boolean sendToAll = (originPlayer==-1);
+
+		for(int id=0;id<clients.size();id++)
+		{
+			if(sendToAll||!(id==originPlayer))
 			{
-			    ObjectOutputStream out = Server.outputStreams.get(i);
+			    ObjectOutputStream out = Server.outputStreams.get(id);
+			    
 			    try
 			    {
 			    	out.writeObject(output);
 				}
+			    catch(SocketException e)
+			    {
+			    	System.out.println("Could not send data to client " + id);
+			    }
 			    catch(Exception e)
 			    {
 			    	e.printStackTrace();
 			    }
 			}
-			
-			i++;
 		}
 	}
 	
@@ -132,31 +139,11 @@ public class Server
 	public static void sendPosition(int id,int x,int y)
 	{
 		int[] pos = {1,id,x,y};
-
-		int i = 0;
-		
-		for(Socket s:clients)
-		{
-			try
-			{
-				ObjectOutputStream out = outputStreams.get(i);
-				out.writeObject(pos);
-				System.out.println("repositioned player " + id + " on player " + i +"'s screen with stream " + out);
-			}
-			catch(Exception e)
-			{
-				e.printStackTrace();
-			}
-			
-			i++;
-		}
+		sendToClients(-1,pos);
 	}
 	
-	public static void listenForPlayerInput(Socket s,ObjectInputStream in)
+	public static void listenForPlayerInput(int id,ObjectInputStream in,ObjectOutputStream out)
 	{
-		System.out.println("About to run thread to listen for player's input");
-		new ServerThread(s,in).start();
-		System.out.println("Thread made to listen for added player's input");
+		new ServerThread(id,in,out).start();
 	}
-
 }

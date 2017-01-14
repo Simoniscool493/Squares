@@ -140,7 +140,7 @@ public class Menu implements Serializable
 		g2.setColor(background);
 		g2.fillRect(textAlign,(int)idTextY-menuComponentHeight, (int)(menuWidth/1.5), menuComponentHeight);
 		g2.setColor(textColor);
-		g2.drawString("Id:    " + String.valueOf(Game.currentGame.clientId),textAlign,idTextY);
+		g2.drawString("Id:    " + String.valueOf(Client.id),textAlign,idTextY);
 	}
 	void refresh(Graphics2D g2)
 	{

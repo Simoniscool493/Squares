@@ -8,14 +8,15 @@ import java.net.Socket;
 public class Client 
 {
 	static Socket clientSocket;
+	static int id;
 	
 	static long latency;
 	
 	static int port = 81;
 	static String ip = "localhost";
 
-	static ObjectOutputStream out;
 	static ObjectInputStream in;
+	static ObjectOutputStream out;
 
 	static void connect()
 	{
@@ -26,16 +27,11 @@ public class Client
 	        in = new ObjectInputStream(clientSocket.getInputStream());
 		    out = new ObjectOutputStream(clientSocket.getOutputStream());
 		    
-	        //in = new ObjectInputStream(new BufferedInputStream(clientSocket.getInputStream()));
-		    //out = new ObjectOutputStream(new BufferedOutputStream(clientSocket.getOutputStream()));
-
-		    
 		    getLatency();
 		}
 		catch(Exception e)
 		{
         	System.out.println("Failed to connect to host");
-			e.printStackTrace();
 		}
 	}
 
@@ -48,9 +44,22 @@ public class Client
         catch(Exception e)
         {
         	System.out.println("Failed to retrieve game");
-        	e.printStackTrace();
         	return null;
         }        
+	}
+	
+	static void getId()
+	{
+		try
+        {
+            int[] idData = (int[])in.readObject();
+            Client.id = idData[1];
+        }
+        catch(Exception e)
+        {
+        	System.out.println("Failed to retrieve id");
+        	return;
+        }   
 	}
 	
 	static void getLatency()
@@ -71,23 +80,19 @@ public class Client
 	
 	static void listenForInput()
 	{
-        new ClientThread(in).start();
+        new ClientThread(in,out).start();
 	}
 	
-	static void sendKeyInput(int key,int id)
+	static void sendKeyInput(int key)
 	{
 		try 
 		{
-		    int[] output = new int[] {key,id};
-
+		    int[] output = new int[] {key};
 			out.writeObject(output);
 		} 
 		catch (IOException e) 
 		{
 			e.printStackTrace();
 		}
-
 	}
-
-
 }

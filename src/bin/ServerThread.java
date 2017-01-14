@@ -2,34 +2,38 @@ package bin;
 
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.net.Socket;
+import java.net.SocketException;
 
 public class ServerThread extends Thread
 {
-	Socket socket;
-	boolean listening = true;
-	
+	int id;
 	ObjectInputStream in;
-	
-    ServerThread(Socket s,ObjectInputStream in)
+	ObjectOutputStream out;
+
+    ServerThread(int id,ObjectInputStream in,ObjectOutputStream out)
     {
         super("ServerThread");
+        this.id = id;
         this.in = in;
-        this.socket = s;
+        this.out = out;
     }
 
 	public void run()
 	{
-		while(listening)
+		while(true)
 		{
 			try
 			{
-				int[] output = (int[])in.readObject();
-				Game.currentGame.foreignKeyInput(output[0],output[1]);
+				int[] output = (int[])in.readObject();				
+				Game.currentGame.foreignKeyInput(output[0],id);
 				
-				int[] serverOutput = {0,output[0],output[1],0};		
-				Server.sendToOtherPlayers(socket,serverOutput);
-				
+				int[] serverOutput = {0,output[0],id,0};		
+				Server.sendToClients(id,serverOutput);
+			}
+			catch(SocketException e)
+			{
+				System.out.println("Client " + id + " disconnected");
+				break;
 			}
 			catch(Exception e)
 			{
@@ -37,7 +41,5 @@ public class ServerThread extends Thread
 				break;
 			}
 		}
-
 	}
-
 }
