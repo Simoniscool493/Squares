@@ -85,6 +85,7 @@ public class Server
 			Game.currentGame.togglePause();
 			Game.currentGame.addPlayer(id);
 			
+			System.out.println("Player of menu: " + Game.currentGame.sideMenu.p);
 			out.writeObject(Game.currentGame);
 			out.writeObject(new int[]{-1,id});
 

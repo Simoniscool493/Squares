@@ -62,6 +62,7 @@ public class Game implements ActionListener, Serializable
 		grid = new Grid();
 		zoomGrid = new ZoomGrid(U.p1startX,U.p1startY);
 		
+		//create the player for a one-player game
 		if(!isHosted)
 		{
 			//up down left right turn fire build place delete
@@ -190,9 +191,18 @@ public class Game implements ActionListener, Serializable
 	public void addPlayer(int id)
 	{
 		clientPlayerKeyMapping = new KeyMapping('W','S','A','D','U','H','K','I','J');
-		clientPlayer = new Player(id,clientPlayerKeyMapping,grid.getPoint(U.p1startX,U.p1startY),U.p1,U.p1cap);
-		players.add(clientPlayer);
-		sideMenu = new Menu(clientPlayer);
+		
+		if(isClient)
+		{
+			Player p = new Player(id,clientPlayerKeyMapping,grid.getPoint(U.p1startX,U.p1startY),U.p1,U.p1cap);
+			players.add(p);
+		}
+		else
+		{
+			clientPlayer = new Player(id,clientPlayerKeyMapping,grid.getPoint(U.p1startX,U.p1startY),U.p1,U.p1cap);
+			players.add(clientPlayer);
+			sideMenu = new Menu(clientPlayer);
+		}
 	}
 	
 	public void positionUpdate(int id,int x,int y)
